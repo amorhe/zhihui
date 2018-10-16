@@ -1,0 +1,43 @@
+[v-clock]{
+    display: none;
+}
+#allmap {
+    width: 3.75rem;
+    height: 5.2rem;
+    overflow: hidden;
+    margin: 0;
+    font-family: "微软雅黑", serif;
+}
+
+.bussiness_name{
+    font-family: "PingFangSC-regular", serif;
+    color: #101010;
+    font-size: .15rem;
+    margin-left: .1rem;
+    margin-top: .13rem;
+}
+
+.address_detail{
+    font-size: .12rem;
+    color: #7B7B7B;
+    margin-left: .1rem;
+}
+
+ul{
+    width: 96%;
+    margin: .25rem auto .25rem;
+    margin-top: .25rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+ul > li {
+    display: inline-block;
+    width: .76rem;
+    height: .24rem;
+    border-radius: .04rem;
+    text-align: center;
+    background: #E6E6E6;
+    line-height: .24rem;
+    color: #888888;
+}

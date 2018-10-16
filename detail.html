@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>详情</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/l_common.css">
+</head>
+<body>
+<div id="app">
+    <section class="detail_head">
+        <p class="iconfont icon-fanhui back cursor_pointer"></p>
+        <img src="http://img1.3lian.com/2015/w22/87/d/105.jpg" alt="">
+    </section>
+
+    <section class="address">
+        <header>
+            轻食主义
+        </header>
+        <footer>
+            <i class="iconfont icon-dingwei"></i>
+            <div class="position_detail" @click="toMap()">
+                <p>
+                    申花路剑桥公社A座1楼
+                </p>
+                <p class="distance">
+                    距离您300米，步行需6分钟
+                </p>
+            </div>
+            <img src="iconfont/phone.svg" alt="">
+        </footer>
+    </section>
+
+    <section class="booking">
+        <header>
+            预订
+            <span>
+               <i class="el-icon-circle-check">支持</i>
+               <i class="el-icon-circle-check">2018人订过</i>
+            </span>
+        </header>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="i in 7">
+                    今天
+                    <p>10-12</p>
+                </div>
+            </div>
+        </div>
+        <footer class="species">
+            <span>
+                小包（3-4人）
+            </span>
+            <span>
+                中包（6-8人）
+            </span>
+            <span>
+                大包（9-11人）
+            </span>
+        </footer>
+    </section>
+
+    <section class="booking_money">
+        <ul>
+            <li v-for="i in 3">
+                <div>
+                    11:30至10:00内，任选3小时
+                    <span>￥92</span>
+                </div>
+                <a @click="alert = true">
+                    预订
+                </a>
+            </li>
+            <li style="text-align: center">
+                更多 <i class="el-icon-arrow-down"></i>
+            </li>
+        </ul>
+    </section>
+
+    <section class="bus_information">
+        <header>
+            商户信息 <i class="el-icon-arrow-right"></i>
+        </header>
+        <footer>
+            营业时间：<span>周一至周日 11:30-02:00</span>
+            <p>
+               <span>
+                    <img src="iconfont/bus.svg" alt=""> 免费停车
+               </span>
+                <span>
+                    <img src="iconfont/wifi.svg" alt=""> wi-fi
+               </span>
+            </p>
+        </footer>
+    </section>
+    <div class="background" v-show="alert" @touchend.self="alert = false">
+        <section class="alert">
+            <header class="v_header">
+                小包
+                <span>￥92</span>
+            </header>
+            <footer>
+                <div>今天（10-12）11:30至18：00内，任选3小时</div>
+                <span>请选择开唱时间</span>
+                <div>
+                    <button class="" v-for="i in 5" @click="toDetail()">15:00</button>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<script src="js/swiper.min.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            alert: false,
+        },
+        mounted() {
+            var mySwiper = new Swiper('.swiper-container', {
+
+            })
+        },
+        methods: {
+            toMap() {
+                location.href = './map.html'
+            },
+            toDetail() {
+                location.href = './room_booking.html'
+            }
+        }
+    })
+</script>
+
+</html>

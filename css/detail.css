@@ -1,0 +1,223 @@
+html, body {
+    position: relative;
+}
+* {
+    font-family: "PingFangSC-regular", serif;
+    font-weight: normal;
+    color: #101010;
+}
+
+ul li {
+    list-style: none;
+}
+
+.detail_head {
+    position: relative;
+    width: 3.75rem;
+    height: 1.2rem;
+    overflow: hidden;
+}
+
+.detail_head > img {
+    position: absolute;
+    width: 100%;
+}
+
+.detail_head > .back {
+    position: absolute;
+    top: .09rem;
+    left: .14rem;
+    z-index: 1;
+}
+
+.address {
+    width: 3.75rem;
+    height: 1rem;
+    background: #F0F0F0;
+    margin-top: .18rem;
+    padding: .11rem .24rem .17rem .14rem;
+    box-sizing: border-box;
+
+}
+
+.address > header {
+    font-size: .16rem;
+    color: #101010;
+}
+
+.address > footer {
+    margin-top: .08rem;
+    font-size: .14rem;
+}
+
+.address > footer > i {
+    float: left;
+    font-size: .14rem;
+    margin-top: .03rem;
+}
+
+.address > footer > div.position_detail {
+    font-size: .14rem;
+    float: left;
+    margin-left: .04rem;
+}
+
+.address img {
+    width: .24rem;
+    float: right;
+}
+
+.address > footer > div > p.distance {
+    margin-top: .08rem;
+    font-size: .1rem;
+}
+
+.booking {
+    width: 3.75rem;
+    height: 1.3rem;
+    background: #F2F2F2;
+    margin-top: .11rem;
+}
+
+.booking > header {
+    padding: .11rem 0 .09rem .11rem;
+    font-size: .14rem;
+    border-bottom: .01rem solid #E6E6E6;
+}
+
+.booking > header > span {
+    float: right;
+    font-size: .1rem;
+}
+
+.swiper-container {
+    margin-top: .06rem;
+    width: 3.75rem;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: .12rem;
+    height: .44rem;
+}
+
+footer.species {
+    padding: .06rem .12rem;
+
+}
+
+.species > span {
+    display: inline-block;
+    padding: .04rem .02rem;
+    text-align: center;
+    background: #FFFFFF;
+    margin-right: .08rem;
+    font-size: .12rem;
+}
+
+.booking_money {
+    margin-top: .09rem;
+    width: 3.75rem;
+    background: #F2F2F2;
+}
+
+.booking_money li {
+    padding: .11rem 0.11rem .02rem;
+    border-bottom: .01rem solid #E6E6E6;
+}
+
+.booking_money li:last-child {
+    padding: .11rem 0;
+    border: none;
+}
+
+.booking_money div {
+    display: inline-block;
+}
+
+.booking_money span {
+    display: block;
+    color: #f03232;
+}
+
+.booking_money a {
+    float: right;
+    display: inline-block;
+    width: .57rem;
+    height: .24rem;
+    line-height: .24rem;
+    text-align: center;
+    background: #FFFFFF;
+    text-decoration: none;
+    border-radius: .04rem;
+}
+
+.bus_information {
+    margin-top: .09rem;
+    width: 3.75rem;
+    background: #F2F2F2;
+}
+
+.bus_information header {
+    padding: .07rem .11rem;
+    border-bottom: .01rem solid #E6E6E6;
+}
+
+.bus_information header i {
+    float: right;
+}
+
+.bus_information footer {
+    padding: .02rem .07rem;
+}
+
+.bus_information footer img {
+    width: .1rem;
+}
+
+.background{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(4,4,4,.2);
+}
+
+.alert {
+    position: absolute;
+    bottom: -0.1rem;
+    width: 3.75rem;
+    padding: 0 .13rem .2rem;
+    box-sizing: border-box;
+    z-index: 1;
+    max-height: 50rem;
+    background: white;
+    font-size: .14rem;
+    color: #101010;
+}
+
+.v_header {
+    padding: .11rem 0;
+    border-bottom: .01rem solid #BBBBBB;
+}
+
+.v_header span {
+    float: right;
+}
+
+.alert footer div{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.alert footer div button{
+    margin-top: .06rem;
+    border: .01rem solid #BBBBBB;
+    font-size: .14rem;
+    width: .8rem;
+    height: .3rem;
+    line-height: .3rem;
+    background: white;
+    border-radius: .04rem;
+}
+

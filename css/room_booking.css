@@ -1,0 +1,66 @@
+.room {
+    background: #F0F0F0;
+}
+
+.room_style {
+    width: 100%;
+    padding: .11rem;
+    font-size: .14rem;
+    box-sizing: border-box;
+    background: #F9F8F8;
+}
+
+.room_style header {
+    padding-bottom: .13rem;
+    border-bottom: .01rem solid #ECEBEB;
+}
+
+.room_style header span {
+    font-size: .1rem;
+}
+
+.room_style footer {
+    font-size: .14rem;
+    padding: .22rem .04rem .2rem;
+}
+
+.room_style footer span {
+    float: right;
+    margin-right: .1rem;
+}
+
+.real_pay {
+    margin-top: .08rem;
+}
+
+.real_pay footer {
+    padding: .08rem .04rem;
+}
+
+.pay {
+    position: absolute;
+    bottom: 0;
+}
+
+.pay footer {
+    font-size: .2rem;
+}
+
+.pay footer a {
+    font-size: .07rem;
+    color: #4F4F4F;
+}
+
+.pay footer span {
+    border-radius: .04rem;
+    text-align: center;
+    width: .8rem;
+    height: .3rem;
+    line-height: .3rem;
+    font-size: .14rem;
+    color: #101010;
+    display: inline-block;
+    background: #DfDFDF;
+}
+
+

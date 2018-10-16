@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>包房预订</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/room_booking.css">
+</head>
+<body>
+<div id="app">
+    <header class="pay_top room">
+        <p class="iconfont icon-fanhui comeback"></p>
+        <p>包房预订</p>
+    </header>
+    <section class="room_style">
+        <header>
+            <p>星空纯K量贩KTV</p>
+            <span>
+                小包（3-4人）
+            </span>
+        </header>
+        <footer>
+            3小时换了唱
+            <span>￥92</span>
+        </footer>
+    </section>
+
+    <section class="real_pay room_style">
+        <footer>
+            实际支付
+            <span>￥92</span>
+        </footer>
+    </section>
+
+    <section class="real_pay phone room_style">
+        <footer>
+            手机号码
+            <span>183 2919 8765</span>
+        </footer>
+    </section>
+
+    <section class="real_pay ruler room_style">
+        <footer>
+            退订规则
+            <p>1.开唱时间提前一小时（14:00）前可退</p>
+            <p>2.开唱时间提前一小时至开唱时间（14:00-15:00）退款，则平台提取30%原实付金额的违约金</p>
+            <p>3.开唱时间（15:00）后不可退</p>
+        </footer>
+    </section>
+
+    <section class="real_pay pay room_style">
+        <footer>
+            ￥92
+            <a>含2元服务费</a>
+            <span>立即支付</span>
+        </footer>
+    </section>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+
+        },
+        mounted() {
+
+        },
+        method:{
+
+        }
+    })
+</script>
+</html>
