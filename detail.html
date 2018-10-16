@@ -130,7 +130,9 @@
         },
         mounted() {
             var mySwiper = new Swiper('.swiper-container', {
-
+                width:innerWidth,
+                slidesPerView : 6,
+                freeMode: true
             })
         },
         methods: {
