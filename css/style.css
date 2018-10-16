@@ -1,0 +1,345 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html {max-width: 500px;
+    margin: 0 auto;}
+
+#app {
+    color: #101010;
+    font-size: 14px;
+}
+.fontSm {
+    font-size: .12rem;
+}
+/*首页*/
+.index_head {
+    width: 100%;
+    height: .56rem;
+    display: flex;
+    padding: 0 .2rem;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+.position_icon {
+    font-size: .27rem;
+}
+.el-input {
+    width: 89.5%;
+    height: .4rem;
+}
+.el-input input {
+    height: 100%;
+    border-radius: .5rem;
+}
+.index_list {
+    padding: .1rem .2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-between;
+    height: 1.4rem;
+    box-sizing: border-box;
+    margin-bottom: .2rem;
+}
+.index_list_div {
+    width: 25%;
+    height: .51rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.index_list_div>img {
+    width: .51rem;
+    height: .51rem;
+    border-radius: 50%;
+}
+.day_recom {
+    padding: .15rem ;
+    background: rgb(242,242,242);
+}
+.day_recom_top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .13rem;
+}
+.day_recom_top>p:nth-child(2) {
+    font-size: .12rem;
+    align-items: center;
+}
+.day_recom_swiper>.swiper-slide {
+    width: 72%;
+    display: flex;
+}
+.slide_img {
+    width: .64rem;
+    height: .64rem;
+    margin-right: .16rem;
+}
+.slide_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 1.67rem;
+}
+.slide_div>p:nth-child(1){
+    color: #6f6f6f;
+}
+.slide_div>p:nth-child(2){
+    font-size: .12rem;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.dollar {
+    font-size: .11rem;
+}
+.colorRed {
+    color: #f03232;
+}
+.through_span {
+    text-decoration: line-through;
+    color: #bdbcbc;
+}
+.index_mid {
+    padding: .2rem .15rem;
+    display: flex;
+    justify-content: space-between;
+}
+.index_mid>div {
+    width: 32.3%;
+    height: .7rem;
+    border-radius: .05rem;
+    position: relative;
+}
+.mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(101,101,101,.6);
+    color: #fff;
+    text-align: center;
+    line-height: .7rem;
+    border-radius: .05rem;
+}
+.index_mid>div:nth-child(1){
+    background: url("http://img.juimg.com/tuku/yulantu/110124/292-1101241A32471.jpg") 0 0 / 100% 100% no-repeat;
+}
+.index_mid>div:nth-child(2){
+    background: url("http://img01.taopic.com/161124/240369-1611240KI410.jpg") 0 0 / 100% 100% no-repeat;
+}
+.index_mid>div:nth-child(3){
+    background: url("http://pic40.nipic.com/20140403/8614226_162018219198_2.jpg") 0 0 / 100% 100% no-repeat;
+}
+.index_bottom_title {
+    text-align: center;
+}
+.index_foot {
+    display: flex;
+    padding: .1rem .2rem;
+    justify-content: space-between;
+}
+.index_foot_list {
+    padding: .1rem;
+    display: flex;
+    justify-content: space-between;
+    height: .79rem;
+    box-sizing: border-box;
+    border-bottom: .01rem #ccc solid;
+    background: rgb(238,238,238);
+}
+.index_foot_list>img {
+    width: .75rem;
+    height: .54rem;
+}
+.index_foot_list>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.list_name {
+    font-size: .16rem;
+    font-weight: bold;
+}
+.list_content {
+    color: #666;
+    font-size: .1rem;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.list_price {
+    font-size: .13rem;
+}
+.align_self {
+    align-items: flex-end;
+}
+
+/*搜索*/
+.search_div {
+    padding: .2rem .12rem 0;
+}
+.elIn {
+    height: .3rem;
+}
+.elIn i {
+    line-height: .3rem;
+}
+.search_div>p {
+    color: #6c6c6c;
+}
+.search_div>div {
+    display: flex;
+}
+.search_div>div p {
+    width: .7rem;
+    height: .2rem;
+    background: #eaeaea;
+    text-align: center;
+    line-height: .2rem;
+    font-size: .12rem;
+    margin: .1rem .16rem 0;
+}
+.comeback {
+    align-self: start;
+}
+.pay_top {
+    font-size: .16rem;
+    height: .4rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: .08rem;
+    background: #eee;
+    margin-bottom: .2rem;
+    box-sizing: border-box;
+}
+.pay_top>p {
+    margin-right: auto;
+    height: .4rem;
+}
+.jine {
+    font-size: .16rem;
+    margin-left: .16rem;
+}
+.pay_price {
+    font-size: .2rem;
+    margin-left: -.2rem;
+}
+.pay_mid {
+    background: #eee;
+}
+.circle {
+    width: .2rem;
+    height: .2rem;
+    border-radius: 50%;
+    background: #fff;
+    border: .01rem solid #a6a6a6;
+}
+.pay_mid>div {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 .16rem;
+    border-bottom: 1px solid #e1e0e0;
+    height: .44rem;
+    align-items: center;
+}
+.pay_mid i {
+    font-size: .2rem;
+    margin-right: .1rem;
+}
+.noneBorderBottom {
+    border-bottom: 0!important;
+}
+.payButton {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: .5rem;
+    text-align: center;
+    line-height: .5rem;
+    background: #eee;
+}
+.checked_icon {
+    background: url("../img/gou.png") 0 0 / 100% 100% no-repeat;
+}
+
+/*优惠商家*/
+.business_list {
+    width: 93.6%;
+    height: 1rem;
+    background: rgb(236,236,236);
+    margin: .1rem 3.2%;
+    border-radius: .05rem;
+    display: flex;
+    overflow: hidden;
+}
+.business_list>img {
+    width: 36%;
+    height: .99rem;
+    margin-right: 13.4%;
+}
+.business_list>div {
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.bus_top>p:nth-child(1) {
+     font-size: .16rem;
+}
+.colorWrap {
+    color: #a6a6a6;
+}
+.bus_down {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*今日钜惠*/
+.today_ul {
+    padding: .09rem .07rem;
+    display: flex;
+    background: #eee;
+    margin: -.1rem 0 .2rem;
+}
+.today_ul>img {
+    width: 20%;
+    height: .54rem;
+    margin-right: 4.3%;
+}
+.today_ul>div {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.nowrap{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.fontTen {
+    font-size: .1rem;
+}
+.recommend_list {
+    justify-content: space-between;
+}
+.recommend_list>div {
+    margin-left: .07rem;
+}
+.recommend_list_img {
+    margin-right: 0!important;
+}
+.recomP {
+    display: flex;
+    justify-content: space-between;
+}
+.setNum {
+    color: #666;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>首页</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="index_head">
+            <i class="iconfont icon-dingwei position_icon"></i>
+            <el-input
+                    placeholder="输入商家名字、品类"
+                    prefix-icon="el-icon-search">
+            </el-input>
+        </div>
+
+        <div class="index_list">
+            <div class="index_list_div" v-for="item in 8">
+                <img src="http://img1.3lian.com/2015/w22/87/d/105.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="day_recom">
+            <div class="day_recom_top">
+                <p>今日推荐</p>
+                <p>
+                    <span>更多推荐</span>
+                    <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
+                </p>
+            </div>
+            <div class="day_recom_bottom">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper day_recom_swiper">
+                        <div class="swiper-slide" v-for="item in 4">
+                            <img class="slide_img" src="http://pic.58pic.com/58pic/13/10/96/35T58PICBYS_1024.jpg" alt="">
+                            <div class="slide_div">
+                                <p>星空纯K量贩KTV</p>
+                                <p>【两周年店庆特惠】白天卫栖梧问wqewq</p>
+                                <p>
+                                    <span class="dollar colorRed">￥</span>
+                                    <span class="colorRed">38</span>
+                                    <span class="through_span">￥188</span>
+                                </p>
+                            </div>
+                        </div>
+                        <!--<div class="swiper-slide">slider2</div>-->
+                        <!--<div class="swiper-slide">slider3</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="index_mid">
+            <div>
+                <a href="#">
+                    <div class="mask">今日钜惠</div>
+                </a>
+            </div>
+            <div>
+                <a href="#">
+                    <div class="mask">狠优惠</div>
+                </a>
+            </div>
+            <div>
+                <a href="#">
+                    <div class="mask">优惠商家</div>
+                </a>
+            </div>
+        </div>
+
+        <h3 class="index_bottom_title">附近商家</h3>
+
+        <div class="index_bottom">
+            <div class="index_foot">
+                <p>离我最近</p>
+                <p>折扣最高</p>
+                <p>最新发布</p>
+            </div>
+
+            <div class="index_foot_list" v-for="item in 3">
+                <img src="http://img3.redocn.com/tupian/20140911/qiaopimeinv_3058833.jpg" alt="">
+                <div>
+                    <p class="list_name">养生SPA会所（诸暨店）</p>
+                    <p class="list_content">[高教文区]1个预定项目+3个优惠套餐···</p>
+                    <p class="list_price">¥168起</p>
+                </div>
+                <div class="align_self">
+                    <p class="fontSm">300km</p>
+                    <p class="list_price">已售2018</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+
+        },
+        mounted() {
+            var mySwiper = new Swiper('.swiper-container', {
+                // autoplay: true,//可选选项，自动滑
+                slidesPerView : 'auto',
+            })
+        },
+        method:{
+
+        }
+    })
+</script>
+</html>

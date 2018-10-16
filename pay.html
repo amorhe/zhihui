@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>支付</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="pay_top">
+            <p class="iconfont icon-fanhui comeback"></p>
+            <p>支付订单</p>
+        </div>
+
+        <div class="pay_top">
+            <p class="comeback jine">金额</p>
+            <p class="pay_price">￥128.00</p>
+        </div>
+
+        <div class="pay_mid">
+            <div @click="choosePay(0)">
+              <p>
+                  <i class="iconfont icon-money"></i>
+                  <span>余额</span>
+              </p>
+              <div class="circle" :class="checked==0 ? 'checked_icon' : ''"></div>
+            </div>
+            <div @click="choosePay(1)">
+                <p>
+                    <i class="iconfont icon-weixin"></i>
+                    <span>微信</span>
+                </p>
+                <div class="circle" :class="checked==1 ? 'checked_icon' : ''"></div>
+            </div>
+            <div class="noneBorderBottom" @click="choosePay(2)">
+                <p>
+                    <i class="iconfont icon-zhifubao"></i>
+                    <span>支付宝</span>
+                </p>
+                <div class="circle" :class="checked==2 ? 'checked_icon' : ''"></div>
+            </div>
+        </div>
+
+        <div class="payButton">立即支付</div>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            checked: 0
+        },
+        mounted() {
+
+        },
+        methods:{
+            choosePay(index) {
+                this.checked = index;
+            }
+        }
+    })
+</script>
+</html>

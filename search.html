@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>搜索</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="index_head">
+            <el-input class="elIn"
+                    placeholder="输入商家名字、品类"
+                    prefix-icon="el-icon-search">
+            </el-input>
+            <span>取消</span>
+        </div>
+
+        <div class="search_div">
+            <p>热门搜索</p>
+            <div>
+                <p v-for="item in 3">养生会所</p>
+            </div>
+        </div>
+
+        <div class="search_div">
+            <p>历史搜索</p>
+            <div>
+                <p v-for="item in 1">KTV会所</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+
+        },
+        mounted() {
+
+        },
+        method:{
+
+        }
+    })
+</script>
+</html>
