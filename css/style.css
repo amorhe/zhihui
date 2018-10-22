@@ -44,10 +44,10 @@ html {max-width: 500px;
     margin-bottom: .2rem;
 }
 .index_list_div {
-    width: 25%;
-    height: .51rem;
+    height: .71rem;
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 .index_list_div>img {
