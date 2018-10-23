@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="iconfont/iconfont.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/swiper.min.css">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.7&key=2e1bab005d970022580466031df7793a"></script>
 </head>
 <body>
+<<<<<<< HEAD
 <div id="app">
     <div class="index_head">
         <i class="iconfont icon-dingwei position_icon"></i>
@@ -19,6 +21,20 @@
                 prefix-icon="el-icon-search">
         </el-input>
     </div>
+=======
+    <div id="app">
+        <div class="index_head">
+            <p v-if="address!=''">{{address}}</p>
+            <i v-else class="iconfont icon-dingwei position_icon"></i>
+            <el-input
+                    placeholder="输入商家名字、品类"
+                    prefix-icon="el-icon-search">
+            </el-input>
+            <el-button type="text" @click="open3">
+                <i class="iconfont icon-add"></i>
+            </el-button>
+        </div>
+>>>>>>> origin/master
 
     <div class="index_list">
         <div class="swiper-container" id="shopCatelist">
@@ -115,6 +131,7 @@
 <!--<script src="js/jq.js"></script>-->
 <script>
     new Vue({
+<<<<<<< HEAD
         el: "#app",
         data: {
             shopCateListData: [],
@@ -146,6 +163,45 @@
                 this.shopCateListData = result.data
                 console.log(result)
             }
+=======
+        el:"#app",
+        data:{
+            address:''
+        },
+        created(){
+            var map = new AMap.Map('container', {
+                resizeEnable: true
+            })
+            var that = this;
+            map.plugin('AMap.Geolocation', function() {
+                var geolocation = new AMap.Geolocation({
+                    // 是否使用高精度定位，默认：true
+                    enableHighAccuracy: true,
+                    // 设置定位超时时间，默认：无穷大
+                    timeout: 10000,
+                    // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+                    buttonOffset: new AMap.Pixel(10, 20),
+                    //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    zoomToAccuracy: true,
+                    //  定位按钮的排放位置,  RB表示右下
+                    buttonPosition: 'RB'
+                })
+
+                geolocation.getCurrentPosition()
+                AMap.event.addListener(geolocation, 'complete', onComplete)
+                AMap.event.addListener(geolocation, 'error', onError)
+
+                function onComplete (data) {
+                    // data是具体的定位信息
+                    console.log(data.addressComponent.district)
+                    that.address = data.addressComponent.district;
+                }
+
+                function onError (data) {
+                    // 定位出错
+                }
+            })
+>>>>>>> origin/master
         },
         mounted() {
             this.getBanner();
@@ -159,7 +215,32 @@
                 // autoplay: true,//可选选项，自动滑
                 slidesPerView: 'auto',
             })
+<<<<<<< HEAD
         },
+=======
+
+        },
+        methods:{
+            open3() {
+                this.$prompt('请输入', '发布', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+                    // inputErrorMessage: '邮箱格式不正确'
+                }).then(({ value }) => {
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '你的邮箱是: ' + value
+                    // });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
+            }
+        }
+>>>>>>> origin/master
     })
 </script>
 </html>
