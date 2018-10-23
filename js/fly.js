@@ -76,3 +76,5 @@ const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shop
 const discountList = () => ajax(Base_url + '/api/alldiscount/discountlist')
 //今日钜惠
 const todayDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldiscount/todydiscountlist',{longitude_latitude})
+//很优惠
+const firmDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldiscount/firmdiscountlist',{longitude_latitude})

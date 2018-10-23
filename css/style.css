@@ -281,7 +281,7 @@ html {max-width: 500px;
 .business_list>img {
     width: 36%;
     height: .99rem;
-    margin-right: 13.4%;
+    /*margin-right: 13.4%;*/
 }
 .business_list>div {
     width: 49%;

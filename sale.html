@@ -16,19 +16,19 @@
             <p>狠优惠</p>
         </div>
 
-        <div class="business_list recommend_list" v-for="item in 4">
+        <div class="business_list recommend_list" v-for="item in shopList" :key="item.id">
             <div>
                 <div class="bus_top">
-                    <p>养生SPA会所</p>
-                    <p class="colorWrap">面部补水+肩颈放松套餐</p>
+                    <p>{{item.shop_name}}</p>
+                    <p class="colorWrap">{{item.distribution}}</p>
                 </div>
                 <div class="bus_down">
-                    <p>￥168</p>
-                    <p>已售456</p>
-                    <p>1km</p>
+                    <p>{{item.discount/10}}折</p>
+                    <p>已售{{item.sold_num}}</p>
+                    <p>{{item.distance}}km</p>
                 </div>
             </div>
-            <img class="recommend_list_img" src="http://img2.ph.126.net/VOSo-Gjpdq_QElxzE-QapA==/6619407444886373570.jpg" alt="">
+            <img style="float: right" :src="`http://192.168.1.21/${item.store_images}`" alt="">
         </div>
     </div>
 </body>
@@ -36,17 +36,42 @@
 <script src="js/font.js"></script>
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/fly.js"></script>
 <script>
     new Vue({
-        el:"#app",
-        data:{
-
+        el: "#app",
+        data: {
+            shopList:[]
         },
         mounted() {
-
+            let longitude_latitude = this.GetQueryString('longitude_latitude')
+            this.getStoreList(longitude_latitude)
+            //路由拦截。。。
+            if (longitude_latitude === null){
+                location.assign('./index.html')
+            }
         },
-        method:{
-
+        methods: {
+            back(){
+                history.go(-1)
+            },
+            GetQueryString(name) {
+                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                let r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            },
+            async getStoreList(longitude_latitude) {
+                let result = await firmDiscountList(longitude_latitude)
+                if (result.code === 0) {
+                    alert(result.message)
+                }
+                if (result.code === 1) {
+                    console.log(result.data)
+                    this.shopList =  result.data
+                }
+            },
         }
     })
 </script>
