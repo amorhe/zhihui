@@ -67,3 +67,5 @@ let bannerList = ajax(Base_url + '/api/allbanner/bannerlist')
 //分类
 let shopCatelist = ajax(Base_url + '/api/allshopcate/shopcatelist')
 //分类下的店铺
+let storeList = (shopcate_id,longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id,longitude_latitude})
+let recommendList =(recommend) => ajax(Base_url + '/api/allstore/recommendlist',{recommend})

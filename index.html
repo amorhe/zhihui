@@ -10,10 +10,13 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/swiper.min.css">
     <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.7&key=2e1bab005d970022580466031df7793a"></script>
+            src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd"></script>
+    <!--<script type="text/javascript"-->
+    <!--src="https://webapi.amap.com/maps?v=1.4.7&key=2e1bab005d970022580466031df7793a"></script>-->
 </head>
 <body>
 <div id="app">
+    <div id="allmap"></div>
     <div class="index_head">
         <p v-if="address!=''">{{address}}</p>
         <i v-else class="iconfont icon-dingwei position_icon"></i>
@@ -30,7 +33,7 @@
         <div class="swiper-container" id="shopCatelist">
             <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="i in cate">
-                    <div class="index_list_div" v-for="item in i" :key="item.id">
+                    <div class="index_list_div" v-for="item in i" :key="item.id" @click="goTo(item.id,longitude_latitude)">
                         <img :src="`http://192.168.1.21/${item.images}`" alt="">
                         <p>{{item.catename}}</p>
                     </div>
@@ -122,17 +125,18 @@
         el: "#app",
         data: {
             shopCateListData: [],
-            address: ''
+            address: '',
+            longitude_latitude: ''
         },
         computed: {
             cate() {
                 let arr = []
                 let arr2 = []
-                this.shopCateListData.forEach(c =>{
-                    if (arr2.length === 8){
-                        arr2 =[]
+                this.shopCateListData.forEach(c => {
+                    if (arr2.length === 8) {
+                        arr2 = []
                     }
-                    if (arr2.length === 0){
+                    if (arr2.length === 0) {
                         arr.push(arr2)
                     }
                     arr2.push(c)
@@ -151,6 +155,9 @@
                 result = await shopCatelist
                 this.shopCateListData = result.data
                 console.log(result)
+            },
+            goTo(id,longitude_latitude) {
+                location.assign(`./business.html?id=${id}&longitude_latitude=${longitude_latitude}`)
             },
             open3() {
                 this.$prompt('请输入', '发布', {
@@ -172,38 +179,62 @@
             }
         },
         created() {
-            var map = new AMap.Map('container', {
-                resizeEnable: true
-            })
+            // var map = new AMap.Map('container', {
+            //     resizeEnable: true
+            // })
             var that = this;
-            map.plugin('AMap.Geolocation', function () {
-                var geolocation = new AMap.Geolocation({
-                    // 是否使用高精度定位，默认：true
-                    enableHighAccuracy: true,
-                    // 设置定位超时时间，默认：无穷大
-                    timeout: 10000,
-                    // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
-                    buttonOffset: new AMap.Pixel(10, 20),
-                    //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                    zoomToAccuracy: true,
-                    //  定位按钮的排放位置,  RB表示右下
-                    buttonPosition: 'RB'
-                })
+            // map.plugin('AMap.Geolocation', function () {
+            //     var geolocation = new AMap.Geolocation({
+            //         enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            //         timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            //         maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+            //         convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+            //         showButton: true,        //显示定位按钮，默认：true
+            //         buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+            //         buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            //         showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+            //         showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+            //         panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+            //         zoomToAccuracy: true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            //     })
+            //
+            //     geolocation.getCurrentPosition()
+            //     AMap.event.addListener(geolocation, 'complete', onComplete)
+            //     AMap.event.addListener(geolocation, 'error', onError)
+            //
+            //     function onComplete(data) {
+            //         // data是具体的定位信息
+            //
+            //         console.log(data)
+            //         that.longitude_latitude = data.position
+            //         that.address = data.addressComponent.district;
+            //     }
+            //
+            //     function onError(data) {
+            //         // 定位出错
+            //     }
+            // })
+            var map = new BMap.Map("allmap");
+            var point = new BMap.Point(116.331398,39.897445);
+            map.centerAndZoom(point,12);
 
-                geolocation.getCurrentPosition()
-                AMap.event.addListener(geolocation, 'complete', onComplete)
-                AMap.event.addListener(geolocation, 'error', onError)
-
-                function onComplete(data) {
-                    // data是具体的定位信息
-                    console.log(data.addressComponent.district)
-                    that.address = data.addressComponent.district;
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                console.log(r)
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    var mk = new BMap.Marker(r.point);
+                    map.addOverlay(mk);
+                    map.panTo(r.point);
+                    that.address = r.address.city
+                    // alert('您的位置：'+r.point.lng+','+r.point.lat);
+                    that.longitude_latitude = r.point.lng+','+ r.point.lat
+                    console.log(that.longitude_latitude)
+                    // alert('您的位置：'+r.point.lng+','+r.point.lat);
                 }
-
-                function onError(data) {
-                    // 定位出错
+                else {
+                    alert('failed'+this.getStatus());
                 }
-            })
+            },{enableHighAccuracy: true})
         },
 
         mounted() {
@@ -213,8 +244,8 @@
                 width: innerWidth,
                 // autoplay: true,//可选选项，自动滑
                 // slidesPerView: 'auto',
-                observer:true,//修改swiper自己或子元素时，自动初始化swiper
-                observeParents:true,//修改swiper的父元素时，自动初始化swiper
+                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true,//修改swiper的父元素时，自动初始化swiper
             })
             let mySwiper = new Swiper('.swiper-container', {
                 // autoplay: true,//可选选项，自动滑
