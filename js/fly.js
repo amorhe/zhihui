@@ -63,9 +63,10 @@ function ajax(url, data = {}, type) {
 
 const Base_url = 'http://192.168.1.21'
 //所有轮播
-let bannerList = ajax(Base_url + '/api/allbanner/bannerlist')
+let bannerList = () => ajax(Base_url + '/api/allbanner/bannerlist')
 //分类
-let shopCatelist = ajax(Base_url + '/api/allshopcate/shopcatelist')
+let shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
 //分类下的店铺
-let storeList = (shopcate_id,longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id,longitude_latitude})
-let recommendList =(recommend) => ajax(Base_url + '/api/allstore/recommendlist',{recommend})
+let storeList = (shopcate_id, longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude})
+//小编推荐
+let recommendList = (recommend) => ajax(Base_url + '/api/allstore/recommendlist', {recommend})
