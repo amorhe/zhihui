@@ -72,3 +72,7 @@ const storeList = (shopcate_id, longitude_latitude) => ajax(Base_url + '/api/all
 const recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude})
 //商家推荐列表
 const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shopgoodslist' ,{longitude_latitude})
+//优惠底层图片和文案
+const discountList = () => ajax(Base_url + '/api/alldiscount/discountlist')
+//今日钜惠
+const todayDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldiscount/todydiscountlist',{longitude_latitude})

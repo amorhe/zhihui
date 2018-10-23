@@ -31,9 +31,12 @@
         <div class="swiper-container" id="shopCatelist">
             <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="i in cate">
-                    <div class="index_list_div" v-for="item in i" :key="item.id"
+                    <div class="index_list_div" v-for="item in i"
+                         :key="item.id"
                          @click="goTo('./business.html',item.id,longitude_latitude)">
-                        <img :src="`http://192.168.1.21/${item.images}`" alt="">
+                        <img
+                                :src="`http://192.168.1.21/${item.images}`"
+                                alt="">
                         <p>{{item.catename}}</p>
                     </div>
                 </div>
@@ -45,7 +48,7 @@
         <div class="day_recom_top">
             <p>小编推荐</p>
             <p>
-                <span @click="goTo('./todaySale.html','xbtj',longitude_latitude)">更多推荐</span>
+                <span @click="goTo('./recommened.html','xbtj',longitude_latitude)">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
@@ -99,20 +102,12 @@
     </div>
 
     <div class="index_mid">
-        <div>
-            <a href="#">
-                <div class="mask">今日钜惠</div>
-            </a>
-        </div>
-        <div>
-            <a href="#">
-                <div class="mask">狠优惠</div>
-            </a>
-        </div>
-        <div>
-            <a href="#">
-                <div class="mask">优惠商家</div>
-            </a>
+        <div :style="`background: url(http://192.168.1.21${v.images}) 0 0 / 100% 100% no-repeat;`"
+             v-for="(v,i) in discountList"
+             :key="v.id"
+             @click="goToDetail(i)"
+        >
+            <div class="mask">{{v.name}}</div>
         </div>
     </div>
 
@@ -155,6 +150,7 @@
             shopCateListData: [],
             recommendList: [],
             shopGoodList: [],
+            discountList: [],
             address: '',
             longitude_latitude: ''
         },
@@ -198,8 +194,19 @@
                     console.log(result)
                 }
             },
+            async getDiscountList() {
+                let result = await discountList()
+                if (result.code === 1) {
+                    console.log(result)
+                    this.discountList = result.data
+                }
+            },
             goTo(url, id, longitude_latitude) {
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}`)
+            },
+            goToDetail(i) {
+                const url = ['./todaySale.html', './todaySale.html', './todaySale.html']
+                this.goTo(url[i],'',this.longitude_latitude)
             },
             open3() {
                 this.$prompt('请输入', '发布', {
@@ -237,8 +244,6 @@
                     // alert('您的位置：'+r.point.lng+','+r.point.lat);
                     that.longitude_latitude = r.point.lng + ',' + r.point.lat
 
-                    that.getBanner();
-                    that.getShopCateList();
                     that.getRecommendList(that.longitude_latitude);
                     that.getShopGoodList(that.longitude_latitude);
                 }
@@ -246,6 +251,10 @@
                     alert('failed' + this.getStatus());
                 }
             }, {enableHighAccuracy: true})
+
+            this.getBanner();
+            this.getShopCateList();
+            this.getDiscountList();
 
         },
 
