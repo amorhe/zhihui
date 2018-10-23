@@ -32,7 +32,7 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="i in cate">
                     <div class="index_list_div" v-for="item in i" :key="item.id"
-                         @click="goTo(item.id,longitude_latitude)">
+                         @click="goTo('./business.html',item.id,longitude_latitude)">
                         <img :src="`http://192.168.1.21/${item.images}`" alt="">
                         <p>{{item.catename}}</p>
                     </div>
@@ -45,14 +45,14 @@
         <div class="day_recom_top">
             <p>小编推荐</p>
             <p>
-                <span>更多推荐</span>
+                <span @click="goTo('./todaySale.html','xbtj',longitude_latitude)">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
         <div class="day_recom_bottom">
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id">
+                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="gotTo()">
                         <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -74,7 +74,7 @@
         <div class="day_recom_top">
             <p>今日推荐</p>
             <p>
-                <span>更多推荐</span>
+                <span @click="goTo('./recommend.html','xbtj',longitude_latitude)">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
@@ -198,8 +198,8 @@
                     console.log(result)
                 }
             },
-            goTo(id, longitude_latitude) {
-                location.assign(`./business.html?id=${id}&longitude_latitude=${longitude_latitude}`)
+            goTo(url, id, longitude_latitude) {
+                location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}`)
             },
             open3() {
                 this.$prompt('请输入', '发布', {
@@ -252,8 +252,6 @@
         mounted() {
             let shopCatelist = new Swiper('#shopCatelist', {
                 width: innerWidth,
-                // autoplay: true,//可选选项，自动滑
-                // slidesPerView: 'auto',
                 observer: true,//修改swiper自己或子元素时，自动初始化swiper
                 observeParents: true,//修改swiper的父元素时，自动初始化swiper
             })
