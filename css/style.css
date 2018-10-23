@@ -26,12 +26,20 @@ html {max-width: 500px;
     font-size: .27rem;
 }
 .el-input {
-    width: 89.5%;
     height: .4rem;
+}
+.index_head>.el-input{
+    width: 70%;
 }
 .el-input input {
     height: 100%;
     border-radius: .5rem;
+}
+.el-message-box {
+    width: 80%;
+    position: fixed;
+    top: 30%;
+    left: 10%
 }
 .index_list {
     padding: .1rem .2rem;
@@ -44,10 +52,10 @@ html {max-width: 500px;
     margin-bottom: .2rem;
 }
 .index_list_div {
-    height: .71rem;
+    width: 25%;
+    height: .51rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 }
 .index_list_div>img {
@@ -129,7 +137,7 @@ html {max-width: 500px;
     background: url("http://img.juimg.com/tuku/yulantu/110124/292-1101241A32471.jpg") 0 0 / 100% 100% no-repeat;
 }
 .index_mid>div:nth-child(2){
-    background: url("http://img01.taopic.com/161124/240369-1611240KI410.jpg") 0 0 / 100% 100% no-repeat;
+    background: url("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4028995031,4033848463&fm=27&gp=0.jpg") 0 0 / 100% 100% no-repeat;
 }
 .index_mid>div:nth-child(3){
     background: url("http://pic40.nipic.com/20140403/8614226_162018219198_2.jpg") 0 0 / 100% 100% no-repeat;
