@@ -69,4 +69,5 @@ let shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
 //分类下的店铺
 let storeList = (shopcate_id, longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude})
 //小编推荐
-let recommendList = (recommend) => ajax(Base_url + '/api/allstore/recommendlist', {recommend})
+let recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude})
+//今日推荐
