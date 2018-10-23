@@ -63,11 +63,12 @@ function ajax(url, data = {}, type) {
 
 const Base_url = 'http://192.168.1.21'
 //所有轮播
-let bannerList = () => ajax(Base_url + '/api/allbanner/bannerlist')
+const bannerList = () => ajax(Base_url + '/api/allbanner/bannerlist')
 //分类
-let shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
+const shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
 //分类下的店铺
-let storeList = (shopcate_id, longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude})
+const storeList = (shopcate_id, longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude})
 //小编推荐
-let recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude})
-//今日推荐
+const recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude})
+//商家推荐列表
+const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shopgoodslist' ,{longitude_latitude})

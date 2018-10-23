@@ -56,6 +56,7 @@ html {max-width: 500px;
 .day_recom {
     padding: .15rem ;
     background: rgb(242,242,242);
+    margin-top: .1rem;
 }
 .day_recom_top {
     display: flex;
@@ -67,7 +68,7 @@ html {max-width: 500px;
     align-items: center;
 }
 .day_recom_swiper>.swiper-slide {
-    width: 72%;
+    /*width: 72%;*/
     display: flex;
 }
 .slide_img {
