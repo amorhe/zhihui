@@ -147,12 +147,12 @@
         methods: {
             async getBanner() {
                 let result
-                result = await bannerList
+                result = await bannerList()
                 console.log(result)
             },
             async getShopCateList() {
                 let result
-                result = await shopCatelist
+                result = await shopCatelist()
                 this.shopCateListData = result.data
                 console.log(result)
             },
