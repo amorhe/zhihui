@@ -42,21 +42,11 @@ html {max-width: 500px;
     left: 10%
 }
 .index_list {
-    padding: .1rem .2rem;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-content: space-between;
-    height: 1.4rem;
-    box-sizing: border-box;
-    margin-bottom: .2rem;
 }
 .index_list_div {
     width: 25%;
-    height: .51rem;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    display: inline-block;
+    text-align: center;
 }
 .index_list_div>img {
     width: .51rem;

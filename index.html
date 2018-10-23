@@ -28,9 +28,9 @@
 
     <div class="index_list">
         <div class="swiper-container" id="shopCatelist">
-            <div class="swiper-wrapper day_recom_swiper">
-                <div class="swiper-slide" v-for="i in (shopCateListData.length)%8">
-                    <div class="index_list_div" v-for="item in shopCateListData" :key="item.id">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="i in cate">
+                    <div class="index_list_div" v-for="item in i" :key="item.id">
                         <img :src="`http://192.168.1.21/${item.images}`" alt="">
                         <p>{{item.catename}}</p>
                     </div>
@@ -128,14 +128,16 @@
             cate() {
                 let arr = []
                 let arr2 = []
-                for (let i = 0; i < this.shopCateListData; i++) {
-                    this.shopCateListData.map(item => {
-                        arr2.push(item)
-                        if (arr2.length == 8) {
-                            arr = [...arr, ...arr2]
-                        }
-                    })
-                }
+                this.shopCateListData.forEach(c =>{
+                    if (arr2.length === 8){
+                        arr2 =[]
+                    }
+                    if (arr2.length === 0){
+                        arr.push(arr2)
+                    }
+                    arr2.push(c)
+                })
+                return arr
             }
         },
         methods: {
@@ -211,6 +213,8 @@
                 width: innerWidth,
                 // autoplay: true,//可选选项，自动滑
                 // slidesPerView: 'auto',
+                observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents:true,//修改swiper的父元素时，自动初始化swiper
             })
             let mySwiper = new Swiper('.swiper-container', {
                 // autoplay: true,//可选选项，自动滑
