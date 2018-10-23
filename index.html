@@ -9,32 +9,22 @@
     <link rel="stylesheet" href="iconfont/iconfont.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/swiper.min.css">
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.7&key=2e1bab005d970022580466031df7793a"></script>
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.7&key=2e1bab005d970022580466031df7793a"></script>
 </head>
 <body>
-<<<<<<< HEAD
 <div id="app">
     <div class="index_head">
-        <i class="iconfont icon-dingwei position_icon"></i>
+        <p v-if="address!=''">{{address}}</p>
+        <i v-else class="iconfont icon-dingwei position_icon"></i>
         <el-input
                 placeholder="输入商家名字、品类"
                 prefix-icon="el-icon-search">
         </el-input>
+        <el-button type="text" @click="open3">
+            <i class="iconfont icon-add"></i>
+        </el-button>
     </div>
-=======
-    <div id="app">
-        <div class="index_head">
-            <p v-if="address!=''">{{address}}</p>
-            <i v-else class="iconfont icon-dingwei position_icon"></i>
-            <el-input
-                    placeholder="输入商家名字、品类"
-                    prefix-icon="el-icon-search">
-            </el-input>
-            <el-button type="text" @click="open3">
-                <i class="iconfont icon-add"></i>
-            </el-button>
-        </div>
->>>>>>> origin/master
 
     <div class="index_list">
         <div class="swiper-container" id="shopCatelist">
@@ -72,8 +62,6 @@
                             </p>
                         </div>
                     </div>
-                    <!--<div class="swiper-slide">slider2</div>-->
-                    <!--<div class="swiper-slide">slider3</div>-->
                 </div>
             </div>
         </div>
@@ -131,21 +119,20 @@
 <!--<script src="js/jq.js"></script>-->
 <script>
     new Vue({
-<<<<<<< HEAD
         el: "#app",
         data: {
             shopCateListData: [],
+            address: ''
         },
-        computed() {
-            cate()
-            {
+        computed: {
+            cate() {
                 let arr = []
                 let arr2 = []
                 for (let i = 0; i < this.shopCateListData; i++) {
                     this.shopCateListData.map(item => {
                         arr2.push(item)
-                        if (arr2.length == 8){
-                            arr = [...arr,...arr2]
+                        if (arr2.length == 8) {
+                            arr = [...arr, ...arr2]
                         }
                     })
                 }
@@ -162,18 +149,32 @@
                 result = await shopCatelist
                 this.shopCateListData = result.data
                 console.log(result)
+            },
+            open3() {
+                this.$prompt('请输入', '发布', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+                    // inputErrorMessage: '邮箱格式不正确'
+                }).then(({value}) => {
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '你的邮箱是: ' + value
+                    // });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
             }
-=======
-        el:"#app",
-        data:{
-            address:''
         },
-        created(){
+        created() {
             var map = new AMap.Map('container', {
                 resizeEnable: true
             })
             var that = this;
-            map.plugin('AMap.Geolocation', function() {
+            map.plugin('AMap.Geolocation', function () {
                 var geolocation = new AMap.Geolocation({
                     // 是否使用高精度定位，默认：true
                     enableHighAccuracy: true,
@@ -191,18 +192,18 @@
                 AMap.event.addListener(geolocation, 'complete', onComplete)
                 AMap.event.addListener(geolocation, 'error', onError)
 
-                function onComplete (data) {
+                function onComplete(data) {
                     // data是具体的定位信息
                     console.log(data.addressComponent.district)
                     that.address = data.addressComponent.district;
                 }
 
-                function onError (data) {
+                function onError(data) {
                     // 定位出错
                 }
             })
->>>>>>> origin/master
         },
+
         mounted() {
             this.getBanner();
             this.getShopCateList()
@@ -215,32 +216,7 @@
                 // autoplay: true,//可选选项，自动滑
                 slidesPerView: 'auto',
             })
-<<<<<<< HEAD
         },
-=======
-
-        },
-        methods:{
-            open3() {
-                this.$prompt('请输入', '发布', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                    // inputErrorMessage: '邮箱格式不正确'
-                }).then(({ value }) => {
-                    // this.$message({
-                    //     type: 'success',
-                    //     message: '你的邮箱是: ' + value
-                    // });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '取消输入'
-                    });
-                });
-            }
-        }
->>>>>>> origin/master
     })
 </script>
 </html>
