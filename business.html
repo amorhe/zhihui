@@ -26,9 +26,9 @@
             </div>
             <div class="bus_down">
                 <!--<p>￥168</p>-->
-                <p>{{item.discount === '0' ? "暂无折扣" : item.discount+"%"}}</p>
+                <p>{{item.discount/10}}折</p>
                 <p>已售456</p>
-                <p>1km</p>
+                <p>{{item.distance}}km</p>
             </div>
         </div>
     </div>
@@ -50,6 +50,10 @@
             let id = this.GetQueryString('id')
             let longitude_latitude = this.GetQueryString('longitude_latitude')
             this.getStoreList(id,longitude_latitude)
+            //路由拦截。。。
+            if (id === null){
+                location.assign('./index.html')
+            }
         },
         methods: {
             back(){
