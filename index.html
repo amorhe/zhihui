@@ -46,7 +46,7 @@
         <div class="day_recom_top">
             <p>小编推荐</p>
             <p>
-                <span @click="goTo('./recommened.html','xbtj',longitude_latitude)">更多推荐</span>
+                <span @click="goTo('./morerecommendlist.html','xbtj',longitude_latitude)">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
@@ -228,12 +228,10 @@
                 }
             },
             async loadingMore() {
-                // alert($(document).height())
-                // console.log($(window).scrollTop() + $(window).height() + 350)
                 if (this.allLoaded === false) {
                     return
                 }
-                if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                if ($(window).scrollTop() + $(window).height() + 100 >= $(document).height()) {
                     // alert(1)
                     this.allLoaded = false
                     this.loading = true;
@@ -248,7 +246,6 @@
                             if (this.allSortList.length === result.data.total) {
                                 return
                             } else {
-
                                 this.loading_more = true
                                 this.allSortList = [...this.allSortList, ...result.data.data];
                             }
@@ -267,7 +264,7 @@
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}`)
             },
             goToDetail(i) {
-                const url = ['./todaySale.html', './sale.html', './todaySale.html']
+                const url = ['./todaySale.html', './sale.html', './business.html']
                 this.goTo(url[i], '', this.longitude_latitude)
             },
             open3() {

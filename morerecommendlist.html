@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>今日钜惠</title>
+    <title>小编推荐</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="iconfont/iconfont.css">
@@ -12,23 +12,20 @@
 <body>
 <div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()">
     <div class="pay_top">
-        <p class="iconfont icon-fanhui comeback" @click="back()"></p>
-        <p>今日钜惠</p>
+        <p class="iconfont icon-fanhui comeback"></p>
+        <p>小编推荐</p>
     </div>
 
-    <div class="today_ul" v-for="item in shopList" :key="item.goods_id" v-if="shopList.length !== item+1">
+    <div class="today_ul" v-for="item in shopList">
         <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
         <div>
             <div class="bus_top">
                 <p>{{item.shop_name}}</p>
             </div>
-            <p class="nowrap fontTen colorWrap"><span v-show="item.meal_name">[{{item.meal_name}}] </span> {{item.name}}
-            </p>
+            <p class="nowrap fontTen colorWrap">[{{item.address}}]</p>
             <div class="bus_down">
-                <p>￥{{item.amount_money}}起</p>
-                <p style="margin-left:.1rem;max-width: 1.4rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                    {{item.address}}</p>
-                <p style="text-align:right;flex-grow: 1">{{item.distance}}km</p>
+                <p>{{item.discount}}折起</p>
+                <p>{{item.distance}}km</p>
             </div>
         </div>
     </div>
@@ -79,18 +76,13 @@
                 return null;
             },
             async getStoreList(longitude_latitude, page) {
-                let result = await todayDiscountList(longitude_latitude, page)
+                let result = await MoreRecommendList(longitude_latitude, page)
                 if (result.code === 0) {
                     alert(result.message)
                 }
                 if (result.code === 1) {
                     console.log(result.data)
-                    let arr = []
-                    for (let i in result.data) {
-                        arr.push(result.data[i])
-                    }
-                    this.shopList = arr
-                    console.log(arr);
+                    this.shopList = result.data.data
                     if (this.shopList.length === result.data.total + 1) {
                         this.allLoaded = false
                     }
@@ -107,7 +99,7 @@
                     let result
                     if (this.loading_more) {
                         this.loading_more = false //禁止浏览器发送ajax请求
-                        result = await todayDiscountList(this.longitude_latitude, this.page)
+                        result = await MoreRecommendList(this.longitude_latitude, this.page)
                         if (result.code === 1) {//判断接受是否成功
                             this.loading = false
                             // console.log(this.allSortList.length, result.data.total)
@@ -116,12 +108,7 @@
                                 return
                             } else {
                                 this.loading_more = true
-                                let arr = []
-                                for (let i in result.data) {
-                                    arr.push(result.data[i])
-                                }
-                                this.shopList = arr
-                                this.shopList = [...this.shopList, ...arr];
+                                this.shopList = [...this.shopList, ...res.data.data];
                             }
                         } else {
                             setTimeout(() => {

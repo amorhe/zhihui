@@ -10,27 +10,31 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app">
-        <div class="pay_top">
-            <p class="iconfont icon-fanhui comeback" @click="back()"></p>
-            <p>狠优惠</p>
-        </div>
-
-        <div class="business_list recommend_list" v-for="item in shopList" :key="item.id">
-            <div>
-                <div class="bus_top">
-                    <p>{{item.shop_name}}</p>
-                    <p class="colorWrap">{{item.distribution}}</p>
-                </div>
-                <div class="bus_down">
-                    <p>{{item.discount/10}}折</p>
-                    <p>已售{{item.sold_num}}</p>
-                    <p>{{item.distance}}km</p>
-                </div>
-            </div>
-            <img style="float: right" :src="`http://192.168.1.21/${item.store_images}`" alt="">
-        </div>
+<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()">
+    <div class="pay_top">
+        <p class="iconfont icon-fanhui comeback" @click="back()"></p>
+        <p>狠优惠</p>
     </div>
+
+    <div class="business_list recommend_list" v-for="item in shopList" :key="item.id">
+        <div>
+            <div class="bus_top">
+                <p>{{item.shop_name}}</p>
+                <p class="colorWrap">{{item.distribution}}</p>
+            </div>
+            <div class="bus_down">
+                <p>{{item.discount/10}}折</p>
+                <p>已售{{item.sold_num}}</p>
+                <p>{{item.distance}}km</p>
+            </div>
+        </div>
+        <img style="float: right" :src="`http://192.168.1.21/${item.store_images}`" alt="">
+    </div>
+    <div style="width: 100%;text-align: center">
+        <span v-if="allLoaded" @click="loadingMore()">上拉加载更多</span>
+        <span v-else>没有更多了</span>
+    </div>
+</div>
 </body>
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
@@ -38,22 +42,66 @@
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
 <script src="js/fly.js"></script>
+<script src="js/jq.js"></script>
+
 <script>
-    new Vue({
+    let app = new Vue({
         el: "#app",
         data: {
-            shopList:[]
+            shopList: [],
+            page: 1,
+            longitude_latitude: '',
+            allLoaded: true,
+            loading: false,//判断是否加载数据
+            loading_more: true,//控制是否发送ajax请求
         },
         mounted() {
             let longitude_latitude = this.GetQueryString('longitude_latitude')
-            this.getStoreList(longitude_latitude)
+            this.longitude_latitude = longitude_latitude
+            setTimeout(() => {
+                this.getStoreList(longitude_latitude, this.page)
+            })
             //路由拦截。。。
-            if (longitude_latitude === null){
+            if (longitude_latitude === null) {
                 location.assign('./index.html')
             }
         },
         methods: {
-            back(){
+            async loadingMore() {
+                if (this.allLoaded === false) {
+                    return
+                }
+                if ($(window).scrollTop() + $(window).height() + 100 >= $(document).height()) {
+                    // alert(1)
+                    this.allLoaded = false
+                    this.loading = true;
+                    this.page++;
+                    let result
+                    if (this.loading_more) {
+                        this.loading_more = false //禁止浏览器发送ajax请求
+                        result = await firmDiscountList(this.longitude_latitude, this.page)
+                        if (result.code === 1) {//判断接受是否成功
+                            this.loading = false
+                            console.log(this.allSortList.length, result.data.total)
+                            if (this.allSortList.length === result.data.total) {
+                                return
+                            } else {
+
+                                this.loading_more = true
+                                this.shopList = [...this.shopList, ...result.data.data];
+                            }
+                        } else {
+                            setTimeout(() => {
+                                this.loading = false
+                                this.loading_more = true
+                            }, 1000)
+                        }
+                    } else {
+                        this.loading = false
+                    }
+                }
+            },
+            back() {
                 history.go(-1)
             },
             GetQueryString(name) {
@@ -62,14 +110,14 @@
                 if (r != null) return unescape(r[2]);
                 return null;
             },
-            async getStoreList(longitude_latitude) {
-                let result = await firmDiscountList(longitude_latitude)
+            async getStoreList(longitude_latitude, page) {
+                let result = await firmDiscountList(longitude_latitude, page)
                 if (result.code === 0) {
                     alert(result.message)
                 }
                 if (result.code === 1) {
                     console.log(result.data)
-                    this.shopList =  result.data
+                    this.shopList = result.data.data
                 }
             },
         }
