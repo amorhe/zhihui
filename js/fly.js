@@ -132,11 +132,11 @@ const shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
 
 //店铺套餐
 //套餐
-const allShopGoodList = (store_id,longitude_latitude,status) => ajax(Base_url + '/api/allshopgoods/shopgoodslis',{store_id,longitude_latitude,status})
+const allShopGoodList = (store_id,longitude_latitude,status = 1) => ajax(Base_url + '/api/allshopgoods/shopgoodslist',{store_id,longitude_latitude,status})
 
 //智能排序
 //排序
-const allSort = (sort_status, longitude_latitude, page = 2) => ajax(Base_url + '/api/allsort/sortlist', {sort_status, longitude_latitude, page})
+const allSort = (sort_status, longitude_latitude, page) => ajax(Base_url + '/api/allsort/sortlist', {sort_status, longitude_latitude, page})
 
 //分类下的店铺
 //店铺列表

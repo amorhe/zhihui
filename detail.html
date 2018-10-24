@@ -15,22 +15,22 @@
 <body>
 <div id="app">
     <section class="detail_head">
-        <p class="iconfont icon-fanhui back cursor_pointer"></p>
-        <img src="http://img1.3lian.com/2015/w22/87/d/105.jpg" alt="">
+        <p class="iconfont icon-fanhui back cursor_pointer" @click="back()"></p>
+        <img :src="`http://192.168.1.21/${detail.store_images}`" alt="">
     </section>
 
     <section class="address">
         <header>
-            轻食主义
+            {{detail.shop_name}}
         </header>
         <footer>
             <i class="iconfont icon-dingwei"></i>
             <div class="position_detail" @click="toMap()">
                 <p>
-                    申花路剑桥公社A座1楼
+                    {{detail.address}}
                 </p>
                 <p class="distance">
-                    距离您300米，步行需6分钟
+                    距离您{{detail.distance}}千米
                 </p>
             </div>
             <img src="iconfont/phone.svg" alt="">
@@ -41,15 +41,15 @@
         <header>
             预订
             <span>
-               <i class="el-icon-circle-check">支持</i>
-               <i class="el-icon-circle-check">2018人订过</i>
+               <!--<i class="el-icon-circle-check">支持</i>-->
+               <i class="el-icon-circle-check">{{detail.sold_num}}人订过</i>
             </span>
         </header>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="i in 7">
-                    今天
-                    <p>10-12</p>
+                <div class="swiper-slide" v-for="i in detail.week">
+                    {{i.slice(-3)}}
+                    <p>{{i.slice(0,-3)}}</p>
                 </div>
             </div>
         </div>
@@ -117,23 +117,56 @@
 
 </div>
 </body>
+<!-- 引入组件库 -->
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
 <script src="js/swiper.min.js"></script>
-<!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/fly.js"></script>
+<script src="js/jq.js"></script>
+
 <script>
-    new Vue({
+    let app = new Vue({
         el: "#app",
         data: {
+            status: '',
+            store_id: '',
             alert: false,
+            detail: {},
+            longitude_latitude: '',
+            page: 1,
+            allLoaded: true,
+            loading: false,//判断是否加载数据
+            loading_more: true,//控制是否发送ajax请求
         },
         mounted() {
             var mySwiper = new Swiper('.swiper-container', {
-                width:innerWidth,
-                slidesPerView : 6,
-                freeMode: true
+                width: innerWidth,
+                slidesPerView: 6,
+                freeMode: true,
+                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true,//修改swiper的父元素时，自动初始化swiper
             })
+
+            let store_id = this.GetQueryString('id')
+            this.store_id = store_id
+            let longitude_latitude = this.GetQueryString('longitude_latitude')
+            this.longitude_latitude = longitude_latitude
+            let status = this.GetQueryString('status')
+            if (status === undefined) {
+                status = 0
+            } else {
+                status = 1
+            }
+            this.status = status
+            setTimeout(() => {
+                this.getStoreList(this.store_id, this.longitude_latitude, this.status)
+            })
+            //路由拦截。。。
+            if (longitude_latitude === null) {
+                location.assign('./index.html')
+            }
         },
         methods: {
             toMap() {
@@ -141,7 +174,26 @@
             },
             toDetail() {
                 location.href = './room_booking.html'
-            }
+            },
+            back() {
+                history.go(-1)
+            },
+            GetQueryString(name) {
+                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                let r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            },
+            async getStoreList(store_id, longitude_latitude, status) {
+                let result = await allShopGoodList(store_id, longitude_latitude, status)
+                if (result.code === 0) {
+                    alert(result.message)
+                }
+                if (result.code === 1) {
+                    console.log(result.data)
+                    this.detail = result.data
+                }
+            },
         }
     })
 </script>

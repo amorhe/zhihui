@@ -53,7 +53,7 @@
         <div class="day_recom_bottom">
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo()">
+                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude)">
                         <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -75,7 +75,7 @@
         <div class="day_recom_top">
             <p>商家推荐</p>
             <p>
-                <span @click="goTo('./recommend.html','xbtj',longitude_latitude)">更多推荐</span>
+                <span @click="goTo('./recommend.html','xbtj',longitude_latitude,0)">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
@@ -260,8 +260,8 @@
                     }
                 }
             },
-            goTo(url, id, longitude_latitude) {
-                location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}`)
+            goTo(url, id, longitude_latitude,status) {
+                location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
             },
             goToDetail(i) {
                 const url = ['./todaySale.html', './sale.html', './business.html']
