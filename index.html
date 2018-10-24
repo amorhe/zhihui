@@ -9,11 +9,9 @@
     <link rel="stylesheet" href="iconfont/iconfont.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/swiper.min.css">
-    <script type="text/javascript"
-            src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd"></script>
 </head>
 <body>
-<div id="app" v-clock>
+<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()">
     <div id="allmap"></div>
     <div class="index_head">
         <p v-if="address!=''">{{address}}</p>
@@ -55,14 +53,14 @@
         <div class="day_recom_bottom">
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="gotTo()">
+                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo()">
                         <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
                             <p>{{item.address}}</p>
                             <p>
                                 <!--<span class="dollar colorRed">￥</span>-->
-                                <span class="colorRed">{{item.discount/10 +'折'}}</span>
+                                <span class="colorRed">{{item.discount}}折起</span>
                                 <!--<span class="through_span">￥188</span>-->
                                 <span class="dollar" style="float: right">{{item.distance}}km</span>
                             </p>
@@ -115,11 +113,11 @@
 
     <div class="index_bottom">
         <div class="index_foot">
-            <p @click="getAllSort(1,longitude_latitude)" :style="{'border-bottom': + index_foot[0] +'px solid #000'}">
+            <p @click="getAllSort(1,longitude_latitude,1)" :style="{'border-bottom': + index_foot[0] +'px solid #000'}">
                 离我最近</p>
-            <p @click="getAllSort(2,longitude_latitude)" :style="{'border-bottom': + index_foot[1] +'px solid #000'}">
+            <p @click="getAllSort(2,longitude_latitude,1)" :style="{'border-bottom': + index_foot[1] +'px solid #000'}">
                 折扣最高</p>
-            <p @click="getAllSort(3,longitude_latitude)" :style="{'border-bottom': + index_foot[2] +'px solid #000'}">
+            <p @click="getAllSort(3,longitude_latitude,1)" :style="{'border-bottom': + index_foot[2] +'px solid #000'}">
                 最新发布</p>
         </div>
 
@@ -135,19 +133,24 @@
                 <p class="list_price">已售{{item.sold_num}}</p>
             </div>
         </div>
+        <div style="width: 100%;text-align: center">
+            <span v-if="allLoaded">上拉加载更多</span>
+            <span v-else>没有更多了</span>
+        </div>
     </div>
 </div>
 </body>
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
 <!-- 引入组件库 -->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
 <script src="js/fly.js"></script>
-<!--<script src="js/jq.js"></script>-->
+<script src="js/jq.js"></script>
 <script>
-    new Vue({
+    let app = new Vue({
         el: "#app",
         data: {
             shopCateListData: [],
@@ -155,9 +158,14 @@
             shopGoodList: [],
             discountList: [],
             allSortList: [],
+            sort_status: 1,
+            sortPage: 1,
             index_foot: [1, 0, 0],
             address: '',
-            longitude_latitude: ''
+            longitude_latitude: '',
+            allLoaded: true,
+            loading: false,//判断是否加载数据
+            loading_more: true,//控制是否发送ajax请求
         },
         computed: {
             cate() {
@@ -188,14 +196,14 @@
             async getRecommendList(longitude_latitude) {
                 let result = await recommendList(longitude_latitude)
                 if (result.code === 1) {
-                    this.recommendList = result.data
+                    this.recommendList = result.data.data
                     console.log(result)
                 }
             },
             async getShopGoodList(longitude_latitude) {
                 let result = await shopGoodList(longitude_latitude)
                 if (result.code === 1) {
-                    this.shopGoodList = result.data
+                    this.shopGoodList = result.data.data
                     console.log(result)
                 }
             },
@@ -206,15 +214,53 @@
                     this.discountList = result.data
                 }
             },
-            async getAllSort(sort_status, longitude_latitude) {
-
+            async getAllSort(sort_status, longitude_latitude, page) {
+                this.allLoaded = true
+                this.sortPage = 1
                 this.index_foot = [0, 0, 0]
                 this.index_foot[sort_status - 1] = 1
+                this.sort_status = sort_status
 
-                let result = await allSort(sort_status, longitude_latitude)
+                let result = await allSort(sort_status, longitude_latitude, page)
                 if (result.code === 1) {
                     console.log(result)
-                    this.allSortList = result.data
+                    this.allSortList = result.data.data
+                }
+            },
+            async loadingMore() {
+                // alert($(document).height())
+                // console.log($(window).scrollTop() + $(window).height() + 350)
+                if (this.allLoaded === false) {
+                    return
+                }
+                if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                    // alert(1)
+                    this.allLoaded = false
+                    this.loading = true;
+                    this.sortPage++;
+                    let result
+                    if (this.loading_more) {
+                        this.loading_more = false //禁止浏览器发送ajax请求
+                        result = await allSort(this.sort_status, this.longitude_latitude, this.sortPage)
+                        if (result.code === 1) {//判断接受是否成功
+                            this.loading = false
+                            console.log(this.allSortList.length, result.data.total)
+                            if (this.allSortList.length === result.data.total) {
+                                return
+                            } else {
+
+                                this.loading_more = true
+                                this.allSortList = [...this.allSortList, ...result.data.data];
+                            }
+                        } else {
+                            setTimeout(() => {
+                                this.loading = false
+                                this.loading_more = true
+                            }, 1000)
+                        }
+                    } else {
+                        this.loading = false
+                    }
                 }
             },
             goTo(url, id, longitude_latitude) {
@@ -262,17 +308,18 @@
 
                     that.getRecommendList(that.longitude_latitude);
                     that.getShopGoodList(that.longitude_latitude);
-                    that.getAllSort(1, that.longitude_latitude)
+                    that.getAllSort(1, that.longitude_latitude, 1)
                 }
                 else {
                     alert('failed' + this.getStatus());
                 }
             }, {enableHighAccuracy: true})
 
-            this.getBanner();
-            this.getShopCateList();
-            this.getDiscountList();
-
+            setTimeout(() => {
+                this.getBanner();
+                this.getShopCateList();
+                this.getDiscountList();
+            })
         },
 
         mounted() {

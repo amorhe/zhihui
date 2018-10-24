@@ -1,7 +1,59 @@
 // 添加请求拦截器
+let form_data = new FormData();
+let loading
+function makeFormData(obj, form_data)
+{
+    var data = [];
+    if (obj instanceof File)
+    {
+        data.push({key: "", value: obj});
+    }
+    else if (obj instanceof Array )
+    {
+        for (var j=0,len=obj.length;j<len;j++)
+        {
+            var arr = makeFormData(obj[j]);
+            for (var k=0,l=arr.length;k<l;k++)
+            {
+                var key = !!form_data ? j+arr[k].key : "["+j+"]"+arr[k].key;
+                data.push({key: key, value: arr[k].value})
+            }
+        }
+    }
+    else if (typeof obj == 'object')
+    {
+        for (var j in obj)
+        {
+            var arr = makeFormData(obj[j]);
+            for (var k=0,l=arr.length;k<l;k++)
+            {
+                var key = !!form_data ? j+arr[k].key : "["+j+"]"+arr[k].key;
+                data.push({key: key, value: arr[k].value})
+            }
+        }
+    }
+    else
+    {
+        data.push({key: "", value: obj});
+    }
+    if (!!form_data)
+    {
+        // 封装
+        for (var i=0,len=data.length;i<len;i++)
+        {
+            form_data.append(data[i].key, data[i].value)
+        }
+    }
+    else
+    {
+        return data;
+    }
+}
+
 fly.interceptors.request.use((request) => {
     // 给所有请求添加自定义header
     // request.headers['X-Tag'] = 'flyio'
+    // request.headers['Content-Type'] = 'application/json'
     // 打印出请求体
     // console.log(request.body)
     // 终止请求
@@ -10,7 +62,12 @@ fly.interceptors.request.use((request) => {
     // return Promise.reject(new Error(""))
 
     // 可以显式返回request, 也可以不返回，没有返回值时拦截器中默认返回request
-    // wx.showLoading()
+    loading = app.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+    });
     return request
 })
 
@@ -19,6 +76,7 @@ fly.interceptors.response.use(
     (response) => {
         // 只将请求结果的data字段返回
         // wx.hideLoading()
+        loading.close()
         return response
     }, (err) => {
         // 发生网络错误后会走到这里
@@ -48,7 +106,8 @@ function ajax(url, data = {}, type) {
             promise = fly.get(url)
         } else {
             // 发送post请求
-            promise = fly.post(url, data)
+            makeFormData(data, form_data)
+            promise = fly.post(url, form_data)
         }
         promise.then(function (response) {
             // 成功了调用resolve()
@@ -79,4 +138,4 @@ const todayDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldisco
 //很优惠
 const firmDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldiscount/firmdiscountlist',{longitude_latitude})
 //智能排序
-const allSort = (sort_status,longitude_latitude) => ajax(Base_url + '/api/allsort/sortlist',{sort_status,longitude_latitude})
+const allSort = (sort_status,longitude_latitude,page=2) => ajax(Base_url + '/api/allsort/sortlist',{sort_status,longitude_latitude,page})

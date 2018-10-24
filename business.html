@@ -41,19 +41,10 @@
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
 <script src="js/fly.js"></script>
 <script>
-    new Vue({
+    let app = new Vue({
         el: "#app",
         data: {
             shopList:[]
-        },
-        mounted() {
-            let id = this.GetQueryString('id')
-            let longitude_latitude = this.GetQueryString('longitude_latitude')
-            this.getStoreList(id,longitude_latitude)
-            //路由拦截。。。
-            if (id === null){
-                location.assign('./index.html')
-            }
         },
         methods: {
             back(){
@@ -76,7 +67,18 @@
                     this.shopList =  result.data
                 }
             },
-        }
+        },
+        mounted() {
+            let id = this.GetQueryString('id')
+            let longitude_latitude = this.GetQueryString('longitude_latitude')
+            setTimeout(()=>{
+                this.getStoreList(id,longitude_latitude)
+            })
+            //路由拦截。。。
+            if (id === null){
+                location.assign('./index.html')
+            }
+        },
     })
 </script>
 </html>

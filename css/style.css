@@ -2,6 +2,10 @@
     display: none;
 }
 
+iframe{
+    display: none;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -305,6 +309,10 @@ html {max-width: 500px;
 .bus_down {
     display: flex;
     justify-content: space-between;
+}
+
+.bus_down > p{
+    flex-shrink: 0;
 }
 
 /*今日钜惠*/
