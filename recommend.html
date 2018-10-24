@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>今日推荐</title>
+    <title>商家推荐</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="iconfont/iconfont.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="app">
+<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()">
     <div class="pay_top">
         <p class="iconfont icon-fanhui comeback"></p>
-        <p>今日推荐</p>
+        <p>商家推荐</p>
     </div>
 
-    <div class="today_ul" v-for="item in 5">
-        <img src="http://t1.27270.com/uploads/tu/201810/198/8c4fcf8777.jpg" alt="">
+    <div class="today_ul" v-for="item in shopList">
+        <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
         <div>
             <div class="bus_top">
                 <p class="recomP">
-                    <span>养生SPA会所（诸暨店）</span>
-                    <span class="fontSm">300km</span>
+                    <span>{{item.shop_name}}）</span>
+                    <span class="fontSm">{{item.distance}}km</span>
                 </p>
             </div>
-            <p class="nowrap fontTen colorWrap">[高教文区]1个预定项目+3个优惠套餐卫计委考勤机</p>
+            <p class="nowrap fontTen colorWrap">[{{item.address}}]{{item.meal_name}}</p>
             <div class="bus_down">
-                <p>￥168起</p>
-                <p class="setNum">已售2018</p>
+                <p>￥{{item.amount_money}}起</p>
+                <p class="setNum">已售{{item.sold_num}}</p>
             </div>
         </div>
+    </div>
+    <div style="width: 100%;text-align: center">
+        <span v-if="allLoaded" @click="loadingMore()">上拉加载更多</span>
+        <span v-else>没有更多了</span>
     </div>
 </div>
 </body>
@@ -38,17 +42,88 @@
 <script src="js/font.js"></script>
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script>
-    new Vue({
-        el:"#app",
-        data:{
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/fly.js"></script>
+<script src="js/jq.js"></script>
 
+<script>
+    let app = new Vue({
+        el: "#app",
+        data: {
+            shopList: [],
+            longitude_latitude: '',
+            page: 1,
+            allLoaded: true,
+            loading: false,//判断是否加载数据
+            loading_more: true,//控制是否发送ajax请求
         },
         mounted() {
-
+            let longitude_latitude = this.GetQueryString('longitude_latitude')
+            this.longitude_latitude = longitude_latitude
+            setTimeout(() => {
+                this.getStoreList(longitude_latitude, this.page)
+            })
+            //路由拦截。。。
+            if (longitude_latitude === null) {
+                location.assign('./index.html')
+            }
         },
-        method:{
-
+        methods: {
+            back() {
+                history.go(-1)
+            },
+            GetQueryString(name) {
+                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                let r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            },
+            async getStoreList(longitude_latitude, page) {
+                let result = await moreShopGoodsList(longitude_latitude, page)
+                if (result.code === 0) {
+                    alert(result.message)
+                }
+                if (result.code === 1) {
+                    console.log(result.data)
+                    this.shopList = result.data.data
+                    if (this.shopList.length === result.data.total + 1) {
+                        this.allLoaded = false
+                    }
+                }
+            },
+            async loadingMore() {
+                if (this.allLoaded === false) {
+                    return
+                }
+                if ($(window).scrollTop() + $(window).height() + 10 >= $(document).height()) {
+                    this.allLoaded = false
+                    this.loading = true;
+                    this.page++;
+                    let result
+                    if (this.loading_more) {
+                        this.loading_more = false //禁止浏览器发送ajax请求
+                        result = await moreShopGoodsList(this.longitude_latitude, this.page)
+                        if (result.code === 1) {//判断接受是否成功
+                            this.loading = false
+                            // console.log(this.allSortList.length, result.data.total)
+                            if (this.shopList.length === result.data.total + 1) {
+                                console.log('没有更多数据')
+                                return
+                            } else {
+                                this.loading_more = true
+                                this.shopList = [...this.shopList, ...res.data.data];
+                            }
+                        } else {
+                            setTimeout(() => {
+                                this.loading = false
+                                this.loading_more = true
+                            }, 1000)
+                        }
+                    } else {
+                        this.loading = false
+                    }
+                }
+            },
         }
     })
 </script>

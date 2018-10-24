@@ -147,6 +147,8 @@ const recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/rec
 const MoreRecommendList = (longitude_latitude,page) => ajax(Base_url + '/api/allstore/morerecommendlist',{longitude_latitude,page})
 //商家推荐列表
 const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shopgoodslist', {longitude_latitude})
+//更多商家推荐列表
+const moreShopGoodsList = (longitude_latitude,page) => ajax(Base_url + '/api/allstore/moreshopgoodslist',{longitude_latitude,page})
 
 
 
