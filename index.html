@@ -13,7 +13,7 @@
             src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd"></script>
 </head>
 <body>
-<div id="app">
+<div id="app" v-clock>
     <div id="allmap"></div>
     <div class="index_head">
         <p v-if="address!=''">{{address}}</p>
@@ -115,17 +115,20 @@
 
     <div class="index_bottom">
         <div class="index_foot">
-            <p @click="getAllSort(1,longitude_latitude)">离我最近</p>
-            <p @click="getAllSort(2,longitude_latitude)">折扣最高</p>
-            <p @click="getAllSort(3,longitude_latitude)">最新发布</p>
+            <p @click="getAllSort(1,longitude_latitude)" :style="{'border-bottom': + index_foot[0] +'px solid #000'}">
+                离我最近</p>
+            <p @click="getAllSort(2,longitude_latitude)" :style="{'border-bottom': + index_foot[1] +'px solid #000'}">
+                折扣最高</p>
+            <p @click="getAllSort(3,longitude_latitude)" :style="{'border-bottom': + index_foot[2] +'px solid #000'}">
+                最新发布</p>
         </div>
 
         <div class="index_foot_list" v-for="item in allSortList">
-            <img  :src="`http://192.168.1.21/${item.store_images}`" alt="">
+            <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
             <div>
                 <p class="list_name">{{item.shop_name}}</p>
                 <p class="list_content">[{{item.address}}]</p>
-                <p class="list_price">{{item.discount/10}}折起</p>
+                <p class="list_price">{{item.discount}}折起</p>
             </div>
             <div class="align_self">
                 <p class="fontSm">{{item.distance}}km</p>
@@ -152,6 +155,7 @@
             shopGoodList: [],
             discountList: [],
             allSortList: [],
+            index_foot: [1, 0, 0],
             address: '',
             longitude_latitude: ''
         },
@@ -203,6 +207,10 @@
                 }
             },
             async getAllSort(sort_status, longitude_latitude) {
+
+                this.index_foot = [0, 0, 0]
+                this.index_foot[sort_status - 1] = 1
+
                 let result = await allSort(sort_status, longitude_latitude)
                 if (result.code === 1) {
                     console.log(result)
@@ -254,7 +262,7 @@
 
                     that.getRecommendList(that.longitude_latitude);
                     that.getShopGoodList(that.longitude_latitude);
-                    that.getAllSort(1,that.longitude_latitude)
+                    that.getAllSort(1, that.longitude_latitude)
                 }
                 else {
                     alert('failed' + this.getStatus());
