@@ -144,19 +144,21 @@ html {max-width: 500px;
 .index_foot_list {
     padding: .1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: .79rem;
     box-sizing: border-box;
     border-bottom: .01rem #ccc solid;
     background: rgb(238,238,238);
 }
 .index_foot_list>img {
+    float: left;
     width: .75rem;
     height: .54rem;
 }
 .index_foot_list>div {
     display: flex;
     flex-direction: column;
+    margin-left: .2rem;
     justify-content: space-between;
 }
 .list_name {
@@ -175,6 +177,7 @@ html {max-width: 500px;
 }
 .align_self {
     align-items: flex-end;
+    flex-grow: 1;
 }
 
 /*搜索*/

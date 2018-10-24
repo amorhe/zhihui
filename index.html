@@ -115,21 +115,21 @@
 
     <div class="index_bottom">
         <div class="index_foot">
-            <p>离我最近</p>
-            <p>折扣最高</p>
-            <p>最新发布</p>
+            <p @click="getAllSort(1,longitude_latitude)">离我最近</p>
+            <p @click="getAllSort(2,longitude_latitude)">折扣最高</p>
+            <p @click="getAllSort(3,longitude_latitude)">最新发布</p>
         </div>
 
-        <div class="index_foot_list" v-for="item in 3">
-            <img src="http://img3.redocn.com/tupian/20140911/qiaopimeinv_3058833.jpg" alt="">
+        <div class="index_foot_list" v-for="item in allSortList">
+            <img  :src="`http://192.168.1.21/${item.store_images}`" alt="">
             <div>
-                <p class="list_name">养生SPA会所（诸暨店）</p>
-                <p class="list_content">[高教文区]1个预定项目+3个优惠套餐···</p>
-                <p class="list_price">¥168起</p>
+                <p class="list_name">{{item.shop_name}}</p>
+                <p class="list_content">[{{item.address}}]</p>
+                <p class="list_price">{{item.discount/10}}折起</p>
             </div>
             <div class="align_self">
-                <p class="fontSm">300km</p>
-                <p class="list_price">已售2018</p>
+                <p class="fontSm">{{item.distance}}km</p>
+                <p class="list_price">已售{{item.sold_num}}</p>
             </div>
         </div>
     </div>
@@ -151,6 +151,7 @@
             recommendList: [],
             shopGoodList: [],
             discountList: [],
+            allSortList: [],
             address: '',
             longitude_latitude: ''
         },
@@ -201,12 +202,19 @@
                     this.discountList = result.data
                 }
             },
+            async getAllSort(sort_status, longitude_latitude) {
+                let result = await allSort(sort_status, longitude_latitude)
+                if (result.code === 1) {
+                    console.log(result)
+                    this.allSortList = result.data
+                }
+            },
             goTo(url, id, longitude_latitude) {
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}`)
             },
             goToDetail(i) {
                 const url = ['./todaySale.html', './sale.html', './todaySale.html']
-                this.goTo(url[i],'',this.longitude_latitude)
+                this.goTo(url[i], '', this.longitude_latitude)
             },
             open3() {
                 this.$prompt('请输入', '发布', {
@@ -246,6 +254,7 @@
 
                     that.getRecommendList(that.longitude_latitude);
                     that.getShopGoodList(that.longitude_latitude);
+                    that.getAllSort(1,that.longitude_latitude)
                 }
                 else {
                     alert('failed' + this.getStatus());

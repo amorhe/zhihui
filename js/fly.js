@@ -78,3 +78,5 @@ const discountList = () => ajax(Base_url + '/api/alldiscount/discountlist')
 const todayDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldiscount/todydiscountlist',{longitude_latitude})
 //很优惠
 const firmDiscountList = (longitude_latitude) => ajax(Base_url + '/api/alldiscount/firmdiscountlist',{longitude_latitude})
+//智能排序
+const allSort = (sort_status,longitude_latitude) => ajax(Base_url + '/api/allsort/sortlist',{sort_status,longitude_latitude})
