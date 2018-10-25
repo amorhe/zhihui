@@ -113,11 +113,11 @@
 
     <div class="index_bottom">
         <div class="index_foot">
-            <p @click="getAllSort(1,longitude_latitude,1)" :style="{'border-bottom': + index_foot[0] +'px solid #000'}">
+            <p @click="getAllSort(1,longitude_latitude,1)" :class="{'active':index_foot[0] === 1}">
                 离我最近</p>
-            <p @click="getAllSort(2,longitude_latitude,1)" :style="{'border-bottom': + index_foot[1] +'px solid #000'}">
+            <p @click="getAllSort(2,longitude_latitude,1)" :class="{'active':index_foot[1] === 1}">
                 折扣最高</p>
-            <p @click="getAllSort(3,longitude_latitude,1)" :style="{'border-bottom': + index_foot[2] +'px solid #000'}">
+            <p @click="getAllSort(3,longitude_latitude,1)" :class="{'active':index_foot[2] === 1}">
                 最新发布</p>
         </div>
 
