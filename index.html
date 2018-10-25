@@ -31,7 +31,7 @@
                 <div class="swiper-slide" v-for="i in cate">
                     <div class="index_list_div" v-for="item in i"
                          :key="item.id"
-                         @click="goTo('./business.html',item.id,longitude_latitude)">
+                         @click="goTo('./storelist.html',item.id,longitude_latitude)">
                         <img
                                 :src="`http://192.168.1.21/${item.images}`"
                                 alt="">

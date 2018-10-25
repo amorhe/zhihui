@@ -140,7 +140,7 @@ const allSort = (sort_status, longitude_latitude, page) => ajax(Base_url + '/api
 
 //分类下的店铺
 //店铺列表
-const storeList = (shopcate_id, longitude_latitude) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude})
+const storeList = (shopcate_id, longitude_latitude, page) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude, page})
 //小编推荐
 const recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude})
 //小编更多推荐
