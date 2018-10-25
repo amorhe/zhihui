@@ -184,7 +184,7 @@
         },
         methods: {
             toMap() {
-                location.href = `./map.html?longitude_latitude=${this.detail.longitude_latitude}`
+                location.href = `./map.html?longitude_latitude=${this.detail.longitude_latitude}&title=${encodeURIComponent(this.detail.address)}&content=${encodeURIComponent(this.detail.shop_name)}`
             },
             toDetail() {
                 location.href = './room_booking.html'

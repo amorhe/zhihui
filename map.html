@@ -19,14 +19,16 @@
         <p>地图</p>
     </div>
     <div id="allmap"></div>
-    <div class="bussiness_name">123</div>
-    <div class="address_detail">{{address}}</div>
+    <div class="bussiness_name">{{title}}</div>
+    <div class="address_detail">{{content}}</div>
     <ul>
-        <li>查看路线</li>
-        <li id="myMap">本机地图</li>
+        <li>
+            <a :href="`http://api.map.baidu.com/marker?location=${longitude_latitude[1]},${longitude_latitude[0]}&title=${title}&content=${content}&output=html`">查看路线</a>
+        </li>
+        <!--<li id="myMap">本机地图</li>-->
         <!--<a href="http://api.map.baidu.com/marker?location=31.2722620000,121.4375870000&title=%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%90%8C%E6%B5%8E%E5%8C%BB%E9%99%A2&content=%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%90%8C%E6%B5%8E%E5%8C%BB%E9%99%A2%E6%90%9C%E7%B4%A2%E5%91%A8%E8%BE%B9%E5%88%B0%E8%BF%99%E5%8C%BA%E5%90%8C%E6%B5%8E%E5%8C%BB%E9%99%A2&output=html">1</a>-->
-        <!--<a href="baidumap://map/direction?origin=中关村&destination=五道口&mode=driving&region=北京">a</a>-->
-        <li>报错</li>
+
+        <!--<li>报错</li>-->
     </ul>
 
 </div>
@@ -36,75 +38,59 @@
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-   let app = new Vue({
+    let app = new Vue({
         el: "#app",
         data: {
+            title: '',
+            content: '',
             address: '',
-            longitude_latitude:''
+            longitude_latitude: ''
         },
         mounted() {
             let longitude_latitude = this.GetQueryString('longitude_latitude')
-            this.longitude_latitude =longitude_latitude.split(',')
+            this.title = this.getRequest().title
+            this.content = this.getRequest().content
+            this.longitude_latitude = longitude_latitude.split(',')
             longitude_latitude = longitude_latitude.split(',')
-            var myMap = document.getElementById('myMap')
-            myMap.onclick = function () {
-                alert(1)
-                submitFn()
-            }
 
+            var myMap = document.getElementById('myMap')
             var that = this
             // 百度地图API功能
             var map = new BMap.Map("allmap");
             map.centerAndZoom(new BMap.Point(116.404, 39.915), 17);
-            // 添加带有定位的导航控件
-            var navigationControl = new BMap.NavigationControl({
-                // 靠左上角位置
-                anchor: BMAP_ANCHOR_TOP_LEFT,
-                // LARGE类型
-                type: BMAP_NAVIGATION_CONTROL_LARGE,
-                // 启用显示定位
-                enableGeolocation: true
-            });
-            map.addControl(navigationControl);
-            // 添加定位控件
-            var geolocationControl = new BMap.GeolocationControl();
-            geolocationControl.addEventListener("locationSuccess", function (e) {
-                // 定位成功事件
-                var address = '';
-                address += e.addressComponent.province;
-                address += e.addressComponent.city;
-                address += e.addressComponent.district;
-                address += e.addressComponent.street;
-                address += e.addressComponent.streetNumber;
-                that.address = address
-                // alert("当前定位地址为：" + address);
-            });
-            geolocationControl.addEventListener("locationError", function (e) {
-                // 定位失败事件
-                alert(e.message);
-            });
-            map.addControl(geolocationControl);
-
 
             // 用经纬度设置地图中心点
-            function theLocation(){
-                    map.clearOverlays();
-                    var new_point = new BMap.Point(longitude_latitude[0],longitude_latitude[1]);
-                    var marker = new BMap.Marker(new_point);  // 创建标注
-                    map.addOverlay(marker);              // 将标注添加到地图中
-                    map.panTo(new_point);
+            function theLocation() {
+                map.clearOverlays();
+                var new_point = new BMap.Point(...longitude_latitude);
+                var marker = new BMap.Marker(new_point);  // 创建标注
+                map.addOverlay(marker);              // 将标注添加到地图中
+                map.panTo(new_point);
             }
 
             theLocation()
         },
         methods: {
+            getRequest() {
+                var url = window.location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            },
             GetQueryString(name) {
                 let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
                 let r = window.location.search.substr(1).match(reg);
                 if (r != null) return unescape(r[2]);
                 return null;
-            },
-            back(){
+            }
+            ,
+            back() {
                 history.go(-1)
             }
         }
