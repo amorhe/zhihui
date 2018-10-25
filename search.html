@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-clock>
         <div class="index_head">
             <el-input class="elIn"
                     placeholder="输入商家名字、品类"
@@ -39,7 +39,7 @@
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-    new Vue({
+    let app = new Vue({
         el:"#app",
         data:{
 

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/swiper.min.css">
 </head>
 <body>
-<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()">
+<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
     <div id="allmap"></div>
     <div class="index_head">
         <p v-if="address!=''">{{address}}</p>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-clock>
         <div class="pay_top">
             <p class="iconfont icon-fanhui comeback"></p>
             <p>支付订单</p>
@@ -53,7 +53,7 @@
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-    var vm = new Vue({
+    let app = new Vue({
         el:"#app",
         data:{
             checked: 0

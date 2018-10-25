@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/room_booking.css">
 </head>
 <body>
-<div id="app">
+<div id="app" v-clock>
     <header class="pay_top room">
         <p class="iconfont icon-fanhui comeback"></p>
         <p>包房预订</p>
@@ -66,7 +66,7 @@
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-    new Vue({
+    let app = new Vue({
         el:"#app",
         data:{
 
@@ -74,7 +74,7 @@
         mounted() {
 
         },
-        method:{
+        methods:{
 
         }
     })
