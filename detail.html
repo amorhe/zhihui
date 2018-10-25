@@ -16,7 +16,7 @@
 <div id="app">
     <section class="detail_head">
         <p class="iconfont icon-fanhui back cursor_pointer" @click="back()"></p>
-        <img :src="`http://192.168.1.21/${detail.store_images}`" alt="">
+        <img v-if="detail.store_images" :src="`http://192.168.1.21/${detail.store_images}`" alt="">
     </section>
 
     <section class="address">
@@ -33,16 +33,18 @@
                     距离您{{detail.distance}}千米
                 </p>
             </div>
-            <img src="iconfont/phone.svg" alt="">
+            <a :href="`tel:${detail.phone}`">
+                <img src="iconfont/phone.svg" alt="">
+            </a>
         </footer>
     </section>
 
     <section class="booking">
         <header>
             预订
-            <span>
+            <span style="margin-right: .1rem">
                <!--<i class="el-icon-circle-check">支持</i>-->
-               <i class="el-icon-circle-check">{{detail.sold_num}}人订过</i>
+               <i class="el-icon-circle-check"> {{detail.sold_num}}人订过</i>
             </span>
         </header>
         <div class="swiper-container">
@@ -54,31 +56,31 @@
             </div>
         </div>
         <footer class="species">
-            <span>
-                小包（3-4人）
-            </span>
-            <span>
-                中包（6-8人）
-            </span>
-            <span>
-                大包（9-11人）
+            <span v-for="(v,i) in timeSel" @click="filterTime(v,i)" :class="{'active':i === selected}">
+               {{v === ''? '不限时' : v}}
             </span>
         </footer>
     </section>
 
     <section class="booking_money">
         <ul>
-            <li v-for="i in 3">
+            <li v-for="(v,i) in detail.shop_goods" :key="v.id" @click="showDetail(i)">
                 <div>
-                    11:30至10:00内，任选3小时
-                    <span>￥92</span>
+                    [{{v.rule === ''? '不限时' : v.rule}}]  {{v.meal_name}}
+                    <span>￥{{v.amount_money}}</span>
                 </div>
                 <a @click="alert = true">
                     预订
                 </a>
+
+                <el-collapse-transition>
+                    <section v-show="show3 === i">
+                        <p v-html="v.details"></p>
+                    </section>
+                </el-collapse-transition>
             </li>
             <li style="text-align: center">
-                更多 <i class="el-icon-arrow-down"></i>
+                <!--更多 <i class="el-icon-arrow-down"></i>-->
             </li>
         </ul>
     </section>
@@ -127,9 +129,15 @@
 <script src="js/jq.js"></script>
 
 <script>
+    function removeSameItem(arr) {
+        return Array.from(new Set(arr))
+    }
+
     let app = new Vue({
         el: "#app",
         data: {
+            show3:false,
+            selected:-1,
             status: '',
             store_id: '',
             alert: false,
@@ -139,6 +147,16 @@
             allLoaded: true,
             loading: false,//判断是否加载数据
             loading_more: true,//控制是否发送ajax请求
+        },
+        computed: {
+            timeSel() {
+                if (this.detail.shop_goods_time) {
+                    let arr = []
+                    arr = this.detail.shop_goods_time.map(item => item.rule)
+                    arr = removeSameItem(arr)
+                    return arr
+                }
+            }
         },
         mounted() {
             var mySwiper = new Swiper('.swiper-container', {
@@ -178,6 +196,17 @@
             back() {
                 history.go(-1)
             },
+            showDetail(i){
+                this.show3 = i
+            },
+            async filterTime(v,i) {
+                this.selected = i
+                await this.getStoreList(this.store_id, this.longitude_latitude, this.status)
+                if (this.detail.shop_goods) {
+                    this.detail.shop_goods = this.detail.shop_goods.filter(item => item.rule === v)
+                }
+
+            },
             GetQueryString(name) {
                 let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
                 let r = window.location.search.substr(1).match(reg);
@@ -196,6 +225,8 @@
             },
         }
     })
+
+
 </script>
 
 </html>

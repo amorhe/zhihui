@@ -260,7 +260,7 @@
                     }
                 }
             },
-            goTo(url, id, longitude_latitude,status) {
+            goTo(url, id, longitude_latitude, status) {
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
             },
             goToDetail(i) {
@@ -300,6 +300,7 @@
                     map.addOverlay(mk);
                     map.panTo(r.point);
                     that.address = r.address.city
+
                     // alert('您的位置：'+r.point.lng+','+r.point.lat);
                     that.longitude_latitude = r.point.lng + ',' + r.point.lat
 
