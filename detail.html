@@ -172,11 +172,6 @@
             let longitude_latitude = this.GetQueryString('longitude_latitude')
             this.longitude_latitude = longitude_latitude
             let status = this.GetQueryString('status')
-            if (status === undefined) {
-                status = 0
-            } else {
-                status = 1
-            }
             this.status = status
             setTimeout(() => {
                 this.getStoreList(this.store_id, this.longitude_latitude, this.status)

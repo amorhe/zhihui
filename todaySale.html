@@ -16,7 +16,7 @@
         <p>今日钜惠</p>
     </div>
 
-    <div class="today_ul" v-for="item in shopList" :key="item.goods_id" v-if="shopList.length !== item+1">
+    <div class="today_ul" v-for="item in shopList" :key="item.store_id" v-if="shopList.length !== item+1" @click="goTo('./detail.html',item.store_id,longitude_latitude,1)">
         <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
         <div>
             <div class="bus_top">
@@ -69,6 +69,9 @@
             }
         },
         methods: {
+            goTo(url, id, longitude_latitude, status) {
+                location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
+            },
             back() {
                 history.go(-1)
             },

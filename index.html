@@ -53,7 +53,7 @@
         <div class="day_recom_bottom">
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude)">
+                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
                         <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -82,7 +82,7 @@
         <div class="day_recom_bottom">
             <div class="swiper-container" id="shopGoodList">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in shopGoodList" :key="item.goods_id">
+                    <div class="swiper-slide" v-for="item in shopGoodList" :key="item.store_id" @click="goTo('./detail.html',item.store_id,longitude_latitude,0)">
                         <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -121,7 +121,7 @@
                 最新发布</p>
         </div>
 
-        <div class="index_foot_list" v-for="item in allSortList">
+        <div class="index_foot_list" v-for="item in allSortList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
             <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
             <div>
                 <p class="list_name">{{item.shop_name}}</p>
