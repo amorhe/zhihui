@@ -184,7 +184,7 @@
         },
         methods: {
             toMap() {
-                location.href = './map.html'
+                location.href = `./map.html?longitude_latitude=${this.detail.longitude_latitude}`
             },
             toDetail() {
                 location.href = './room_booking.html'
