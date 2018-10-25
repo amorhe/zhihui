@@ -125,6 +125,10 @@ const firmDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/all
 //优惠信息
 const informationDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/alldiscount/informationdiscountlist', {longitude_latitude, page})
 
+//搜索展示
+//热搜
+const hotSearchList = () => ajax(Base_url + '/api/allsearch/hotsearchlist')
+
 //所有分类
 //分类
 const shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
