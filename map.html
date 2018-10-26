@@ -18,7 +18,7 @@
         <p class="iconfont icon-fanhui comeback" @click="back()"></p>
         <p>地图</p>
     </div>
-    <div id="allmap"></div>
+    <!--<div id="allmap"></div>-->
     <div class="bussiness_name">{{title}}</div>
     <div class="address_detail">{{content}}</div>
     <ul>
@@ -88,8 +88,7 @@
                 let r = window.location.search.substr(1).match(reg);
                 if (r != null) return unescape(r[2]);
                 return null;
-            }
-            ,
+            },
             back() {
                 history.go(-1)
             }

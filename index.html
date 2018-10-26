@@ -12,7 +12,6 @@
 </head>
 <body>
 <div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
-    <div id="allmap"></div>
     <div class="index_head">
         <span>切换</span>
         <p v-if="address!=''">{{address}}</p>
@@ -165,7 +164,8 @@
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
 <!-- 引入组件库 -->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd&s=1"></script>
+<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd&s=1"></script>-->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
@@ -175,7 +175,7 @@
     let app = new Vue({
         el: "#app",
         data: {
-            baseImgUrl:ImgBaseUrl,
+            baseImgUrl: ImgBaseUrl,
             banner: [],
             shopCateListData: [],
             recommendList: [],
@@ -208,6 +208,12 @@
             }
         },
         methods: {
+            GetQueryString(name) {
+                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                let r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            },
             async getBanner() {
                 let result = await bannerList()
                 this.banner = result.data
@@ -292,6 +298,18 @@
                 const url = ['./todaySale.html', './sale.html', './business.html']
                 this.goTo(url[i], '', this.longitude_latitude)
             },
+            getRequest() {
+                var url = window.location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            },
             open3() {
                 this.$prompt('请输入', '发布', {
                     confirmButtonText: '确定',
@@ -312,36 +330,36 @@
             }
         },
         created() {
-            var that = this;
-            var map = new BMap.Map("allmap");
-            var point = new BMap.Point(116.331398, 39.897445);
-            map.centerAndZoom(point, 12);
+            let longitude = this.GetQueryString('latitude1')
+            let latitude = this.GetQueryString('longitude1')
+            this.longitude_latitude = latitude+','+longitude
+            this.address = decodeURI(this.getRequest().district)
+            console.log(this.longitude_latitude)
 
-            var geolocation = new BMap.Geolocation();
-            geolocation.getCurrentPosition(function (r) {
-                console.log(r)
-                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                    var mk = new BMap.Marker(r.point);
-                    map.addOverlay(mk);
-                    map.panTo(r.point);
-                    that.address = r.address.city
+            // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
 
-                    // alert('您的位置：'+r.point.lng+','+r.point.lat);
-                    that.longitude_latitude = r.point.lng + ',' + r.point.lat
-
-                    that.getRecommendList(that.longitude_latitude);
-                    that.getShopGoodList(that.longitude_latitude);
-                    that.getAllSort(1, that.longitude_latitude, 1)
-                }
-                else {
-                    alert('failed' + this.getStatus());
-                }
-            }, {enableHighAccuracy: true})
+            // var point = new BMap.Point(116.331398, 39.897445);
+            // var geolocation = new BMap.Geolocation();
+            // geolocation.getCurrentPosition(function (r) {
+            //     console.log(r)
+            //     if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            //         var mk = new BMap.Marker(r.point);
+            //         that.address = r.address.city
+            //         // alert('您的位置：'+r.point.lng+','+r.point.lat);
+            //         that.longitude_latitude = r.point.lng + ',' + r.point.lat
+            //     }
+            //     else {
+            //         alert('failed' + this.getStatus());
+            //     }
+            // }, {enableHighAccuracy: true})
 
             setTimeout(() => {
                 this.getBanner();
                 this.getShopCateList();
                 this.getDiscountList();
+                this.getRecommendList(this.longitude_latitude);
+                this.getShopGoodList(this.longitude_latitude);
+                this.getAllSort(1, this.longitude_latitude, 1)
             })
         },
 
