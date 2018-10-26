@@ -18,7 +18,7 @@ html {
 
 #app {
     color: #101010;
-    font-size: 14px;
+    font-size: .14rem;
 }
 
 .fontSm {
@@ -51,6 +51,7 @@ html {
 }
 
 .index_head .el-input input {
+    line-height: .3rem;
     height: .3rem;
     border-radius: .5rem;
 }
@@ -78,7 +79,7 @@ html {
 }
 
 .index_list_div > p {
-    font-size: 14px;
+    font-size: .14rem;
 }
 
 .index_list_div > img {
@@ -102,7 +103,7 @@ html {
 }
 
 .day_recom_top > p:nth-child(1) {
-    font-size: 16px;
+    font-size: .16rem;
     font-weight: bold;
 }
 
@@ -151,6 +152,7 @@ html {
 }
 
 .through_span {
+    font-size: .12rem;
     text-decoration: line-through;
     color: #bdbcbc;
 }
@@ -238,7 +240,7 @@ html {
 
 .list_content {
     color: #666;
-    font-size: 12px;
+    font-size: .12rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -335,7 +337,7 @@ html {
     display: flex;
     justify-content: space-between;
     margin: 0 .16rem;
-    border-bottom: 1px solid #e1e0e0;
+    border-bottom: .01rem solid #e1e0e0;
     height: .44rem;
     align-items: center;
 }
