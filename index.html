@@ -14,12 +14,16 @@
 <div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
     <div id="allmap"></div>
     <div class="index_head">
+        <span>切换</span>
         <p v-if="address!=''">{{address}}</p>
         <i v-else class="iconfont icon-dingwei position_icon"></i>
-        <el-input
-                placeholder="输入商家名字、品类"
-                prefix-icon="el-icon-search">
-        </el-input>
+        <form action="#" onsubmit="return false;">
+            <el-input
+                    type="search"
+                    placeholder="输入商家名字、品类"
+                    prefix-icon="el-icon-search">
+            </el-input>
+        </form>
         <el-button type="text" @click="open3">
             <i class="iconfont icon-add"></i>
         </el-button>
@@ -45,7 +49,7 @@
     <div class="banner_list" style="border-top: .1rem solid rgb(242, 242, 242);">
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"  v-for="item in banner"
+                <div class="swiper-slide" v-for="item in banner"
                      :key="item.id"
                 >
                     <div class="banner">
@@ -347,8 +351,8 @@
                 observeParents: true,//修改swiper的父元素时，自动初始化swiper
             })
             let banner = new Swiper('#banner', {
-                autoplay:true,
-                loop:true,
+                autoplay: true,
+                loop: true,
                 pagination: {
                     el: '.swiper-pagination',
                 },

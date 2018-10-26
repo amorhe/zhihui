@@ -36,24 +36,30 @@ html {
     box-sizing: border-box;
 }
 
+
+
 .position_icon {
     font-size: .27rem;
-}
-
-.el-input {
-    height: .4rem;
 }
 
 .index_head > .el-input {
     width: 70%;
 }
 
-.el-input input {
-    height: 100%;
+.index_head .el-input__icon{
+    line-height: .3rem;
+}
+
+.index_head .el-input input {
+    height: .3rem;
     border-radius: .5rem;
 }
 
-.el-message-box {
+.index_head .icon-add{
+    font-size: .24rem;
+}
+
+.index_head .el-message-box {
     width: 80%;
     position: fixed;
     top: 30%;
@@ -61,7 +67,7 @@ html {
 }
 
 .index_list {
-    padding: .1rem 0;
+    padding: 0 0 .1rem 0;
 }
 
 .index_list_div {
