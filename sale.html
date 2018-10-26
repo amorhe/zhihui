@@ -28,7 +28,7 @@
                 <p class="dollar">{{item.distance}}km</p>
             </div>
         </div>
-        <img style="float: right" :src="`http://192.168.1.21/${item.store_images}`" alt="">
+        <img style="float: right" :src="`${baseImgUrl}${item.store_images}`" alt="">
     </div>
     <div style="width: 100%;text-align: center">
         <span v-if="allLoaded" @click="loadingMore()">上拉加载更多</span>
@@ -48,6 +48,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            baseImgUrl:ImgBaseUrl,
             shopList: [],
             page: 1,
             longitude_latitude: '',

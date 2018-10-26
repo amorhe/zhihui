@@ -17,7 +17,7 @@
     </div>
 
     <div class="today_ul" v-for="item in shopList" :key="item.store_id" v-if="shopList.length !== item+1" @click="goTo('./detail.html',item.store_id,longitude_latitude,1)">
-        <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
+        <img :src="`${baseImgUrl}${item.store_images}`" alt="">
         <div>
             <div class="bus_top">
                 <p>{{item.shop_name}}</p>
@@ -50,6 +50,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            baseImgUrl:ImgBaseUrl,
             shopList: [],
             longitude_latitude: '',
             page: 1,

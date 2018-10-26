@@ -385,7 +385,7 @@ html {
 }
 
 .business_list > div {
-    width: 49%;
+    width: 57%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -394,6 +394,7 @@ html {
 
 .bus_top > p:nth-child(1) {
     font-size: .16rem;
+    font-weight: bold;
 }
 
 .colorWrap {

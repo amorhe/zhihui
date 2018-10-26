@@ -65,7 +65,7 @@
     <section class="booking_money">
         <ul>
             <li v-for="(v,i) in detail.shop_goods" :key="v.id" @click="showDetail(i)">
-                <img  style="height: .4rem" :src="`http://192.168.1.21/${v.meal_images}`" alt="">
+                <img  style="height: .4rem" :src="`${baseImgUrl}${v.meal_images}`" alt="">
                 <div>
                     [{{v.rule === ''? '不限时' : v.rule}}]  {{v.meal_name}}
                     <span>￥{{v.amount_money}}</span>
@@ -139,6 +139,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            baseImgUrl:ImgBaseUrl,
             show3:false,
             selected:-1,
             status: '',

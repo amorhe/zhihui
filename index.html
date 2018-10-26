@@ -37,7 +37,7 @@
                          :key="item.id"
                          @click="goTo('./storelist.html',item.id,longitude_latitude)">
                         <img
-                                :src="`http://192.168.1.21/${item.images}`"
+                                :src="`${baseImgUrl}${item.images}`"
                                 alt="">
                         <p>{{item.catename}}</p>
                     </div>
@@ -54,7 +54,7 @@
                 >
                     <div class="banner">
                         <img
-                                :src="`http://192.168.1.21/${item.images}`"
+                                :src="`${baseImgUrl}${item.images}`"
                                 alt="">
                     </div>
                 </div>
@@ -76,7 +76,7 @@
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
                     <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
-                        <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
+                        <img class="slide_img" :src="`${baseImgUrl}${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
                             <p>{{item.address}}</p>
@@ -105,7 +105,7 @@
             <div class="swiper-container" id="shopGoodList">
                 <div class="swiper-wrapper day_recom_swiper">
                     <div class="swiper-slide" v-for="item in shopGoodList" :key="item.store_id" @click="goTo('./detail.html',item.store_id,longitude_latitude,0)">
-                        <img class="slide_img" :src="`http://192.168.1.21/${item.store_images}`" alt="">
+                        <img class="slide_img" :src="`${baseImgUrl}${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
                             <p>{{item.meal_name}}</p>
@@ -144,7 +144,7 @@
         </div>
 
         <div class="index_foot_list" v-for="item in allSortList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
-            <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
+            <img :src="`${baseImgUrl}${item.store_images}`" alt="">
             <div>
                 <p class="list_name">{{item.shop_name}}</p>
                 <p class="list_content">[{{item.address}}]</p>
@@ -175,6 +175,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            baseImgUrl:ImgBaseUrl,
             banner: [],
             shopCateListData: [],
             recommendList: [],

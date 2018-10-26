@@ -109,7 +109,7 @@ function ajax(url, data = {}, type) {
     })
 }
 
-
+const ImgBaseUrl ='http://192.168.1.21'
 const Base_url = 'http://192.168.1.21'
 //所有轮播
 //列表广告

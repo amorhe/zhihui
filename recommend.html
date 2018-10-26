@@ -17,7 +17,7 @@
     </div>
 
     <div class="today_ul" v-for="item in shopList" @click="goTo('./detail.html',item.store_id,longitude_latitude,1)">
-        <img :src="`http://192.168.1.21/${item.store_images}`" alt="">
+        <img :src="`${baseImgUrl}${item.store_images}`" alt="">
         <div>
             <div class="bus_top">
                 <p class="recomP">
@@ -50,6 +50,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            baseImgUrl:ImgBaseUrl,
             shopList: [],
             longitude_latitude: '',
             page: 1,
@@ -88,7 +89,7 @@
                 }
                 if (result.code === 1) {
                     console.log(result.data)
-                    this.shopList = result.data.data
+                    this.shopList = result.data
                     if (this.shopList.length === result.data.total + 1) {
                         this.allLoaded = false
                     }
@@ -114,7 +115,7 @@
                                 return
                             } else {
                                 this.loading_more = true
-                                this.shopList = [...this.shopList, ...res.data.data];
+                                this.shopList = [...this.shopList, ...res.data];
                             }
                         } else {
                             setTimeout(() => {
