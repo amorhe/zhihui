@@ -109,8 +109,10 @@ function ajax(url, data = {}, type) {
     })
 }
 
-const ImgBaseUrl ='http://192.168.1.21'
-const Base_url = 'http://192.168.1.21'
+// const ImgBaseUrl ='http://192.168.1.21'
+const ImgBaseUrl ='https://shop.zhihuimall.com.cn:443/zhihuishop/public'
+// const Base_url = 'http://192.168.1.21'
+const Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php'
 //所有轮播
 //列表广告
 const bannerList = () => ajax(Base_url + '/api/allbanner/bannerlist')
