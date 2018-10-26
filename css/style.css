@@ -208,7 +208,7 @@ html {
     justify-content: flex-start;
     height: .79rem;
     box-sizing: border-box;
-    border-bottom: .01rem rgba(242,242,242,.9) solid;
+    border-bottom: .01rem rgba(242, 242, 242, .9) solid;
     /*background: rgb(238, 238, 238);*/
 }
 
@@ -232,14 +232,17 @@ html {
 
 .list_content {
     color: #666;
-    font-size: .1rem;
+    font-size: 12px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .list_price {
-    font-size: .13rem;
+    display: inline-block;
+    /*background: #c88749;*/
+    color: #c83f28;
+    font-size: .09rem;
 }
 
 .align_self {
@@ -396,6 +399,7 @@ html {
 
 .bus_down > p {
     flex-shrink: 0;
+
 }
 
 /*今日钜惠*/
@@ -448,4 +452,18 @@ html {
 
 .setNum {
     color: #666;
+}
+
+.banner_list {
+    background: rgb(242, 242, 242);
+    height: 1.64rem;
+    overflow: hidden;
+}
+
+.banner {
+    width: 100%;
+}
+
+.banner img {
+    width: 100%;
 }

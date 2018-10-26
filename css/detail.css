@@ -41,6 +41,7 @@ ul li {
 }
 
 .address > header {
+    font-weight: bold;
     font-size: .16rem;
     color: #101010;
 }
@@ -176,7 +177,7 @@ footer.species {
 }
 
 .bus_information footer img {
-    width: .1rem;
+    /*width: .1rem;*/
 }
 
 .background{
@@ -229,4 +230,5 @@ footer.species {
 .active{
     background: #ffa5a5 !important;
 }
+
 

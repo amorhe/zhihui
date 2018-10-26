@@ -42,6 +42,24 @@
         </div>
     </div>
 
+    <div class="banner_list" style="border-top: .1rem solid rgb(242, 242, 242);">
+        <div class="swiper-container" id="banner">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"  v-for="item in banner"
+                     :key="item.id"
+                >
+                    <div class="banner">
+                        <img
+                                :src="`http://192.168.1.21/${item.images}`"
+                                alt="">
+                    </div>
+                </div>
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
     <div class="day_recom">
         <div class="day_recom_top">
             <p>小编推荐</p>
@@ -130,7 +148,7 @@
             </div>
             <div class="align_self">
                 <p class="fontSm">{{item.distance}}km</p>
-                <p class="list_price">已售{{item.sold_num}}</p>
+                <p>已售{{item.sold_num}}</p>
             </div>
         </div>
         <div style="width: 100%;text-align: center">
@@ -153,6 +171,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            banner: [],
             shopCateListData: [],
             recommendList: [],
             shopGoodList: [],
@@ -186,6 +205,7 @@
         methods: {
             async getBanner() {
                 let result = await bannerList()
+                this.banner = result.data
                 console.log(result)
             },
             async getShopCateList() {
@@ -203,7 +223,7 @@
             async getShopGoodList(longitude_latitude) {
                 let result = await shopGoodList(longitude_latitude)
                 if (result.code === 1) {
-                    this.shopGoodList = result.data.data
+                    this.shopGoodList = result.data
                     console.log(result)
                 }
             },
@@ -322,6 +342,16 @@
 
         mounted() {
             let shopCatelist = new Swiper('#shopCatelist', {
+                width: innerWidth,
+                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true,//修改swiper的父元素时，自动初始化swiper
+            })
+            let banner = new Swiper('#banner', {
+                autoplay:true,
+                loop:true,
+                pagination: {
+                    el: '.swiper-pagination',
+                },
                 width: innerWidth,
                 observer: true,//修改swiper自己或子元素时，自动初始化swiper
                 observeParents: true,//修改swiper的父元素时，自动初始化swiper

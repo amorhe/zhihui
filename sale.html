@@ -23,9 +23,9 @@
                 <p class="colorWrap">{{item.distribution}}</p>
             </div>
             <div class="bus_down">
-                <p>{{item.discount/10}}折</p>
+                <p class="colorRed">{{item.discount/10}}折</p>
                 <p>已售{{item.sold_num}}</p>
-                <p>{{item.distance}}km</p>
+                <p class="dollar">{{item.distance}}km</p>
             </div>
         </div>
         <img style="float: right" :src="`http://192.168.1.21/${item.store_images}`" alt="">
