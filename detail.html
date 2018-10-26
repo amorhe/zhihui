@@ -76,7 +76,8 @@
                 </a>
 
                 <el-collapse-transition>
-                    <section v-show="show3 === i">
+                    <section v-show="show3 === i" style="border-top: .01rem solid #e6e6e6">
+                        <p style="float:right;font-weight: lighter;font-size: .12rem;color: #409eff">商品详情</p>
                         <p v-html="v.details"></p>
                     </section>
                 </el-collapse-transition>
