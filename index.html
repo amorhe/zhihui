@@ -13,7 +13,8 @@
 <body>
 <div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
     <div class="index_head">
-        <img src="https://shop.zhihuimall.com.cn/attachment/images/1604/2018/03/C71FPZt1FAr1nDkWs1o3O5s3RSwS1s.png" style="height: .2rem;" alt="">
+        <img src="https://shop.zhihuimall.com.cn/attachment/images/1604/2018/03/C71FPZt1FAr1nDkWs1o3O5s3RSwS1s.png"
+             style="height: .2rem;" alt="">
         <p v-if="address!=''">{{address}}</p>
         <i v-else class="iconfont icon-dingwei position_icon"></i>
         <form action="#" onsubmit="return false;">
@@ -26,23 +27,6 @@
         <el-button type="text" @click="open3">
             <i class="iconfont icon-add"></i>
         </el-button>
-    </div>
-
-    <div class="index_list">
-        <div class="swiper-container" id="shopCatelist">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="i in cate">
-                    <div class="index_list_div" v-for="item in i"
-                         :key="item.id"
-                         @click="goTo('./storelist.html',item.id,longitude_latitude)">
-                        <img
-                                :src="`${baseImgUrl}${item.images}`"
-                                alt="">
-                        <p>{{item.catename}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="banner_list" style="border-top: .1rem solid rgb(242, 242, 242);">
@@ -63,6 +47,23 @@
         </div>
     </div>
 
+    <div class="index_list">
+        <div class="swiper-container" id="shopCatelist">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="i in cate">
+                    <div class="index_list_div" v-for="item in i"
+                         :key="item.id"
+                         @click="goTo('./storelist.html',item.id,longitude_latitude)">
+                        <img
+                                :src="`${baseImgUrl}${item.images}`"
+                                alt="">
+                        <p>{{item.catename}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="day_recom">
         <div class="day_recom_top">
             <p>小编推荐</p>
@@ -74,7 +75,8 @@
         <div class="day_recom_bottom">
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
+                    <div class="swiper-slide" v-for="item in recommendList" :key="item.id"
+                         @click="goTo('./detail.html',item.id,longitude_latitude,1)">
                         <img class="slide_img" :src="`${baseImgUrl}${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -103,7 +105,8 @@
         <div class="day_recom_bottom">
             <div class="swiper-container" id="shopGoodList">
                 <div class="swiper-wrapper day_recom_swiper">
-                    <div class="swiper-slide" v-for="item in shopGoodList" :key="item.store_id" @click="goTo('./detail.html',item.store_id,longitude_latitude,0)">
+                    <div class="swiper-slide" v-for="item in shopGoodList" :key="item.store_id"
+                         @click="goTo('./detail.html',item.store_id,longitude_latitude,0)">
                         <img class="slide_img" :src="`${baseImgUrl}${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -121,7 +124,7 @@
     </div>
 
     <div class="index_mid">
-        <div :style="`background: url(http://192.168.1.21${v.images}) 0 0 / 100% 100% no-repeat;`"
+        <div :style="`background: url(${baseImgUrl}${v.images}) 0 0 / 100% 100% no-repeat;`"
              v-for="(v,i) in discountList"
              :key="v.id"
              @click="goToDetail(i)"
@@ -142,7 +145,8 @@
                 最新发布</p>
         </div>
 
-        <div class="index_foot_list" v-for="item in allSortList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
+        <div class="index_foot_list" v-for="item in allSortList" :key="item.id"
+             @click="goTo('./detail.html',item.id,longitude_latitude,1)">
             <img :src="`${baseImgUrl}${item.store_images}`" alt="">
             <div>
                 <p class="list_name">{{item.shop_name}}</p>
@@ -164,13 +168,12 @@
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
 <!-- 引入组件库 -->
-<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd&s=1"></script>-->
-<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
 <script src="js/fly.js"></script>
 <script src="js/jq.js"></script>
+<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <script>
     let app = new Vue({
         el: "#app",
@@ -330,36 +333,103 @@
             }
         },
         created() {
-            let longitude = this.GetQueryString('latitude1')
-            let latitude = this.GetQueryString('longitude1')
-            this.longitude_latitude = latitude+','+longitude
-            this.address = decodeURI(this.getRequest().district)
-            console.log(this.longitude_latitude)
+            let that = this
+            let jssdkconfig = decodeURI(this.getRequest().jssdkconfig)
+            localStorage.setItem('jsdk', jssdkconfig)
+            jssdkconfig = JSON.parse(jssdkconfig)
+            console.log(jssdkconfig.appId, jssdkconfig.timestamp, jssdkconfig.nonceStr, jssdkconfig.signature)
 
+            if (wx.setStorage) {
+                wx.setStorage({
+                    key: "jsdk",
+                    data: jssdkconfig
+                })
+            }
+
+
+            wx.config({
+                debug: true,
+                appId: jssdkconfig.appId,
+                timestamp: jssdkconfig.timestamp,
+                nonceStr: jssdkconfig.nonceStr,
+                signature: jssdkconfig.signature,
+                jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onVoiceRecordEnd',
+                    'playVoice',
+                    'onVoicePlayEnd',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+                ]
+            });
+            // alert(jssdkconfig)
+            wx.ready(function () {
+                wx.checkJsApi({
+                    jsApiList: [
+                        'getNetworkType',
+                        'previewImage',
+                        'getLocation'
+                    ],
+                    success: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+                wx.getLocation({
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        alert(JSON.stringify(res))
+                        // alert(localStorage.jsdk)
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+
+                        that.longitude_latitude = latitude + ',' + longitude
+                        that.getRecommendList(latitude + ',' + longitude);
+                        that.getShopGoodList(latitude + ',' + longitude);
+                        that.getAllSort(1, latitude + ',' + longitude, 1)
+                    }
+                });
+            })
+
+            wx.error(function (res) {
+                console.log(`err:${res}`)
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            });
             // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
-
-            // var point = new BMap.Point(116.331398, 39.897445);
-            // var geolocation = new BMap.Geolocation();
-            // geolocation.getCurrentPosition(function (r) {
-            //     console.log(r)
-            //     if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            //         var mk = new BMap.Marker(r.point);
-            //         that.address = r.address.city
-            //         // alert('您的位置：'+r.point.lng+','+r.point.lat);
-            //         that.longitude_latitude = r.point.lng + ',' + r.point.lat
-            //     }
-            //     else {
-            //         alert('failed' + this.getStatus());
-            //     }
-            // }, {enableHighAccuracy: true})
 
             setTimeout(() => {
                 this.getBanner();
                 this.getShopCateList();
                 this.getDiscountList();
-                this.getRecommendList(this.longitude_latitude);
-                this.getShopGoodList(this.longitude_latitude);
-                this.getAllSort(1, this.longitude_latitude, 1)
             })
         },
 
