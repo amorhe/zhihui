@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="iconfont/iconfont.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/map.css">
-    <script type="text/javascript"
-            src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd"></script>
+    <!--<script type="text/javascript"-->
+            <!--src="http://api.map.baidu.com/api?v=2.0&ak=RAKoveCQGYcBaEKFDYuk75OSqoWo1QXd"></script>-->
 </head>
 <body>
 <div id="app" v-clock>
@@ -22,6 +22,9 @@
     <div class="bussiness_name">{{title}}</div>
     <div class="address_detail">{{content}}</div>
     <ul>
+        <li id="checkJsApi">
+            123
+        </li>
         <li>
             <a :href="`http://api.map.baidu.com/marker?location=${longitude_latitude[1]},${longitude_latitude[0]}&title=${title}&content=${content}&output=html`">查看路线</a>
         </li>
@@ -33,10 +36,12 @@
 
 </div>
 </body>
+<!-- 引入组件库 -->
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
-<!-- 引入组件库 -->
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/jq.js"></script>
 <script>
     let app = new Vue({
         el: "#app",
@@ -47,28 +52,50 @@
             longitude_latitude: ''
         },
         mounted() {
+            wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '', // 必填，公众号的唯一标识
+                timestamp: '', // 必填，生成签名的时间戳
+                nonceStr: '', // 必填，生成签名的随机串
+                signature: '',// 必填，签名
+                jsApiList: [] // 必填，需要使用的JS接口列表
+            });
+
+            wx.ready(function () {
+                document.querySelector('#checkJsApi').onclick = function () {
+                    wx.openLocation({
+                        latitude: 23.099994,
+                        longitude: 113.324520,
+                        name: 'TIT 创意园',
+                        address: '广州市海珠区新港中路 397 号',
+                        scale: 14,
+                        infoUrl: 'http://weixin.qq.com'
+                    });
+                };
+            })
+
+
             let longitude_latitude = this.GetQueryString('longitude_latitude')
             this.title = this.getRequest().title
             this.content = this.getRequest().content
             this.longitude_latitude = longitude_latitude.split(',')
             longitude_latitude = longitude_latitude.split(',')
 
-            var myMap = document.getElementById('myMap')
-            var that = this
-            // 百度地图API功能
-            var map = new BMap.Map("allmap");
-            map.centerAndZoom(new BMap.Point(116.404, 39.915), 17);
-
-            // 用经纬度设置地图中心点
-            function theLocation() {
-                map.clearOverlays();
-                var new_point = new BMap.Point(...longitude_latitude);
-                var marker = new BMap.Marker(new_point);  // 创建标注
-                map.addOverlay(marker);              // 将标注添加到地图中
-                map.panTo(new_point);
-            }
-
-            theLocation()
+            // var myMap = document.getElementById('myMap')
+            // var that = this
+            // // 百度地图API功能
+            // var map = new BMap.Map("allmap");
+            // map.centerAndZoom(new BMap.Point(116.404, 39.915), 17);
+            //
+            // // 用经纬度设置地图中心点
+            // function theLocation() {
+            //     map.clearOverlays();
+            //     var new_point = new BMap.Point(...longitude_latitude);
+            //     var marker = new BMap.Marker(new_point);  // 创建标注
+            //     map.addOverlay(marker);              // 将标注添加到地图中
+            //     map.panTo(new_point);
+            // }
+            // theLocation()
         },
         methods: {
             getRequest() {
