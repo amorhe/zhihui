@@ -98,7 +98,8 @@ ul li {
 .swiper-slide {
     text-align: center;
     font-size: .12rem;
-    height: .44rem;
+    padding-top: .1rem;
+    padding-bottom: .1rem;
 }
 
 footer.species {

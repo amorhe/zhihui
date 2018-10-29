@@ -49,7 +49,7 @@
         </header>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="i in detail.week">
+                <div class="swiper-slide" :class="{'active':index === selected}" v-for="(i,index) in detail.week" @click="selectDate(index)">
                     {{i.slice(-3)}}
                     <p>{{i.slice(0,-3)}}</p>
                 </div>
@@ -140,6 +140,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            dataSelect:-1,
             jssdkconfig:'',
             baseImgUrl:ImgBaseUrl,
             show3:false,
@@ -211,7 +212,7 @@
                     })
                 }
                 wx.config({
-                    debug: true,
+                    debug: false,
                     appId: jssdkconfig.appId,
                     timestamp: jssdkconfig.timestamp,
                     nonceStr: jssdkconfig.nonceStr,
@@ -287,6 +288,9 @@
                 // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
 
             },
+			selectDate(index){
+				this.dataSelect = index
+			},
             toMap() {
                 let that = this
                 // location.href = `./map.html?longitude_latitude=${this.detail.longitude_latitude}&title=${encodeURIComponent(this.detail.address)}&content=${encodeURIComponent(this.detail.shop_name)}`
@@ -295,7 +299,7 @@
                     longitude: that.detail.longitude_latitude.split(',')[0] - 0, // 经度，浮点数，范围为180 ~ -180。
                     name: that.detail.shop_name, // 位置名
                     address: that.detail.address, // 地址详情说明
-                    scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+                    scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
                     infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
                 });
             },

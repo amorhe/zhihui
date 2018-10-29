@@ -29,7 +29,7 @@
         </el-button>
     </div>
 
-    <div class="banner_list" style="border-top: .1rem solid rgb(242, 242, 242);">
+    <div class="banner_list" style="border-bottom: .1rem solid rgb(242, 242, 242);">
         <div class="swiper-container" id="banner">
             <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="item in banner"
@@ -173,7 +173,8 @@
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
 <script src="js/fly.js"></script>
 <script src="js/jq.js"></script>
-<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
 <script>
     let jssdkconfig
     let app = new Vue({
@@ -220,28 +221,24 @@
                 return null;
             },
             async getWxConfig() {
+                // alert('getConfig')
                 let that = this
                 let url = window.location.href
                 console.log(url)
+                // alert(url)
                 let result = await wxConfig(url)
                 result = JSON.parse(result.data)
                 this.jssdkconfig = result
                 console.log(result)
                 jssdkconfig = this.jssdkconfig
+                // alert(JSON.stringify(jssdkconfig))
+
                 if (jssdkconfig){
-                    localStorage.setItem('jsdk', jssdkconfig)
                     console.log(jssdkconfig.appId, jssdkconfig.timestamp, jssdkconfig.nonceStr, jssdkconfig.signature)
                 }
 
-
-                if (wx.setStorage) {
-                    wx.setStorage({
-                        key: "jsdk",
-                        data: jssdkconfig
-                    })
-                }
                 wx.config({
-                    debug: true,
+                    debug: false,
                     appId: jssdkconfig.appId,
                     timestamp: jssdkconfig.timestamp,
                     nonceStr: jssdkconfig.nonceStr,
@@ -285,7 +282,7 @@
                         'openCard'
                     ]
                 });
-                // alert(jssdkconfig)
+
                 wx.ready(function () {
                     wx.checkJsApi({
                         jsApiList: [
