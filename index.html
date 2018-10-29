@@ -16,12 +16,14 @@
         <img src="https://shop.zhihuimall.com.cn/attachment/images/1604/2018/03/C71FPZt1FAr1nDkWs1o3O5s3RSwS1s.png"
              style="height: .2rem;" alt="">
         <p v-if="address!=''" style="font-size: .12rem">{{address}}</p>
-        <i v-else class="iconfont icon-dingwei position_icon"></i>
+        <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
         <form action="#" onsubmit="return false;">
             <el-input
                     type="search"
                     placeholder="输入商家名字、品类"
-                    prefix-icon="el-icon-search">
+                    prefix-icon="el-icon-search"
+                    @focus="goToSearch()"
+            >
             </el-input>
         </form>
         <el-button type="text" @click="open3">
@@ -214,6 +216,9 @@
             }
         },
         methods: {
+            goToSearch(){
+              location.assign('./search.html')
+            },
             GetQueryString(name) {
                 let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
                 let r = window.location.search.substr(1).match(reg);
@@ -221,21 +226,16 @@
                 return null;
             },
             async getWxConfig() {
-                // alert('getConfig')
+
                 let that = this
                 let url = window.location.href
                 console.log(url)
-                // alert(url)
+
                 let result = await wxConfig(url)
                 result = JSON.parse(result.data)
                 this.jssdkconfig = result
                 console.log(result)
                 jssdkconfig = this.jssdkconfig
-                // alert(JSON.stringify(jssdkconfig))
-
-                if (jssdkconfig) {
-                    console.log(jssdkconfig.appId, jssdkconfig.timestamp, jssdkconfig.nonceStr, jssdkconfig.signature)
-                }
 
                 wx.config({
                     debug: false,
@@ -301,7 +301,7 @@
                             // console.log(localStorage.jsdk)
                             var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-
+                            localStorage.longitude_latitude = longitude + ',' + latitude
                             that.longitude_latitude = longitude + ',' + latitude
                             that.getRecommendList(longitude + ',' + latitude);
                             that.getShopGoodList(longitude + ',' + latitude);
@@ -326,7 +326,7 @@
             async getDistrict(longitude_latitude) {
                 let result = await district(longitude_latitude)
                 this.address = result.result.ad_info.district
-                console.log(result)
+                console.log(result.result.ad_info.district)
             },
             async getShopCateList() {
                 let result = await shopCatelist()
@@ -440,6 +440,10 @@
         },
         created() {
             setTimeout(() => {
+                let uid = this.GetQueryString('uid')
+                localStorage.uid = uid
+                alert(localStorage.uid)
+
                 this.getBanner();
                 this.getShopCateList();
                 this.getDiscountList();

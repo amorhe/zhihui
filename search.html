@@ -10,29 +10,33 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app" v-clock>
-        <div class="index_head">
-            <el-input class="elIn"
-                    placeholder="输入商家名字、品类"
-                    prefix-icon="el-icon-search">
-            </el-input>
-            <span>取消</span>
-        </div>
+<div id="app" v-clock  @keyup.enter="getShopGoodsSearchList(search_key)">
+    <form action="#" onsubmit="return false;" class="index_head">
+        <el-input
+                type="text"  type="search"
+                placeholder="输入商家名字、品类"
+                prefix-icon="el-icon-search"
+                autofocus="true"
+                v-model="search_key"
+        >
+        </el-input>
+        <span>取消</span>
+    </form>
 
-        <div class="search_div">
-            <p>热门搜索</p>
-            <div>
-                <p v-for="item in hotSearchList">{{item.hot_words}}</p>
-            </div>
-        </div>
-
-        <div class="search_div">
-            <p>历史搜索</p>
-            <div>
-                <p v-for="item in 1">KTV会所</p>
-            </div>
+    <div class="search_div">
+        <p>热门搜索</p>
+        <div>
+            <p v-for="item in hotSearchList">{{item.hot_words}}</p>
         </div>
     </div>
+
+    <div class="search_div">
+        <p>历史搜索</p>
+        <div>
+            <p v-for="item in historysearchList">{{item}}</p>
+        </div>
+    </div>
+</div>
 </body>
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
@@ -45,7 +49,9 @@
     let app = new Vue({
         el: "#app",
         data: {
-            hotSearchList:[],
+            historysearchList:'',
+            search_key: '',
+            hotSearchList: [],
             shopList: [],
             page: 1,
             longitude_latitude: '',
@@ -66,6 +72,7 @@
                 if (r != null) return unescape(r[2]);
                 return null;
             },
+
             async getHotSearchList() {
                 let result = await hotSearchList()
                 if (result.code === 0) {
@@ -75,6 +82,24 @@
                     console.log(result.data)
                     this.hotSearchList = result.data
                 }
+            },
+            async getHistorySearchList() {
+                let uid = localStorage.uid
+                let result = await historySearchList(uid)
+                if (result.code === 0) {
+                    alert(result.message)
+                }
+                if (result.code === 1) {
+                    console.log(result.data)
+                    this.historysearchList = result.data
+                }
+            },
+            async getShopGoodsSearchList(search_key) {
+                alert(search_key)
+                let longitude_latitude = localStorage.longitude_latitude
+                let uid = localStorage.uid
+                let result = await shopGoodsSearchList(search_key, longitude_latitude, uid)
+                console.log(result)
             },
             async loadingMore() {
                 if (this.allLoaded === false) {
@@ -113,6 +138,7 @@
         mounted() {
             setTimeout(() => {
                 this.getHotSearchList()
+                this.getHistorySearchList()
             })
             //路由拦截。。。
         },

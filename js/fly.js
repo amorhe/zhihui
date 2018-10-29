@@ -139,6 +139,10 @@ const informationDiscountList = (longitude_latitude, page) => ajax(Base_url + '/
 //搜索展示
 //热搜
 const hotSearchList = () => ajax(Base_url + '/api/allsearch/hotsearchlist')
+//套餐搜索
+const shopGoodsSearchList =  (search_key,longitude_latitude,uid) => ajax(Base_url + '/api/allsearch/shopgoodssearchlist',{search_key,longitude_latitude,uid})
+//搜索历史
+const historySearchList = (uid) => ajax(Base_url + '/api/allsearch/historysearchlist',{uid})
 
 //所有分类
 //分类
