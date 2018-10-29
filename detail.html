@@ -49,7 +49,7 @@
         </header>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" :class="{'active':index === selected}" v-for="(i,index) in detail.week" @click="selectDate(index)">
+                <div class="swiper-slide" :class="{'active':index === dataSelect}" v-for="(i,index) in detail.week" @click="selectDate(index)">
                     {{i.slice(-3)}}
                     <p>{{i.slice(0,-3)}}</p>
                 </div>

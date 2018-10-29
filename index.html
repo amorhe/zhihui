@@ -15,7 +15,7 @@
     <div class="index_head">
         <img src="https://shop.zhihuimall.com.cn/attachment/images/1604/2018/03/C71FPZt1FAr1nDkWs1o3O5s3RSwS1s.png"
              style="height: .2rem;" alt="">
-        <p v-if="address!=''">{{address}}</p>
+        <p v-if="address!=''" style="font-size: .12rem">{{address}}</p>
         <i v-else class="iconfont icon-dingwei position_icon"></i>
         <form action="#" onsubmit="return false;">
             <el-input
@@ -180,7 +180,7 @@
     let app = new Vue({
         el: "#app",
         data: {
-            jssdkconfig:'',
+            jssdkconfig: '',
             baseImgUrl: ImgBaseUrl,
             banner: [],
             shopCateListData: [],
@@ -233,7 +233,7 @@
                 jssdkconfig = this.jssdkconfig
                 // alert(JSON.stringify(jssdkconfig))
 
-                if (jssdkconfig){
+                if (jssdkconfig) {
                     console.log(jssdkconfig.appId, jssdkconfig.timestamp, jssdkconfig.nonceStr, jssdkconfig.signature)
                 }
 
@@ -306,6 +306,7 @@
                             that.getRecommendList(longitude + ',' + latitude);
                             that.getShopGoodList(longitude + ',' + latitude);
                             that.getAllSort(1, longitude + ',' + latitude, 1)
+                            that.getDistrict(latitude + ',' + longitude)
                         }
                     });
                 })
@@ -320,6 +321,11 @@
             async getBanner() {
                 let result = await bannerList()
                 this.banner = result.data
+                console.log(result)
+            },
+            async getDistrict(longitude_latitude) {
+                let result = await district(longitude_latitude)
+                this.address = result.result.ad_info.district
                 console.log(result)
             },
             async getShopCateList() {

@@ -117,7 +117,10 @@ const ImgBaseUrl ='https://shop.zhihuimall.com.cn:443/zhihuishop/public'
 const Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php'
 
 //获取权限
-const wxConfig = (url) => ajax('https://shop.zhihuimall.com.cn/zhihuishop/public/index.php/api/allaccesstoken/tokenlist',{url})
+const wxConfig = (url) => ajax(Base_url + '/api/allaccesstoken/tokenlist',{url})
+//获取当前地址
+const district = (longitude_latitude) => ajax(Base_url + '/api/allaccesstoken/longlat',{longitude_latitude})
+
 
 //所有轮播
 //列表广告

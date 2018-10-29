@@ -30,7 +30,7 @@ html {
     width: 100%;
     height: .56rem;
     display: flex;
-    padding: 0 .2rem;
+    padding: 0 .1rem;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
