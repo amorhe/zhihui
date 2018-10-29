@@ -109,11 +109,15 @@ function ajax(url, data = {}, type) {
     })
 }
 
+
+
 // const ImgBaseUrl ='http://192.168.1.21'
 const ImgBaseUrl ='https://shop.zhihuimall.com.cn:443/zhihuishop/public'
 // const Base_url = 'http://192.168.1.21'
 const Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php'
 
+//获取权限
+const wxConfig = (url) => ajax('https://shop.zhihuimall.com.cn/zhihuishop/public/index.php/api/allaccesstoken/tokenlist',{url})
 
 //所有轮播
 //列表广告
@@ -157,6 +161,5 @@ const MoreRecommendList = (longitude_latitude,page) => ajax(Base_url + '/api/all
 const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shopgoodslist', {longitude_latitude})
 //更多商家推荐列表
 const moreShopGoodsList = (longitude_latitude,page) => ajax(Base_url + '/api/allstore/moreshopgoodslist',{longitude_latitude,page})
-
 
 
