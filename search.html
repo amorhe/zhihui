@@ -29,14 +29,14 @@
     <div class="search_div">
         <p>热门搜索</p>
         <div>
-            <p v-for="item in hotSearchList">{{item.hot_words}}</p>
+            <p v-for="item in hotSearchList" @click="goToSearch(item.hot_words)">{{item.hot_words}}</p>
         </div>
     </div>
     <div style="height: .08rem; background: #ededed;margin-top: .2rem"></div>
     <div class="" style="padding: .2rem .12rem 0;">
         <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete"></i></p>
         <div>
-            <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;" v-for="item in historysearchList">{{item.search_name}}</div>
+            <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;" v-for="item in historysearchList" @click="goToSearch(item.search_name)">{{item.search_name}}</div>
         </div>
     </div>
 </div>
