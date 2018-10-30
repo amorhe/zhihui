@@ -32,9 +32,9 @@
             <p v-for="item in hotSearchList" @click="goToSearch(item.hot_words)">{{item.hot_words}}</p>
         </div>
     </div>
-    <div style="height: .08rem; background: #ededed;margin-top: .2rem"></div>
-    <div class="" style="padding: .2rem .12rem 0;">
-        <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete"></i></p>
+    <div style="height: .08rem; background: #ededed;margin-top: .2rem" v-if="historysearchList"></div>
+    <div class="" style="padding: .2rem .12rem 0;" v-if="historysearchList">
+        <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete" @click="deleteHistoryList()"></i></p>
         <div>
             <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;"
                  v-for="item in historysearchList" @click="goToSearch(item.search_name)">{{item.search_name}}
@@ -102,6 +102,17 @@
                     this.historysearchList = result.data
                 }
             },
+            async deleteHistoryList(){
+                let uid = localStorage.uid
+                let result = await deleteHistory(uid)
+                if (result.code === 0) {
+                    alert(result.message)
+                }
+                if (result.code === 1) {
+                    console.log(result.data)
+                    this.historysearchList = []
+                }
+            }
 
         },
         mounted() {

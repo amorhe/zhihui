@@ -57,6 +57,10 @@ fly.interceptors.request.use((request) => {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
     });
+    //路由拦截
+    if(localStorage.uid === 'null'){
+        location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
+    }
     return request
 })
 
@@ -143,6 +147,8 @@ const hotSearchList = () => ajax(Base_url + '/api/allsearch/hotsearchlist')
 const shopGoodsSearchList =  (search_key,longitude_latitude,uid) => ajax(Base_url + '/api/allsearch/shopgoodssearchlist',{search_key,longitude_latitude,uid})
 //搜索历史
 const historySearchList = (uid) => ajax(Base_url + '/api/allsearch/historysearchlist',{uid})
+//删除搜索历史
+const deleteHistory = (uid) => ajax(Base_url + '/api/allsearch/delhistorysearchlist',{uid});
 
 //所有分类
 //分类
