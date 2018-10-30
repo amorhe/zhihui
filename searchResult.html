@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>搜索结果</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+</head>
+<body>
+<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
+    <h3 class="index_bottom_title">搜索结果</h3>
+    <div class="index_bottom">
+        <!--<div class="index_foot">-->
+            <!--<p @click="getAllSort(1,longitude_latitude,1)" :class="{'active':index_foot[0] === 1}">-->
+                <!--离我最近</p>-->
+            <!--<p @click="getAllSort(2,longitude_latitude,1)" :class="{'active':index_foot[1] === 1}">-->
+                <!--折扣最高</p>-->
+            <!--<p @click="getAllSort(3,longitude_latitude,1)" :class="{'active':index_foot[2] === 1}">-->
+                <!--最新发布</p>-->
+        <!--</div>-->
+        <div class="index_foot_list" v-for="item in allSortList" :key="item.id"
+             @click="goTo('./detail.html',item.id,longitude_latitude,1)">
+            <img :src="`${baseImgUrl}${item.store_images}`" alt="">
+            <div>
+                <p class="list_name">{{item.shop_name}}</p>
+                <p class="list_content">[{{item.address}}]</p>
+                <p class="list_price">{{item.discount}}折起</p>
+            </div>
+            <div class="align_self">
+                <p class="fontSm">{{item.distance}}km</p>
+                <p>已售{{item.sold_num}}</p>
+            </div>
+        </div>
+        <div style="width: 100%;text-align: center">
+            <span v-if="allLoaded">上拉加载更多</span>
+            <span v-else>没有更多了</span>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/fly.js"></script>
+<script src="js/jq.js"></script>
+<!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
+<script>
+    let jssdkconfig
+    let app = new Vue({
+        el: "#app",
+        data: {
+            jssdkconfig: '',
+            baseImgUrl: ImgBaseUrl,
+            allSortList: [],
+            sort_status: 1,
+            sortPage: 1,
+            index_foot: [1, 0, 0],
+            address: '',
+            longitude_latitude: '',
+            allLoaded: true,
+            loading: false,//判断是否加载数据
+            loading_more: true,//控制是否发送ajax请求
+        },
+        computed: {
+            cate() {
+                let arr = []
+                let arr2 = []
+                this.shopCateListData.forEach(c => {
+                    if (arr2.length === 8) {
+                        arr2 = []
+                    }
+                    if (arr2.length === 0) {
+                        arr.push(arr2)
+                    }
+                    arr2.push(c)
+                })
+                return arr
+            }
+        },
+        methods: {
+            goToSearch(){
+              location.assign('./search.html')
+            },
+            GetQueryString(name) {
+                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                let r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            },
+            async getShopGoodsSearchList() {
+                let search_key = this.getRequest().search_key
+                let longitude_latitude = localStorage.longitude_latitude
+                let uid = localStorage.uid
+                let result = await shopGoodsSearchList(search_key, longitude_latitude, uid)
+                this.allSortList = result.data
+                console.log(result)
+            },
+            async loadingMore() {
+                if (this.allLoaded === false) {
+                    return
+                }
+                if ($(window).scrollTop() + $(window).height() + 100 >= $(document).height()) {
+                    // console.log(1)
+                    this.allLoaded = false
+                    this.loading = true;
+                    this.sortPage++;
+                    let result
+                    if (this.loading_more) {
+                        this.loading_more = false //禁止浏览器发送ajax请求
+                        result = await allSort(this.sort_status, this.longitude_latitude, this.sortPage)
+                        if (result.code === 1) {//判断接受是否成功
+                            this.loading = false
+                            console.log(this.allSortList.length, result.data.total)
+                            if (this.allSortList.length === result.data.total) {
+                                return
+                            } else {
+                                this.loading_more = true
+                                this.allSortList = [...this.allSortList, ...result.data.data];
+                            }
+                        } else {
+                            setTimeout(() => {
+                                this.loading = false
+                                this.loading_more = true
+                            }, 1000)
+                        }
+                    } else {
+                        this.loading = false
+                    }
+                }
+            },
+            goTo(url, id, longitude_latitude, status) {
+                location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
+            },
+            getRequest() {
+                var url = window.location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            },
+        },
+        created() {
+            setTimeout(() => {
+                this.getShopGoodsSearchList()
+            })
+        },
+
+        mounted() {
+
+        },
+    })
+</script>
+</html>

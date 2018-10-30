@@ -10,18 +10,21 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="app" v-clock  @keyup.enter="getShopGoodsSearchList(search_key)">
+<div id="app" v-clock  @keyup.enter="goToSearch(search_key)">
     <form action="#" onsubmit="return false;" class="index_head">
         <el-input
+                style="width: 3.03rem;"
                 type="text"  type="search"
-                placeholder="输入商家名字、品类"
+                placeholder="输入套餐名称"
                 prefix-icon="el-icon-search"
                 autofocus="true"
                 v-model="search_key"
         >
         </el-input>
-        <span>取消</span>
+        <span @click="`${window.history.go(-1)}`">取消</span>
     </form>
+
+    <div style="height: .01rem; background: #c3c3c3"></div>
 
     <div class="search_div">
         <p>热门搜索</p>
@@ -29,11 +32,11 @@
             <p v-for="item in hotSearchList">{{item.hot_words}}</p>
         </div>
     </div>
-
-    <div class="search_div">
-        <p>历史搜索</p>
+    <div style="height: .08rem; background: #ededed;margin-top: .2rem"></div>
+    <div class="" style="padding: .2rem .12rem 0;">
+        <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete"></i></p>
         <div>
-            <p v-for="item in historysearchList">{{item}}</p>
+            <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;" v-for="item in historysearchList">{{item.search_name}}</div>
         </div>
     </div>
 </div>
@@ -66,6 +69,9 @@
             goTo(url, id, longitude_latitude, status) {
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
             },
+            goToSearch(search_key){
+                location.assign(`./searchResult.html?search_key=${search_key}`)
+            },
             GetQueryString(name) {
                 let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
                 let r = window.location.search.substr(1).match(reg);
@@ -94,46 +100,7 @@
                     this.historysearchList = result.data
                 }
             },
-            async getShopGoodsSearchList(search_key) {
-                alert(search_key)
-                let longitude_latitude = localStorage.longitude_latitude
-                let uid = localStorage.uid
-                let result = await shopGoodsSearchList(search_key, longitude_latitude, uid)
-                console.log(result)
-            },
-            async loadingMore() {
-                if (this.allLoaded === false) {
-                    return
-                }
-                if ($(window).scrollTop() + $(window).height() + 100 >= $(document).height()) {
-                    // alert(1)
-                    this.allLoaded = false
-                    this.loading = true;
-                    this.page++;
-                    let result
-                    if (this.loading_more) {
-                        this.loading_more = false //禁止浏览器发送ajax请求
-                        result = await informationDiscountList(this.longitude_latitude, this.page)
-                        if (result.code === 1) {//判断接受是否成功
-                            this.loading = false
-                            if (this.shopList.length === result.data.total) {
-                                return
-                            } else {
 
-                                this.loading_more = true
-                                this.shopList = [...this.shopList, ...result.data];
-                            }
-                        } else {
-                            setTimeout(() => {
-                                this.loading = false
-                                this.loading_more = true
-                            }, 1000)
-                        }
-                    } else {
-                        this.loading = false
-                    }
-                }
-            },
         },
         mounted() {
             setTimeout(() => {

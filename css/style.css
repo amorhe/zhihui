@@ -272,21 +272,25 @@ html {
 }
 
 .search_div > p {
-    color: #6c6c6c;
+    font-weight: bold;
+    color: #0f0f0f;
 }
 
 .search_div > div {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .search_div > div p {
     width: .7rem;
-    height: .2rem;
+    height: .3rem;
     background: #eaeaea;
     text-align: center;
-    line-height: .2rem;
+    line-height: .3rem;
     font-size: .12rem;
     margin: .1rem .16rem 0;
+    border-radius: .08rem;
+    color: #000;
 }
 
 .comeback {

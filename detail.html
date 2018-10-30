@@ -49,7 +49,8 @@
         </header>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" :class="{'active':index === dataSelect}" v-for="(i,index) in detail.week" @click="selectDate(index)">
+                <div class="swiper-slide" :class="{'active':index === dataSelect}" v-for="(i,index) in detail.week"
+                     @click="selectDate(index)">
                     {{i.slice(-3)}}
                     <p>{{i.slice(0,-3)}}</p>
                 </div>
@@ -65,9 +66,9 @@
     <section class="booking_money">
         <ul>
             <li v-for="(v,i) in detail.shop_goods" :key="v.id" @click="showDetail(i)">
-                <img  style="height: .4rem" :src="`${baseImgUrl}${v.meal_images}`" alt="">
+                <img style="height: .4rem" :src="`${baseImgUrl}${v.meal_images}`" alt="">
                 <div>
-                    [{{v.rule === ''? '不限时' : v.rule}}]  {{v.meal_name}}
+                    [{{v.rule === ''? '不限时' : v.rule}}] {{v.meal_name}}
                     <span>￥{{v.amount_money}}</span>
                 </div>
                 <!--<a @click="alert = true">-->
@@ -96,12 +97,12 @@
         <footer v-html="detail.content">
             <!--营业时间：<span>周一至周日 11:30-02:00</span>-->
             <!--<p>-->
-               <!--<span>-->
-                    <!--<img src="iconfont/bus.svg" alt=""> 免费停车-->
-               <!--</span>-->
-                <!--<span>-->
-                    <!--<img src="iconfont/wifi.svg" alt=""> wi-fi-->
-               <!--</span>-->
+            <!--<span>-->
+            <!--<img src="iconfont/bus.svg" alt=""> 免费停车-->
+            <!--</span>-->
+            <!--<span>-->
+            <!--<img src="iconfont/wifi.svg" alt=""> wi-fi-->
+            <!--</span>-->
             <!--</p>-->
         </footer>
     </section>
@@ -136,15 +137,16 @@
     function removeSameItem(arr) {
         return Array.from(new Set(arr))
     }
+
     let jssdkconfig
     let app = new Vue({
         el: "#app",
         data: {
-            dataSelect:-1,
-            jssdkconfig:'',
-            baseImgUrl:ImgBaseUrl,
-            show3:false,
-            selected:-1,
+            dataSelect: -1,
+            jssdkconfig: '',
+            baseImgUrl: ImgBaseUrl,
+            show3: false,
+            selected: -1,
             status: '',
             store_id: '',
             alert: false,
@@ -176,16 +178,13 @@
 
             let store_id = this.GetQueryString('id')
             this.store_id = store_id
-            let longitude_latitude = this.GetQueryString('longitude_latitude')
-            this.longitude_latitude = longitude_latitude
             let status = this.GetQueryString('status')
             this.status = status
             setTimeout(() => {
-                this.getStoreList(this.store_id, this.longitude_latitude, this.status)
-                this.getWxConfig()
+                that.getWxConfig()
             })
             //路由拦截。。。
-            if (longitude_latitude === null) {
+            if (this.longitude_latitude === null) {
                 location.assign('./index.html')
             }
         },
@@ -199,18 +198,11 @@
                 this.jssdkconfig = result
                 console.log(result)
                 jssdkconfig = this.jssdkconfig
-                if (jssdkconfig){
+                if (jssdkconfig) {
                     localStorage.setItem('jsdk', jssdkconfig)
                     console.log(jssdkconfig.appId, jssdkconfig.timestamp, jssdkconfig.nonceStr, jssdkconfig.signature)
                 }
 
-
-                if (wx.setStorage) {
-                    wx.setStorage({
-                        key: "jsdk",
-                        data: jssdkconfig
-                    })
-                }
                 wx.config({
                     debug: false,
                     appId: jssdkconfig.appId,
@@ -275,8 +267,10 @@
                             // alert(localStorage.jsdk)
                             var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-
                             that.longitude_latitude = longitude + ',' + latitude
+
+
+                            that.getStoreList(that.store_id, that.longitude_latitude, that.status)
                         }
                     });
                 })
@@ -288,9 +282,9 @@
                 // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
 
             },
-			selectDate(index){
-				this.dataSelect = index
-			},
+            selectDate(index) {
+                this.dataSelect = index
+            },
             toMap() {
                 let that = this
                 // location.href = `./map.html?longitude_latitude=${this.detail.longitude_latitude}&title=${encodeURIComponent(this.detail.address)}&content=${encodeURIComponent(this.detail.shop_name)}`
@@ -309,10 +303,10 @@
             back() {
                 history.go(-1)
             },
-            showDetail(i){
+            showDetail(i) {
                 this.show3 = i
             },
-            async filterTime(v,i) {
+            async filterTime(v, i) {
                 this.selected = i
                 await this.getStoreList(this.store_id, this.longitude_latitude, this.status)
                 if (this.detail.shop_goods) {

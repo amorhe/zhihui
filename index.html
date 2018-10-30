@@ -306,6 +306,7 @@
                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                             localStorage.longitude_latitude = longitude + ',' + latitude
                             that.longitude_latitude = longitude + ',' + latitude
+                            localStorage.setItem('longitude_latitude',that.longitude_latitude)
                             that.getRecommendList(longitude + ',' + latitude);
                             that.getShopGoodList(longitude + ',' + latitude);
                             that.getAllSort(1, longitude + ',' + latitude, 1)
