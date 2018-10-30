@@ -140,6 +140,10 @@ const firmDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/all
 //优惠信息
 const informationDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/alldiscount/informationdiscountlist', {longitude_latitude, page})
 
+//商家二维码
+//商家二维码
+const storeImg = (uid,longitude_latitude) => ajax(Base_url + '/api/allstoreimg/storeimglist',{uid,longitude_latitude})
+
 //搜索展示
 //热搜
 const hotSearchList = () => ajax(Base_url + '/api/allsearch/hotsearchlist')

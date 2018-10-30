@@ -29,9 +29,17 @@
             >
             </el-input>
         </form>
-        <el-button type="text" @click="open3">
-            <i class="iconfont icon-add"></i>
-        </el-button>
+        <!--<el-button type="text" @click="open3">-->
+        <!--<i class="iconfont icon-add"></i>-->
+        <!--</el-button>-->
+        <el-dropdown trigger="click" @command="handleCommand">
+            <span class="el-dropdown-link">
+                <i class="icon-add iconfont"></i>
+             </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="getStoreListImg">商家二维码</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
     </div>
 
     <div class="banner_list" style="border-bottom: .1rem solid rgb(242, 242, 242);">
@@ -219,8 +227,11 @@
             }
         },
         methods: {
-            goToSearch(){
-              location.assign('./search.html')
+            handleCommand(command) {
+                this.getStoreListImg()
+            },
+            goToSearch() {
+                location.assign('./search.html')
             },
             GetQueryString(name) {
                 let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -306,7 +317,7 @@
                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                             localStorage.longitude_latitude = longitude + ',' + latitude
                             that.longitude_latitude = longitude + ',' + latitude
-                            localStorage.setItem('longitude_latitude',that.longitude_latitude)
+                            localStorage.setItem('longitude_latitude', that.longitude_latitude)
                             that.getRecommendList(longitude + ',' + latitude);
                             that.getShopGoodList(longitude + ',' + latitude);
                             that.getAllSort(1, longitude + ',' + latitude, 1)
@@ -322,6 +333,12 @@
                 });
                 // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
 
+            },
+            async getStoreListImg() {
+                let uid = localStorage.uid
+                let longitude_latitude = localStorage.longitude_latitude
+                let result = await storeImg(uid,longitude_latitude)
+                console.log(result)
             },
             async getBanner() {
                 let result = await bannerList()
@@ -458,7 +475,7 @@
 
         mounted() {
             //路由拦截
-            if(localStorage.uid === 'null'){
+            if (localStorage.uid === 'null') {
                 location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
             }
 
