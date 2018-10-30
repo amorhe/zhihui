@@ -12,6 +12,13 @@
 </head>
 <body>
 <div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
+    <!--//二维码弹窗-->
+    <div style="width: 100%;height: 100%;background: rgba(0,0,0,.4);position: absolute;z-index: 9998" v-if="storeImg"
+         @click="storeImg = ''" @wheel.prevent @tochmove.prevent>
+        <img style="border-radius:.2rem;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto; width: 80%;z-index: 9999"
+             :src="`data:image/png;base64,${storeImg}`" alt="">
+    </div>
+
     <div class="index_head">
         <a href="https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop">
             <img src="./img/logo.png"
@@ -29,15 +36,15 @@
             >
             </el-input>
         </form>
-        <!--<el-button type="text" @click="open3">-->
-        <!--<i class="iconfont icon-add"></i>-->
-        <!--</el-button>-->
+
         <el-dropdown trigger="click" @command="handleCommand">
             <span class="el-dropdown-link">
                 <i class="icon-add iconfont"></i>
              </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="getStoreListImg">商家二维码</el-dropdown-item>
+                <el-dropdown-item command="getStoreListImg" v-if="isshop === 1">商家二维码</el-dropdown-item>
+                <div style="height: .01rem;background: #1a1a1a;width: 100%;" v-if="isshop === 1"></div>
+                <el-dropdown-item command="open3">发布需求</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </div>
@@ -176,6 +183,18 @@
             <span v-else>没有更多了</span>
         </div>
     </div>
+
+
+    <el-dialog title="发布需求" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+            <el-input type="textarea" v-model="form.name" autocomplete="off"></el-input>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addNews(form.name)">确 定</el-button>
+        </div>
+    </el-dialog>
+
 </div>
 </body>
 <script src="js/vue.js"></script>
@@ -193,6 +212,13 @@
     let app = new Vue({
         el: "#app",
         data: {
+            dialogFormVisible: false,
+            form: {
+                name: '',
+            },
+            isshop:'',
+            addnews: "",
+            storeImg: '',
             jssdkconfig: '',
             baseImgUrl: ImgBaseUrl,
             banner: [],
@@ -228,7 +254,12 @@
         },
         methods: {
             handleCommand(command) {
-                this.getStoreListImg()
+                if (command === 'getStoreListImg') {
+                    this.getStoreListImg()
+                } else if (command === 'open3') {
+                    this.open3()
+                }
+
             },
             goToSearch() {
                 location.assign('./search.html')
@@ -238,6 +269,12 @@
                 let r = window.location.search.substr(1).match(reg);
                 if (r != null) return unescape(r[2]);
                 return null;
+            },
+            async getIsShop() {
+                let uid = localStorage.uid
+                let result = await isaShop(uid)
+                console.log(result)
+                this.isshop = result.code
             },
             async getWxConfig() {
 
@@ -337,7 +374,30 @@
             async getStoreListImg() {
                 let uid = localStorage.uid
                 let longitude_latitude = localStorage.longitude_latitude
-                let result = await storeImg(uid,longitude_latitude)
+                let result = await storeImg(uid, longitude_latitude)
+                console.log(result)
+                this.storeImg = result.data
+            },
+            async addNews(content) {
+                if (content === "") {
+                    this.$message({
+                        message: '需求不能为空',
+                        type: 'error',
+                        duration: 1000
+                    })
+                    return
+                }
+                let uid = localStorage.uid
+                let result = await newsAdd(uid, content)
+                if (result.code === 1) {
+                    this.$message({
+                        message: result.message,
+                        type: 'success',
+                        duration: 1000
+                    })
+                }
+
+                this.dialogFormVisible = false
                 console.log(result)
             },
             async getBanner() {
@@ -442,22 +502,7 @@
                 return theRequest;
             },
             open3() {
-                this.$prompt('请输入', '发布', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                    // inputErrorMessage: '邮箱格式不正确'
-                }).then(({value}) => {
-                    // this.$message({
-                    //     type: 'success',
-                    //     message: '你的邮箱是: ' + value
-                    // });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '取消输入'
-                    });
-                });
+                this.dialogFormVisible = true
             }
         },
         created() {
@@ -465,7 +510,7 @@
                 let uid = this.GetQueryString('uid')
                 localStorage.uid = uid
                 // alert(localStorage.uid)
-
+                this.getIsShop()
                 this.getBanner();
                 this.getShopCateList();
                 this.getDiscountList();

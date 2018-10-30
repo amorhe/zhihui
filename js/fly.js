@@ -142,7 +142,14 @@ const informationDiscountList = (longitude_latitude, page) => ajax(Base_url + '/
 
 //商家二维码
 //商家二维码
-const storeImg = (uid,longitude_latitude) => ajax(Base_url + '/api/allstoreimg/storeimglist',{uid,longitude_latitude})
+const storeImg = (uid,longitude_latitude) => ajax(Base_url + '/api/allstoreimg/storeimglist',{uid,longitude_latitude},"GET")
+//判断否是商家
+const isaShop = (uid) => ajax(Base_url + '/api/allstoreimg/isashop',{uid},"GET")
+
+//需求发布
+//需求发布
+const newsAdd = (uid,content) => ajax(Base_url + '/api/allnews/newsadd',{uid,content})
+
 
 //搜索展示
 //热搜

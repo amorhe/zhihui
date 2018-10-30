@@ -12,8 +12,9 @@
 <body>
 <div id="app" v-clock @keyup.enter="goToSearch(search_key)">
     <form action="#" onsubmit="return false;" class="index_head">
+        <p class="iconfont icon-fanhui" @click="`${window.history.go(-1)}`"></p>
         <el-input
-                style="width: 3.03rem;"
+                style="width: 2.5rem;"
                 type="text" type="search"
                 placeholder="输入套餐名称"
                 prefix-icon="el-icon-search"
@@ -21,7 +22,7 @@
                 v-model="search_key"
         >
         </el-input>
-        <span @click="`${window.history.go(-1)}`">取消</span>
+        <span @click="goToSearch(search_key)">搜索</span>
     </form>
 
     <div style="height: .01rem; background: #c3c3c3"></div>
@@ -34,7 +35,8 @@
     </div>
     <div style="height: .08rem; background: #ededed;margin-top: .2rem" v-if="historysearchList"></div>
     <div class="" style="padding: .2rem .12rem 0;" v-if="historysearchList">
-        <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete" @click="deleteHistoryList()"></i></p>
+        <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete"
+                                                               @click="deleteHistoryList()"></i></p>
         <div>
             <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;"
                  v-for="item in historysearchList" @click="goToSearch(item.search_name)">{{item.search_name}}
@@ -72,6 +74,13 @@
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
             },
             goToSearch(search_key) {
+                if (search_key === '') {
+                    this.$message({
+                        message: '搜索条件不能为空',
+                        type: 'error',
+                    })
+                    return
+                }
                 location.assign(`./searchResult.html?search_key=${search_key}`)
             },
             GetQueryString(name) {
@@ -102,7 +111,7 @@
                     this.historysearchList = result.data
                 }
             },
-            async deleteHistoryList(){
+            async deleteHistoryList() {
                 let uid = localStorage.uid
                 let result = await deleteHistory(uid)
                 if (result.code === 0) {
@@ -110,7 +119,7 @@
                 }
                 if (result.code === 1) {
                     console.log(result.data)
-                    this.historysearchList = []
+					window.history.go(0)
                 }
             }
 
