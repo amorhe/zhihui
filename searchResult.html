@@ -35,10 +35,11 @@
                 <p>已售{{item.sold_num}}</p>
             </div>
         </div>
-        <div style="width: 100%;text-align: center">
-            <span v-if="allLoaded">上拉加载更多</span>
-            <span v-else>没有更多了</span>
-        </div>
+        <div v-if="!allSortList" style="text-align: center">没有相关项目请重新搜索</div>
+        <!--<div style="width: 100%;text-align: center">-->
+            <!--<span v-if="allLoaded">上拉加载更多</span>-->
+            <!--<span v-else>没有更多了</span>-->
+        <!--</div>-->
     </div>
 </div>
 </body>
@@ -153,7 +154,13 @@
             },
         },
         created() {
+            //路由拦截。。。
+            if (!localStorage.longitude_latitude) {
+                location.assign('./index.html')
+            }
+
             setTimeout(() => {
+                this.longitude_latitude = localStorage.longitude_latitude
                 this.getShopGoodsSearchList()
             })
         },

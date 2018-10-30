@@ -56,15 +56,16 @@
             loading_more: true,//控制是否发送ajax请求
         },
         mounted() {
+            //路由拦截。。。
+            if (!localStorage.longitude_latitude) {
+                location.assign('./index.html')
+            }
+
             let longitude_latitude = this.GetQueryString('longitude_latitude')
             this.longitude_latitude = longitude_latitude
             setTimeout(() => {
                 this.getStoreList(longitude_latitude, this.page)
             })
-            //路由拦截。。。
-            if (longitude_latitude === null) {
-                location.assign('./index.html')
-            }
         },
         methods: {
             back() {

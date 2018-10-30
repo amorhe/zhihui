@@ -168,6 +168,11 @@
             }
         },
         mounted() {
+            //路由拦截。。。
+            if (!localStorage.longitude_latitude) {
+                location.assign('./index.html')
+            }
+
             var mySwiper = new Swiper('.swiper-container', {
                 width: innerWidth,
                 slidesPerView: 6,
@@ -183,10 +188,6 @@
             setTimeout(() => {
                 that.getWxConfig()
             })
-            //路由拦截。。。
-            if (this.longitude_latitude === null) {
-                location.assign('./index.html')
-            }
         },
         methods: {
             async getWxConfig() {

@@ -113,16 +113,17 @@
             },
         },
         mounted() {
+            //路由拦截。。。
+            if (!localStorage.longitude_latitude) {
+                location.assign('./index.html')
+            }
+
             let id = this.GetQueryString('id')
             let longitude_latitude = this.GetQueryString('longitude_latitude')
             this.longitude_latitude = longitude_latitude
             setTimeout(() => {
                 this.getStoreList(id, longitude_latitude)
             })
-            //路由拦截。。。
-            if (id === null) {
-                location.assign('./index.html')
-            }
         },
     })
 </script>

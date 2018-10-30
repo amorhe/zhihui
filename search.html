@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="app" v-clock  @keyup.enter="goToSearch(search_key)">
+<div id="app" v-clock @keyup.enter="goToSearch(search_key)">
     <form action="#" onsubmit="return false;" class="index_head">
         <el-input
                 style="width: 3.03rem;"
-                type="text"  type="search"
+                type="text" type="search"
                 placeholder="输入套餐名称"
                 prefix-icon="el-icon-search"
                 autofocus="true"
@@ -36,7 +36,9 @@
     <div class="" style="padding: .2rem .12rem 0;">
         <p style="font-size: .14rem;font-weight: bold;">历史搜索<i style="float: right;" class="el-icon-delete"></i></p>
         <div>
-            <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;" v-for="item in historysearchList" @click="goToSearch(item.search_name)">{{item.search_name}}</div>
+            <div style="padding: .14rem 0;border-bottom: .01rem solid #e6e6e6;font-size: .12rem;color: #666666;"
+                 v-for="item in historysearchList" @click="goToSearch(item.search_name)">{{item.search_name}}
+            </div>
         </div>
     </div>
 </div>
@@ -52,7 +54,7 @@
     let app = new Vue({
         el: "#app",
         data: {
-            historysearchList:'',
+            historysearchList: '',
             search_key: '',
             hotSearchList: [],
             shopList: [],
@@ -69,7 +71,7 @@
             goTo(url, id, longitude_latitude, status) {
                 location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
             },
-            goToSearch(search_key){
+            goToSearch(search_key) {
                 location.assign(`./searchResult.html?search_key=${search_key}`)
             },
             GetQueryString(name) {
@@ -103,11 +105,16 @@
 
         },
         mounted() {
+            //路由拦截。。。
+            if (!localStorage.longitude_latitude) {
+                location.assign('./index.html')
+            }
+
             setTimeout(() => {
                 this.getHotSearchList()
                 this.getHistorySearchList()
             })
-            //路由拦截。。。
+
         },
     })
 </script>

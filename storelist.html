@@ -61,6 +61,11 @@
             loading_more: true,//控制是否发送ajax请求
         },
         mounted() {
+            //路由拦截。。。
+            if (!localStorage.longitude_latitude) {
+                location.assign('./index.html')
+            }
+
             let longitude_latitude = this.GetQueryString('longitude_latitude')
             this.longitude_latitude = longitude_latitude
             let id = this.GetQueryString('id')
@@ -69,10 +74,6 @@
                 this.getStoreList(this.id,this.longitude_latitude, this.page)
                 this.getShopCateList()
             })
-            //路由拦截。。。
-            if (longitude_latitude === null) {
-                location.assign('./index.html')
-            }
         },
         methods: {
             async getShopCateList() {
