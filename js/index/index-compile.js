@@ -54,10 +54,15 @@ var app = new Vue({
                 this.getStoreListImg();
             } else if (command === 'open3') {
                 this.open3();
+            } else {
+                this.goToApp();
             }
         },
         goToSearch: function goToSearch() {
-            location.assign('https://shop.zhihuimall.com.cn/zhihuishop/zhihui-master/search.html');
+            location.assign('./search.html');
+        },
+        goToApp: function goToApp() {
+            location.assign('./application.html');
         },
         GetQueryString: function GetQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -129,16 +134,6 @@ var app = new Vue({
                                 });
 
                                 wx.ready(function () {
-                                    // wx.checkJsApi({
-                                    //     jsApiList: [
-                                    //         'getNetworkType',
-                                    //         'previewImage',
-                                    //         'getLocation'
-                                    //     ],
-                                    //     success: function (res) {
-                                    //         console.log(JSON.stringify(res));
-                                    //     }
-                                    // });
                                     wx.getLocation({
                                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                                         success: function success(res) {
@@ -152,17 +147,13 @@ var app = new Vue({
                                             that.getRecommendList(longitude + ',' + latitude);
                                             that.getShopGoodList(longitude + ',' + latitude);
                                             that.getAllSort(1, longitude + ',' + latitude, 1);
-
                                             that.getDistrict(latitude + ',' + longitude);
                                         }
                                     });
                                 });
-
                                 wx.error(function (res) {
                                     console.log('err:' + res);
-                                    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
                                 });
-                                // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
 
                             case 13:
                             case 'end':

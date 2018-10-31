@@ -2,6 +2,7 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/js/application/application-compile.js" />
         <item url="file://$PROJECT_DIR$/js/business/business-compile.js" />
         <item url="file://$PROJECT_DIR$/js/detail/detail-compile.js" />
         <item url="file://$PROJECT_DIR$/js/fly-compile.js" />
@@ -17,6 +18,7 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/js/application/application-compile.js" />
       <root url="file://$PROJECT_DIR$/js/business/business-compile.js" />
       <root url="file://$PROJECT_DIR$/js/detail/detail-compile.js" />
       <root url="file://$PROJECT_DIR$/js/fly-compile.js" />

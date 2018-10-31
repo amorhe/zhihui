@@ -1,0 +1,32 @@
+#app {
+  header {
+    .pay_top{
+      margin: 0;
+    }
+  }
+  section.table {
+    table {
+      width: 100%;
+      border-collapse:collapse;
+      tr {
+        border: .01rem solid #cfcfcf;
+        border-width: .01rem 0;
+        td {
+          padding: .13rem 0 .13rem .12rem;
+          &:nth-child(1){
+            width: 30%;
+            font-weight: bold;
+            font-size: .14rem;
+          }
+          &:nth-child(2){
+            input{
+              border: none;
+              outline: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

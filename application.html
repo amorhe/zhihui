@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>商家入驻</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/apllictation.css">
+</head>
+<body>
+<div id="app" v-clock>
+    <header>
+        <div class="pay_top">
+            <p class="iconfont icon-fanhui comeback" @click="`${window.history.go(-1)}`"></p>
+            <p>商家入驻</p>
+        </div>
+    </header>
+    <section class="table">
+        <table>
+            <tr>
+                <td><label for="shop_name">商店名称：</label></td>
+                <td><input type="text" id="shop_name" v-model="shop_name" placeholder="请输入店铺名称"></td>
+            </tr>
+            <tr>
+                <td><label for="master_name">联系人姓名：</label></td>
+                <td><input type="text" id="master_name" v-model="master_name" placeholder="请输入联系人姓名"></td>
+            </tr>
+            <tr>
+                <td><label for="telephone">联系电话:</label></td>
+                <td><input type="text" id="telephone" v-model="telephone" placeholder="请输入您的电话号码"></td>
+            </tr>
+            <tr>
+                <td><label for="idCard">身份证号码：</label></td>
+                <td><input type="text" id="idCard" v-model="idCard" placeholder="请输入您的身份证号码"></td>
+            </tr>
+            <tr>
+                <td><label for="adderss">商店地址：</label></td>
+                <td><input type="text" id="adderss" v-model="address" placeholder="请输入您的详细地址"></td>
+            </tr>
+            <tr>
+                <td>行业分类：</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>身份证照正面：</td>
+                <td>
+                    <span @click="chooseImage">请选择照片</span>
+                    <img :src="localId" alt="">{{localId}}111
+                </td>
+            </tr>
+            <tr>
+                <td>身份证照背面：</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>营业执照：</td>
+                <td></td>
+            </tr>
+        </table>
+    </section>
+</div>
+</body>
+<!-- 引入组件库 -->
+<!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>-->
+<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-rc.4/polyfill.js"></script>
+<script src="./js/vconsole.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<!--<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>-->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/jq.js"></script>
+<script src="js/fly.js"></script>
+<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<script src="js/application/application-compile.js"></script>
+</html>
