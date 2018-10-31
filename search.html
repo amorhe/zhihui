@@ -45,97 +45,15 @@
     </div>
 </div>
 </body>
+<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-rc.4/polyfill.js"></script>
+<script src="./js/vconsole.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
-<!-- 引入组件库 -->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
-<script src="js/fly.js"></script>
 <script src="js/jq.js"></script>
-<script>
-    let app = new Vue({
-        el: "#app",
-        data: {
-            historysearchList: '',
-            search_key: '',
-            hotSearchList: [],
-            shopList: [],
-            page: 1,
-            longitude_latitude: '',
-            allLoaded: true,
-            loading: false,//判断是否加载数据
-            loading_more: true,//控制是否发送ajax请求
-        },
-        methods: {
-            back() {
-                history.go(-1)
-            },
-            goTo(url, id, longitude_latitude, status) {
-                location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
-            },
-            goToSearch(search_key) {
-                if (search_key === '') {
-                    this.$message({
-                        message: '搜索条件不能为空',
-                        type: 'error',
-                    })
-                    return
-                }
-                location.assign(`./searchResult.html?search_key=${search_key}`)
-            },
-            GetQueryString(name) {
-                let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-                let r = window.location.search.substr(1).match(reg);
-                if (r != null) return unescape(r[2]);
-                return null;
-            },
-
-            async getHotSearchList() {
-                let result = await hotSearchList()
-                if (result.code === 0) {
-                    alert(result.message)
-                }
-                if (result.code === 1) {
-                    console.log(result.data)
-                    this.hotSearchList = result.data
-                }
-            },
-            async getHistorySearchList() {
-                let uid = localStorage.uid
-                let result = await historySearchList(uid)
-                if (result.code === 0) {
-                    alert(result.message)
-                }
-                if (result.code === 1) {
-                    console.log(result.data)
-                    this.historysearchList = result.data
-                }
-            },
-            async deleteHistoryList() {
-                let uid = localStorage.uid
-                let result = await deleteHistory(uid)
-                if (result.code === 0) {
-                    alert(result.message)
-                }
-                if (result.code === 1) {
-                    console.log(result.data)
-					window.history.go(0)
-                }
-            }
-
-        },
-        mounted() {
-            //路由拦截。。。
-            if (!localStorage.longitude_latitude) {
-                location.assign('./index.html')
-            }
-
-            setTimeout(() => {
-                this.getHotSearchList()
-                this.getHistorySearchList()
-            })
-
-        },
-    })
-</script>
+<script src="js/fly.js"></script>
+<script src="js/search/search-compile.js"></script>
 </html>
