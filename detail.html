@@ -49,8 +49,8 @@
         </header>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" :class="{'active':index === dataSelect}" v-for="(i,index) in detail.week"
-                     @click="selectDate(index)">
+                <div class="swiper-slide" :class="{'active':index.js === dataSelect}" v-for="(i,index.js) in detail.week"
+                     @click="selectDate(index.js)">
                     {{i.slice(-3)}}
                     <p>{{i.slice(0,-3)}}</p>
                 </div>
@@ -283,7 +283,7 @@
                 // https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop&p=location&latitude=30.25961&longitude=120.13026
 
             },
-            selectDate(index) {
+            selectDate(index.js) {
                 this.dataSelect = index
             },
             toMap() {

@@ -59,7 +59,7 @@ fly.interceptors.request.use((request) => {
     });
     //路由拦截
     if(localStorage.uid === 'null'){
-        location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
+        location.assign('https://shop.zhihuimall.com.cn/app/index.js.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
     }
     return request
 })
@@ -118,7 +118,7 @@ function ajax(url, data = {}, type) {
 // const ImgBaseUrl ='http://192.168.1.21'
 const ImgBaseUrl ='https://shop.zhihuimall.com.cn:443/zhihuishop/public'
 // const Base_url = 'http://192.168.1.21'
-const Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php'
+const Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.js.php'
 
 //获取权限
 const wxConfig = (url) => ajax(Base_url + '/api/allaccesstoken/tokenlist',{url})
