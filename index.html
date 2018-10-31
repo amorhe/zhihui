@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>首页</title>
+    <title>至惠商联</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="iconfont/iconfont.css">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/swiper.min.css">
 </head>
 <body>
-<div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
+<div id="app" @touchmove="loadingMore()" @wheel="loadingMore()">
     <!--//二维码弹窗-->
     <div style="width: 100%;height: 100%;background: rgba(0,0,0,.4);position: absolute;z-index: 9998" v-if="storeImg"
          @click="storeImg = ''" @wheel.prevent @tochmove.prevent>
@@ -45,6 +45,7 @@
                 <el-dropdown-item command="getStoreListImg" v-if="isshop === 1">商家二维码</el-dropdown-item>
                 <div style="height: .01rem;background: #1a1a1a;width: 100%;" v-if="isshop === 1"></div>
                 <el-dropdown-item command="open3">发布需求</el-dropdown-item>
+                <el-dropdown-item command="open3" v-if="isshop === 0">商家入驻</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </div>
@@ -197,16 +198,22 @@
 
 </div>
 </body>
+<!-- 引入组件库 -->
+<script src="./js/vconsole.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/font.js"></script>
-<!-- 引入组件库 -->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
-<script src="js/fly.js"></script>
 <script src="js/jq.js"></script>
+<script src="js/fly.js"></script>
 <!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
-<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
+<script>
+    // 初始化
+    var vConsole = new VConsole();
+    console.log('Hello world');
+</script>
 <script>
     let jssdkconfig
     let app = new Vue({
@@ -295,56 +302,21 @@
                     nonceStr: jssdkconfig.nonceStr,
                     signature: jssdkconfig.signature,
                     jsApiList: [
-                        'checkJsApi',
-                        'onMenuShareTimeline',
-                        'onMenuShareAppMessage',
-                        'onMenuShareQQ',
-                        'onMenuShareWeibo',
-                        'onMenuShareQZone',
-                        'hideMenuItems',
-                        'showMenuItems',
-                        'hideAllNonBaseMenuItem',
-                        'showAllNonBaseMenuItem',
-                        'translateVoice',
-                        'startRecord',
-                        'stopRecord',
-                        'onVoiceRecordEnd',
-                        'playVoice',
-                        'onVoicePlayEnd',
-                        'pauseVoice',
-                        'stopVoice',
-                        'uploadVoice',
-                        'downloadVoice',
-                        'chooseImage',
-                        'previewImage',
-                        'uploadImage',
-                        'downloadImage',
-                        'getNetworkType',
-                        'openLocation',
                         'getLocation',
-                        'hideOptionMenu',
-                        'showOptionMenu',
-                        'closeWindow',
-                        'scanQRCode',
-                        'chooseWXPay',
-                        'openProductSpecificView',
-                        'addCard',
-                        'chooseCard',
-                        'openCard'
                     ]
                 });
 
                 wx.ready(function () {
-                    wx.checkJsApi({
-                        jsApiList: [
-                            'getNetworkType',
-                            'previewImage',
-                            'getLocation'
-                        ],
-                        success: function (res) {
-                            console.log(JSON.stringify(res));
-                        }
-                    });
+                    // wx.checkJsApi({
+                    //     jsApiList: [
+                    //         'getNetworkType',
+                    //         'previewImage',
+                    //         'getLocation'
+                    //     ],
+                    //     success: function (res) {
+                    //         console.log(JSON.stringify(res));
+                    //     }
+                    // });
                     wx.getLocation({
                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                         success: function (res) {
@@ -515,7 +487,7 @@
                 this.getShopCateList();
                 this.getDiscountList();
                 this.getWxConfig()
-            })
+            },100)
         },
 
         mounted() {
