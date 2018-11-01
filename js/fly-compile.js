@@ -243,6 +243,10 @@ var oneCate = function oneCate() {
 var twoCate = function twoCate(p_id) {
     return ajax(Base_url + '/api/allarea/twocate', { p_id: p_id });
 };
+// 商家入驻添加
+var storeAdd = function storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license) {
+    return ajax(Base_url + '/api/allarea/storeadd', { uid: uid, shopcate_id: shopcate_id, shopchildcate_id: shopchildcate_id, province_id: province_id, city_id: city_id, area_id: area_id, street_id: street_id, community_id: community_id, shop_name: shop_name, phone: phone, name: name, address: address, id_card: id_card, id_card_positive_photo: id_card_positive_photo, id_card_negative_photo: id_card_negative_photo, business_license: business_license });
+};
 
 // 关于订单
 // 预订单添加

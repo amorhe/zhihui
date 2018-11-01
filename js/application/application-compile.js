@@ -15,9 +15,9 @@ var app = new Vue({
     el: '#app',
     data: {
         shop_name: '',
-        master_name: '',
-        telephone: '',
-        idCard: '',
+        name: '',
+        phone: '',
+        id_card: '',
         address: '',
         jssdkconfig: '',
         province: [],
@@ -440,6 +440,55 @@ var app = new Vue({
             }
 
             return getTwoCate;
+        }(),
+        adds: function () {
+            var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+                var uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, address, id_card_positive_photo, id_card_negative_photo, business_license, shop_name, phone, name, id_card, result;
+                return regeneratorRuntime.wrap(function _callee9$(_context9) {
+                    while (1) {
+                        switch (_context9.prev = _context9.next) {
+                            case 0:
+                                uid = localStorage.uid;
+                                shopcate_id = this.sOneCate;
+                                shopchildcate_id = this.sTwoCate;
+                                province_id = this.sProvince;
+                                city_id = this.sCity;
+                                area_id = this.sArea;
+                                street_id = this.sCountry;
+                                community_id = this.sAgency;
+                                address = 2;
+                                id_card_positive_photo = this.localId.back;
+                                id_card_negative_photo = this.localId.front;
+                                business_license = this.localId.card;
+                                shop_name = this.shop_name, phone = this.phone, name = this.name, id_card = this.id_card;
+
+                                if (!(!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id, !shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license)) {
+                                    _context9.next = 15;
+                                    break;
+                                }
+
+                                return _context9.abrupt("return");
+
+                            case 15:
+                                _context9.next = 17;
+                                return storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license);
+
+                            case 17:
+                                result = _context9.sent;
+
+                            case 18:
+                            case "end":
+                                return _context9.stop();
+                        }
+                    }
+                }, _callee9, this);
+            }));
+
+            function adds() {
+                return _ref9.apply(this, arguments);
+            }
+
+            return adds;
         }()
     },
     created: function created() {

@@ -27,15 +27,15 @@
             </tr>
             <tr>
                 <td><label for="master_name">联系人姓名：</label></td>
-                <td><input type="text" id="master_name" v-model="master_name" placeholder="请输入联系人姓名"></td>
+                <td><input type="text" id="master_name" v-model="name" placeholder="请输入联系人姓名"></td>
             </tr>
             <tr>
                 <td><label for="telephone">联系电话:</label></td>
-                <td><input type="text" id="telephone" v-model="telephone" placeholder="请输入您的电话号码"></td>
+                <td><input type="text" id="telephone" v-model="phone" placeholder="请输入您的电话号码"></td>
             </tr>
             <tr>
                 <td><label for="idCard">身份证号码：</label></td>
-                <td><input type="text" id="idCard" v-model="idCard" placeholder="请输入您的身份证号码"></td>
+                <td><input type="text" id="idCard" v-model="id_card" placeholder="请输入您的身份证号码"></td>
             </tr>
             <tr>
                 <td><label for="adderss">商店地址：</label></td>
@@ -106,6 +106,9 @@
             </tr>
         </table>
     </section>
+    <footer>
+        <el-button type="success" @click="adds()">提交</el-button>
+    </footer>
 </div>
 </body>
 <!-- 引入组件库 -->

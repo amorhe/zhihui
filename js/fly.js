@@ -195,6 +195,8 @@ const upLoadImgToOur = (src) => ajax(Base_url + '/api/allarea/uploadimg',{src})
 const oneCate = () => ajax(Base_url + '/api/allarea/onecate')
 // 二级分类选择
 const twoCate = (p_id) => ajax(Base_url + '/api/allarea/twocate',{p_id})
+// 商家入驻添加
+const storeAdd = (uid,shopcate_id,shopchildcate_id,province_id,city_id,area_id,street_id,community_id,shop_name,phone,name,address,id_card,id_card_positive_photo,id_card_negative_photo,business_license) => ajax(Base_url + '/api/allarea/storeadd',{uid,shopcate_id,shopchildcate_id,province_id,city_id,area_id,street_id,community_id,shop_name,phone,name,address,id_card,id_card_positive_photo,id_card_negative_photo,business_license})
 
 
 // 关于订单

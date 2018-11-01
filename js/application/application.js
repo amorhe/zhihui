@@ -11,9 +11,9 @@ let app = new Vue({
     el: '#app',
     data: {
         shop_name: '',
-        master_name: '',
-        telephone: '',
-        idCard: '',
+        name: '',
+        phone: '',
+        id_card: '',
         address: '',
         jssdkconfig: '',
         province: [],
@@ -190,18 +190,18 @@ let app = new Vue({
             console.log(result);
             this.agency = result
         },
-        async getOneCate(){
+        async getOneCate() {
             let result = await oneCate()
-            if (result.code === 1){
+            if (result.code === 1) {
                 console.log(result)
                 this.oneCate = result.data
                 this.sOneCate = result.data[0].id
                 this.getTwoCate(this.sOneCate)
             }
         },
-        async getTwoCate(p_id){
+        async getTwoCate(p_id) {
             let result = await twoCate(p_id)
-            if (result.code === 1){
+            if (result.code === 1) {
                 if (result.data === null) {
                     return
                 }
@@ -209,6 +209,26 @@ let app = new Vue({
                 this.twoCate = result.data
                 this.sTwoCate = result.data[0].id
             }
+        },
+        async adds() {
+            let uid = localStorage.uid
+            let shopcate_id = this.sOneCate
+            let shopchildcate_id = this.sTwoCate
+            let province_id = this.sProvince
+            let city_id = this.sCity
+            let area_id = this.sArea
+            let street_id = this.sCountry
+            let community_id = this.sAgency
+            let address = 2
+            let id_card_positive_photo = this.localId.back
+            let id_card_negative_photo = this.localId.front
+            let business_license = this.localId.card
+            let {shop_name, phone, name, id_card} = this
+            if (!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id,!shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license) {
+
+                return
+            }
+            let result = await storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license)
         }
     },
     created() {
