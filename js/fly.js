@@ -82,7 +82,7 @@ fly.interceptors.response.use(
     }
 )
 
-function ajax(url, data = {}, type) {
+function ajax(url, data = {}, type="POST") {
     return new Promise(function (resolve, reject) {
         // 执行异步ajax请求
         let promise
@@ -185,6 +185,12 @@ const MoreRecommendList = (longitude_latitude,page) => ajax(Base_url + '/api/all
 const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shopgoodslist', {longitude_latitude})
 //更多商家推荐列表
 const moreShopGoodsList = (longitude_latitude,page) => ajax(Base_url + '/api/allstore/moreshopgoodslist',{longitude_latitude,page})
+
+// 商家入驻相关
+// 地区列表
+const areaList = () => ajax(Base_url + '/api/allarea/arealist')
+//图片上传
+const upLoadImgToOur =(src) => ajax(Base_url + '/api/allarea/uploadimg',{src})
 
 
 // 初始化

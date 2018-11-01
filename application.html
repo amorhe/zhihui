@@ -39,7 +39,23 @@
             </tr>
             <tr>
                 <td><label for="adderss">商店地址：</label></td>
-                <td><input type="text" id="adderss" v-model="address" placeholder="请输入您的详细地址"></td>
+                <td>
+                    <select name="" id="adderss">
+                        <option value=""></option>
+                    </select>
+                    <select name="" id="city">
+                        <option value=""></option>
+                    </select>
+                    <select name="" id="area">
+                        <option value=""></option>
+                    </select>
+                    <select name="" id="county">
+                        <option value=""></option>
+                    </select>
+                    <select name="" id="agency">
+                        <option value=""></option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>行业分类：</td>
@@ -48,17 +64,31 @@
             <tr>
                 <td>身份证照正面：</td>
                 <td>
-                    <span @click="chooseImage">请选择照片</span>
-                    <img :src="localId" alt="">{{localId}}111
+                    <input class="weui-uploader__input" type="file" name="file"  accept="image/*"
+                           multiple="" @change="upLoadImg(event,'front')">
+                    <img src="./img/add.png" alt="" v-if="!localId.front" style="width: .3rem">
+                    <!--<span @click="chooseImage('front')" v-if="!localId.front">请选择照片</span>-->
+                    <img :src="`${ImgBaseUrl}${localId.front}`" alt="" v-show="localId.front">
                 </td>
             </tr>
             <tr>
                 <td>身份证照背面：</td>
-                <td></td>
+                <td>
+                    <input class="weui-uploader__input" type="file" name="file" accept="image/*"
+                           multiple="" @change="upLoadImg(event,'back')">
+                    <img src="./img/add.png" alt="" v-if="!localId.back" style="width: .3rem">
+                    <!--<span @click="chooseImage('back')" v-if="!localId.back">请选择照片</span>-->
+                    <img :src="`${ImgBaseUrl}${localId.back}`" alt="" v-show="localId.back"></td>
             </tr>
             <tr>
                 <td>营业执照：</td>
-                <td></td>
+                <td>
+                    <input class="weui-uploader__input" type="file"  name="file" accept="image/*"
+                           multiple="" @change="upLoadImg(event,'card')">
+                    <img src="./img/add.png" alt="" v-if="!localId.card" style="width: .3rem">
+                    <!--<span @click="chooseImage('card')" v-if="!localId.card">请选择照片</span>-->
+                    <img :src="`${ImgBaseUrl}${localId.card}`" alt="" v-show="localId.card">
+                </td>
             </tr>
         </table>
     </section>

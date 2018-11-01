@@ -82,7 +82,7 @@ fly.interceptors.response.use(function (response) {
 
 function ajax(url) {
     var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var type = arguments[2];
+    var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "POST";
 
     return new Promise(function (resolve, reject) {
         // 执行异步ajax请求
@@ -224,6 +224,16 @@ var shopGoodList = function shopGoodList(longitude_latitude) {
 //更多商家推荐列表
 var moreShopGoodsList = function moreShopGoodsList(longitude_latitude, page) {
     return ajax(Base_url + '/api/allstore/moreshopgoodslist', { longitude_latitude: longitude_latitude, page: page });
+};
+
+// 商家入驻相关
+// 地区列表
+var areaList = function areaList() {
+    return ajax(Base_url + '/api/allarea/arealist');
+};
+//图片上传
+var upLoadImgToOur = function upLoadImgToOur(src) {
+    return ajax(Base_url + '/api/allarea/uploadimg', { src: src });
 };
 
 // 初始化
