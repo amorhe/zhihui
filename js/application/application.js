@@ -225,10 +225,22 @@ let app = new Vue({
             let business_license = this.localId.card
             let {shop_name, phone, name, id_card} = this
             if (!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id,!shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license) {
-
+                this.$message({
+                    message: "请检查数据",
+                    type: 'error',
+                    duration: 1000
+                })
                 return
             }
             let result = await storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license)
+            if (result.code === 1){
+                this.$message({
+                    message: result.message,
+                    type: 'success',
+                    duration: 1000
+                })
+                return
+            }
         }
     },
     created() {

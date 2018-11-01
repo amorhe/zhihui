@@ -463,20 +463,37 @@ var app = new Vue({
                                 shop_name = this.shop_name, phone = this.phone, name = this.name, id_card = this.id_card;
 
                                 if (!(!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id, !shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license)) {
-                                    _context9.next = 15;
+                                    _context9.next = 16;
                                     break;
                                 }
 
+                                this.$message({
+                                    message: "请检查数据",
+                                    type: 'error',
+                                    duration: 1000
+                                });
                                 return _context9.abrupt("return");
 
-                            case 15:
-                                _context9.next = 17;
+                            case 16:
+                                _context9.next = 18;
                                 return storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license);
 
-                            case 17:
+                            case 18:
                                 result = _context9.sent;
 
-                            case 18:
+                                if (!(result.code === 1)) {
+                                    _context9.next = 22;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: result.message,
+                                    type: 'success',
+                                    duration: 1000
+                                });
+                                return _context9.abrupt("return");
+
+                            case 22:
                             case "end":
                                 return _context9.stop();
                         }
