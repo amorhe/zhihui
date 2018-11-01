@@ -3,7 +3,6 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // 添加请求拦截器
-var form_data = new FormData();
 var loading = void 0;
 
 function makeFormData(obj, form_data) {
@@ -58,9 +57,9 @@ fly.interceptors.request.use(function (request) {
         background: 'rgba(0, 0, 0, 0.7)'
     });
     //路由拦截
-    if (localStorage.uid === 'null') {
-        location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop');
-    }
+    // if(localStorage.uid === 'null'){
+    //     location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
+    // }
     return request;
 });
 
@@ -101,6 +100,7 @@ function ajax(url) {
             promise = fly.get(url);
         } else {
             // 发送post请求
+            var form_data = new FormData();
             makeFormData(data, form_data);
             promise = fly.post(url, form_data);
         }
@@ -228,8 +228,8 @@ var moreShopGoodsList = function moreShopGoodsList(longitude_latitude, page) {
 
 // 商家入驻相关
 // 地区列表
-var areaList = function areaList() {
-    return ajax(Base_url + '/api/allarea/arealist');
+var areaList = function areaList(region_type, parent_id) {
+    return ajax(Base_url + '/api/allarea/arealist', { region_type: region_type, parent_id: parent_id });
 };
 //图片上传
 var upLoadImgToOur = function upLoadImgToOur(src) {

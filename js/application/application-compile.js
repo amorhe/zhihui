@@ -1,8 +1,11 @@
-'use strict';
+"use strict";
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var jssdkconfig = void 0;
+if (navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") == "MSIE9.0") {
+    $("select").css("background", "none");
+}
 
 function getBase64Image(imgElem) {
     return imgElem.replace(/^data:image\/(jpeg|jpg);base64,/, "");
@@ -17,6 +20,16 @@ var app = new Vue({
         idCard: '',
         address: '',
         jssdkconfig: '',
+        province: [],
+        sProvince: '',
+        city: [],
+        sCity: '',
+        area: [],
+        sArea: '',
+        country: [],
+        sCountry: '',
+        agency: [],
+        sAgency: [],
         localId: {
             front: '',
             back: '',
@@ -71,11 +84,11 @@ var app = new Vue({
                                     });
                                 });
                                 wx.error(function (res) {
-                                    console.log('err:' + res);
+                                    console.log("err:" + res);
                                 });
 
                             case 13:
-                            case 'end':
+                            case "end":
                                 return _context.stop();
                         }
                     }
@@ -122,7 +135,7 @@ var app = new Vue({
                 success: function success(res) {
                     console.log(res.data);
                     _this2.localId[which] = res.data;
-                    alert(JSON.stringify(_this2.localId));
+                    // alert(JSON.stringify(this.localId))
                 }
             });
 
@@ -144,13 +157,205 @@ var app = new Vue({
             //     });
             // };
             // reader.readAsDataURL(input.files[0]);
-        }
+        },
+        getProvince: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+                var result;
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.next = 2;
+                                return areaList(1, 0);
+
+                            case 2:
+                                result = _context2.sent;
+
+                                console.log(result);
+                                this.province = result;
+                                this.sProvince = result[0].id;
+                                this.getCity(result[0].id);
+
+                            case 7:
+                            case "end":
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function getProvince() {
+                return _ref2.apply(this, arguments);
+            }
+
+            return getProvince;
+        }(),
+        getCity: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(provinceId) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                _context3.next = 2;
+                                return areaList(2, provinceId);
+
+                            case 2:
+                                result = _context3.sent;
+
+                                if (!(result === false)) {
+                                    _context3.next = 5;
+                                    break;
+                                }
+
+                                return _context3.abrupt("return");
+
+                            case 5:
+                                console.log(result);
+                                this.city = result;
+                                this.sCity = result[0].id;
+                                this.getArea(result[0].id);
+
+                            case 9:
+                            case "end":
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function getCity(_x) {
+                return _ref3.apply(this, arguments);
+            }
+
+            return getCity;
+        }(),
+        getArea: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(CityId) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.next = 2;
+                                return areaList(3, CityId);
+
+                            case 2:
+                                result = _context4.sent;
+
+                                if (!(result === false)) {
+                                    _context4.next = 5;
+                                    break;
+                                }
+
+                                return _context4.abrupt("return");
+
+                            case 5:
+                                console.log(result);
+                                this.area = result;
+                                this.sArea = result[0].id;
+                                this.getCountry(result[0].id);
+
+                            case 9:
+                            case "end":
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function getArea(_x2) {
+                return _ref4.apply(this, arguments);
+            }
+
+            return getArea;
+        }(),
+        getCountry: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(areaId) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                    while (1) {
+                        switch (_context5.prev = _context5.next) {
+                            case 0:
+                                _context5.next = 2;
+                                return areaList(4, areaId);
+
+                            case 2:
+                                result = _context5.sent;
+
+                                if (!(result === false)) {
+                                    _context5.next = 5;
+                                    break;
+                                }
+
+                                return _context5.abrupt("return");
+
+                            case 5:
+                                console.log(result);
+                                this.country = result;
+                                this.sCountry = result[0].id;
+                                this.getAgency(result[0].id);
+
+                            case 9:
+                            case "end":
+                                return _context5.stop();
+                        }
+                    }
+                }, _callee5, this);
+            }));
+
+            function getCountry(_x3) {
+                return _ref5.apply(this, arguments);
+            }
+
+            return getCountry;
+        }(),
+        getAgency: function () {
+            var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(countryId) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee6$(_context6) {
+                    while (1) {
+                        switch (_context6.prev = _context6.next) {
+                            case 0:
+                                _context6.next = 2;
+                                return areaList(5, countryId);
+
+                            case 2:
+                                result = _context6.sent;
+
+                                if (!(result === false)) {
+                                    _context6.next = 5;
+                                    break;
+                                }
+
+                                return _context6.abrupt("return");
+
+                            case 5:
+                                this.sAgency = result[0].id;
+                                console.log(result);
+                                this.agency = result;
+
+                            case 8:
+                            case "end":
+                                return _context6.stop();
+                        }
+                    }
+                }, _callee6, this);
+            }));
+
+            function getAgency(_x4) {
+                return _ref6.apply(this, arguments);
+            }
+
+            return getAgency;
+        }()
     },
     created: function created() {
         var _this3 = this;
 
         setTimeout(function () {
             _this3.getWxConfig();
+            _this3.getProvince();
         }, 100);
     }
 });

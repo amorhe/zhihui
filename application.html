@@ -40,20 +40,25 @@
             <tr>
                 <td><label for="adderss">商店地址：</label></td>
                 <td>
-                    <select name="" id="adderss">
-                        <option value=""></option>
+                    <select name="" id="adderss" @change="getCity(sProvince)" v-model="sProvince">
+                        <!--<option disabled value="">请选择</option>-->
+                        <option v-for="v in province" :value="v.id">{{v.region_name}}</option>
                     </select>
-                    <select name="" id="city">
-                        <option value=""></option>
+                    <select name="" id="city" @change="getArea(sCity)" v-model="sCity" v-if="city.length !== 0">
+                        <!--<option disabled value="">请选择</option>-->
+                        <option v-for="v in city" :value="v.id">{{v.region_name}}</option>
                     </select>
-                    <select name="" id="area">
-                        <option value=""></option>
+                    <select name="" id="area" @change="getCountry(sArea)" v-model="sArea" v-if="area.length !== 0">
+                        <!--<option disabled value="">请选择</option>-->
+                        <option v-for="v in area" :value="v.id">{{v.region_name}}</option>
                     </select>
-                    <select name="" id="county">
-                        <option value=""></option>
+                    <select name="" id="country" @change="getAgency(sCountry)" v-model="sCountry" v-if="country.length !== 0">
+                        <!--<option disabled value="">请选择</option>-->
+                        <option value="" v-for="v in country" :value="v.id">{{v.region_name}}</option>
                     </select>
-                    <select name="" id="agency">
-                        <option value=""></option>
+                    <select name="" id="agency"  v-model="sAgency" v-if="agency.length !== 0">
+                        <!--<option disabled value="">请选择</option>-->
+                        <option value="" v-for="v in agency" :value="v.id">{{v.region_name}}</option>
                     </select>
                 </td>
             </tr>

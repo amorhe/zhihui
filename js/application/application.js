@@ -1,4 +1,8 @@
 let jssdkconfig
+if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE9.0")
+{
+    $("select").css("background","none");
+}
 
 function getBase64Image(imgElem) {
     return imgElem.replace(/^data:image\/(jpeg|jpg);base64,/, "");
@@ -13,6 +17,16 @@ let app = new Vue({
         idCard: '',
         address: '',
         jssdkconfig: '',
+        province:[],
+        sProvince:'',
+        city:[],
+        sCity:'',
+        area:[],
+        sArea:'',
+        country:[],
+        sCountry:'',
+        agency:[],
+        sAgency:[],
         localId: {
             front: '',
             back: '',
@@ -94,7 +108,7 @@ let app = new Vue({
                 success: (res) => {
                     console.log(res.data)
                     this.localId[which] = res.data;
-                    alert(JSON.stringify(this.localId))
+                    // alert(JSON.stringify(this.localId))
                 }
             });
 
@@ -116,11 +130,50 @@ let app = new Vue({
             //     });
             // };
             // reader.readAsDataURL(input.files[0]);
-        }
+        },
+        async getProvince(){
+            let result = await areaList(1,0)
+            console.log(result);
+            this.province = result
+            this.sProvince = result[0].id
+            this.getCity(result[0].id)
+        },
+        async getCity(provinceId){
+            let result = await areaList(2,provinceId)
+            if (result === false){return}
+            console.log(result);
+            this.city = result
+            this.sCity = result[0].id
+            this.getArea(result[0].id)
+        },
+        async getArea(CityId){
+            let result = await areaList(3,CityId)
+            if (result === false){return}
+            console.log(result);
+            this.area = result
+            this.sArea = result[0].id
+            this.getCountry(result[0].id)
+        },
+        async getCountry(areaId){
+            let result = await areaList(4,areaId)
+            if (result === false){return}
+            console.log(result);
+            this.country = result
+            this.sCountry = result[0].id
+            this.getAgency(result[0].id)
+        },
+        async getAgency(countryId){
+            let result = await areaList(5,countryId)
+            if (result === false){return}
+            this.sAgency = result[0].id
+            console.log(result);
+            this.agency = result
+        },
     },
     created() {
         setTimeout(() => {
             this.getWxConfig()
+            this.getProvince()
         }, 100)
     },
 })

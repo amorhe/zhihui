@@ -1,5 +1,4 @@
 // 添加请求拦截器
-let form_data = new FormData();
 let loading
 
 function makeFormData(obj, form_data) {
@@ -58,9 +57,9 @@ fly.interceptors.request.use((request) => {
         background: 'rgba(0, 0, 0, 0.7)'
     });
     //路由拦截
-    if(localStorage.uid === 'null'){
-        location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
-    }
+    // if(localStorage.uid === 'null'){
+    //     location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
+    // }
     return request
 })
 
@@ -100,6 +99,7 @@ function ajax(url, data = {}, type="POST") {
             promise = fly.get(url)
         } else {
             // 发送post请求
+            let form_data = new FormData();
             makeFormData(data, form_data)
             promise = fly.post(url, form_data)
         }
@@ -188,7 +188,7 @@ const moreShopGoodsList = (longitude_latitude,page) => ajax(Base_url + '/api/all
 
 // 商家入驻相关
 // 地区列表
-const areaList = () => ajax(Base_url + '/api/allarea/arealist')
+const areaList = (region_type,parent_id) => ajax(Base_url + '/api/allarea/arealist',{region_type,parent_id})
 //图片上传
 const upLoadImgToOur =(src) => ajax(Base_url + '/api/allarea/uploadimg',{src})
 
