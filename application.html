@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <td><label for="adderss">商店地址：</label></td>
-                <td>
+                <td style="display: flex;flex-wrap: wrap">
                     <select name="" id="adderss" @change="getCity(sProvince)" v-model="sProvince">
                         <!--<option disabled value="">请选择</option>-->
                         <option v-for="v in province" :value="v.id">{{v.region_name}}</option>
