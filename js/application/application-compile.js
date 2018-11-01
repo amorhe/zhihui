@@ -34,7 +34,11 @@ var app = new Vue({
             front: '',
             back: '',
             card: ''
-        }
+        },
+        oneCate: '',
+        sOneCate: '',
+        twoCate: '',
+        sTwoCate: ''
     },
     methods: {
         getWxConfig: function () {
@@ -204,19 +208,23 @@ var app = new Vue({
                                 result = _context3.sent;
 
                                 if (!(result === false)) {
-                                    _context3.next = 5;
+                                    _context3.next = 9;
                                     break;
                                 }
 
+                                this.sCity = '';
+                                this.sArea = '';
+                                this.sCountry = '';
+                                this.sAgency = '';
                                 return _context3.abrupt("return");
 
-                            case 5:
+                            case 9:
                                 console.log(result);
                                 this.city = result;
                                 this.sCity = result[0].id;
                                 this.getArea(result[0].id);
 
-                            case 9:
+                            case 13:
                             case "end":
                                 return _context3.stop();
                         }
@@ -244,19 +252,22 @@ var app = new Vue({
                                 result = _context4.sent;
 
                                 if (!(result === false)) {
-                                    _context4.next = 5;
+                                    _context4.next = 8;
                                     break;
                                 }
 
+                                this.sArea = '';
+                                this.sCountry = '';
+                                this.sAgency = '';
                                 return _context4.abrupt("return");
 
-                            case 5:
+                            case 8:
                                 console.log(result);
                                 this.area = result;
                                 this.sArea = result[0].id;
                                 this.getCountry(result[0].id);
 
-                            case 9:
+                            case 12:
                             case "end":
                                 return _context4.stop();
                         }
@@ -284,19 +295,21 @@ var app = new Vue({
                                 result = _context5.sent;
 
                                 if (!(result === false)) {
-                                    _context5.next = 5;
+                                    _context5.next = 7;
                                     break;
                                 }
 
+                                this.sCountry = '';
+                                this.sAgency = '';
                                 return _context5.abrupt("return");
 
-                            case 5:
+                            case 7:
                                 console.log(result);
                                 this.country = result;
                                 this.sCountry = result[0].id;
                                 this.getAgency(result[0].id);
 
-                            case 9:
+                            case 11:
                             case "end":
                                 return _context5.stop();
                         }
@@ -324,18 +337,19 @@ var app = new Vue({
                                 result = _context6.sent;
 
                                 if (!(result === false)) {
-                                    _context6.next = 5;
+                                    _context6.next = 6;
                                     break;
                                 }
 
+                                this.sAgency = '';
                                 return _context6.abrupt("return");
 
-                            case 5:
+                            case 6:
                                 this.sAgency = result[0].id;
                                 console.log(result);
                                 this.agency = result;
 
-                            case 8:
+                            case 9:
                             case "end":
                                 return _context6.stop();
                         }
@@ -348,6 +362,84 @@ var app = new Vue({
             }
 
             return getAgency;
+        }(),
+        getOneCate: function () {
+            var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+                var result;
+                return regeneratorRuntime.wrap(function _callee7$(_context7) {
+                    while (1) {
+                        switch (_context7.prev = _context7.next) {
+                            case 0:
+                                _context7.next = 2;
+                                return oneCate();
+
+                            case 2:
+                                result = _context7.sent;
+
+                                if (result.code === 1) {
+                                    console.log(result);
+                                    this.oneCate = result.data;
+                                    this.sOneCate = result.data[0].id;
+                                    this.getTwoCate(this.sOneCate);
+                                }
+
+                            case 4:
+                            case "end":
+                                return _context7.stop();
+                        }
+                    }
+                }, _callee7, this);
+            }));
+
+            function getOneCate() {
+                return _ref7.apply(this, arguments);
+            }
+
+            return getOneCate;
+        }(),
+        getTwoCate: function () {
+            var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(p_id) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                    while (1) {
+                        switch (_context8.prev = _context8.next) {
+                            case 0:
+                                _context8.next = 2;
+                                return twoCate(p_id);
+
+                            case 2:
+                                result = _context8.sent;
+
+                                if (!(result.code === 1)) {
+                                    _context8.next = 9;
+                                    break;
+                                }
+
+                                if (!(result.data === null)) {
+                                    _context8.next = 6;
+                                    break;
+                                }
+
+                                return _context8.abrupt("return");
+
+                            case 6:
+                                console.log(result.data);
+                                this.twoCate = result.data;
+                                this.sTwoCate = result.data[0].id;
+
+                            case 9:
+                            case "end":
+                                return _context8.stop();
+                        }
+                    }
+                }, _callee8, this);
+            }));
+
+            function getTwoCate(_x5) {
+                return _ref8.apply(this, arguments);
+            }
+
+            return getTwoCate;
         }()
     },
     created: function created() {
@@ -356,6 +448,7 @@ var app = new Vue({
         setTimeout(function () {
             _this3.getWxConfig();
             _this3.getProvince();
+            _this3.getOneCate();
         }, 100);
     }
 });

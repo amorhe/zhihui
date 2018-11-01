@@ -235,6 +235,32 @@ var areaList = function areaList(region_type, parent_id) {
 var upLoadImgToOur = function upLoadImgToOur(src) {
     return ajax(Base_url + '/api/allarea/uploadimg', { src: src });
 };
+// 一级分类选择
+var oneCate = function oneCate() {
+    return ajax(Base_url + '/api/allarea/onecate');
+};
+// 二级分类选择
+var twoCate = function twoCate(p_id) {
+    return ajax(Base_url + '/api/allarea/twocate', { p_id: p_id });
+};
+
+// 关于订单
+// 预订单添加
+var orderList = function orderList(uid, store_id, goods_id, rule, preset_time, full_reduce, realprice) {
+    return ajax(Base_url + '/api/allorder/orderlist', { uid: uid, store_id: store_id, goods_id: goods_id, rule: rule, preset_time: preset_time, full_reduce: full_reduce, realprice: realprice });
+};
+// 预订单详情
+var budgetOrderList = function budgetOrderList(uid, store_id, goods_id) {
+    return ajax(Base_url + '/api/allorder/budgetorderlist', { uid: uid, store_id: store_id, goods_id: goods_id });
+};
+// 当前用户是否存在手机号
+var memberPhone = function memberPhone(uid) {
+    return ajax(Base_url + '/api/allorder/memberphone', { uid: uid });
+};
+// 当前用户添加预留手机号
+var addmemberphone = function addmemberphone(uid, phone) {
+    return ajax(Base_url + '/zhihuishop/public/index.php/api/allorder/addmemberphone', { uid: uid, phone: phone });
+};
 
 // 初始化
 var vConsole = new VConsole();

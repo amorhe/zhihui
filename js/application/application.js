@@ -1,7 +1,6 @@
 let jssdkconfig
-if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE9.0")
-{
-    $("select").css("background","none");
+if (navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") == "MSIE9.0") {
+    $("select").css("background", "none");
 }
 
 function getBase64Image(imgElem) {
@@ -17,21 +16,25 @@ let app = new Vue({
         idCard: '',
         address: '',
         jssdkconfig: '',
-        province:[],
-        sProvince:'',
-        city:[],
-        sCity:'',
-        area:[],
-        sArea:'',
-        country:[],
-        sCountry:'',
-        agency:[],
-        sAgency:[],
+        province: [],
+        sProvince: '',
+        city: [],
+        sCity: '',
+        area: [],
+        sArea: '',
+        country: [],
+        sCountry: '',
+        agency: [],
+        sAgency: [],
         localId: {
             front: '',
             back: '',
             card: '',
-        }
+        },
+        oneCate: '',
+        sOneCate: '',
+        twoCate: '',
+        sTwoCate: ''
     },
     methods: {
         async getWxConfig() {
@@ -131,49 +134,88 @@ let app = new Vue({
             // };
             // reader.readAsDataURL(input.files[0]);
         },
-        async getProvince(){
-            let result = await areaList(1,0)
+        async getProvince() {
+            let result = await areaList(1, 0)
             console.log(result);
             this.province = result
             this.sProvince = result[0].id
             this.getCity(result[0].id)
         },
-        async getCity(provinceId){
-            let result = await areaList(2,provinceId)
-            if (result === false){return}
+        async getCity(provinceId) {
+            let result = await areaList(2, provinceId)
+            if (result === false) {
+                this.sCity = ''
+                this.sArea = ''
+                this.sCountry = ''
+                this.sAgency = ''
+                return
+            }
             console.log(result);
             this.city = result
             this.sCity = result[0].id
             this.getArea(result[0].id)
         },
-        async getArea(CityId){
-            let result = await areaList(3,CityId)
-            if (result === false){return}
+        async getArea(CityId) {
+            let result = await areaList(3, CityId)
+            if (result === false) {
+                this.sArea = ''
+                this.sCountry = ''
+                this.sAgency = ''
+                return
+            }
             console.log(result);
             this.area = result
             this.sArea = result[0].id
             this.getCountry(result[0].id)
         },
-        async getCountry(areaId){
-            let result = await areaList(4,areaId)
-            if (result === false){return}
+        async getCountry(areaId) {
+            let result = await areaList(4, areaId)
+            if (result === false) {
+                this.sCountry = ''
+                this.sAgency = ''
+                return
+            }
             console.log(result);
             this.country = result
             this.sCountry = result[0].id
             this.getAgency(result[0].id)
         },
-        async getAgency(countryId){
-            let result = await areaList(5,countryId)
-            if (result === false){return}
+        async getAgency(countryId) {
+            let result = await areaList(5, countryId)
+            if (result === false) {
+                this.sAgency = ''
+                return
+            }
             this.sAgency = result[0].id
             console.log(result);
             this.agency = result
         },
+        async getOneCate(){
+            let result = await oneCate()
+            if (result.code === 1){
+                console.log(result)
+                this.oneCate = result.data
+                this.sOneCate = result.data[0].id
+                this.getTwoCate(this.sOneCate)
+            }
+        },
+        async getTwoCate(p_id){
+            let result = await twoCate(p_id)
+            if (result.code === 1){
+                if (result.data === null) {
+                    return
+                }
+                console.log(result.data)
+                this.twoCate = result.data
+                this.sTwoCate = result.data[0].id
+            }
+        }
     },
     created() {
         setTimeout(() => {
             this.getWxConfig()
             this.getProvince()
+            this.getOneCate()
         }, 100)
     },
 })

@@ -190,7 +190,22 @@ const moreShopGoodsList = (longitude_latitude,page) => ajax(Base_url + '/api/all
 // 地区列表
 const areaList = (region_type,parent_id) => ajax(Base_url + '/api/allarea/arealist',{region_type,parent_id})
 //图片上传
-const upLoadImgToOur =(src) => ajax(Base_url + '/api/allarea/uploadimg',{src})
+const upLoadImgToOur = (src) => ajax(Base_url + '/api/allarea/uploadimg',{src})
+// 一级分类选择
+const oneCate = () => ajax(Base_url + '/api/allarea/onecate')
+// 二级分类选择
+const twoCate = (p_id) => ajax(Base_url + '/api/allarea/twocate',{p_id})
+
+
+// 关于订单
+// 预订单添加
+const orderList = (uid,store_id,goods_id,rule,preset_time,full_reduce,realprice) => ajax(Base_url + '/api/allorder/orderlist',{uid,store_id,goods_id,rule,preset_time,full_reduce,realprice})
+// 预订单详情
+const budgetOrderList = (uid,store_id,goods_id) => ajax(Base_url + '/api/allorder/budgetorderlist',{uid,store_id,goods_id})
+// 当前用户是否存在手机号
+const memberPhone = (uid) => ajax(Base_url + '/api/allorder/memberphone',{uid})
+// 当前用户添加预留手机号
+const addmemberphone = (uid,phone) => ajax(Base_url + '/zhihuishop/public/index.php/api/allorder/addmemberphone',{uid,phone})
 
 
 // 初始化

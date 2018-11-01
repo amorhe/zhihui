@@ -64,7 +64,16 @@
             </tr>
             <tr>
                 <td>行业分类：</td>
-                <td></td>
+                <td style="display: flex;flex-wrap: wrap">
+                    <select name="" id="onecate"  v-model="sOneCate" @change="getTwoCate(sOneCate)">
+                        <!--<option disabled value="">请选择</option>-->
+                        <option value="" v-for="v in oneCate" :value="v.id">{{v.catename}}</option>
+                    </select>
+                    <select name="" id="twocate"  v-model="sTwoCate" >
+                        <!--<option disabled value="">请选择</option>-->
+                        <option value="" v-for="v in twoCate" :value="v.id">{{v.catename}}</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>身份证照正面：</td>
