@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>至惠商联</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/selectAddress.css">
+</head>
+<body>
+<div id="app" v-clock style="background: #eeeeee">
+    <form action="#" onsubmit="return false;" class="index_head" style="background: #ffffff">
+        <p class="iconfont icon-fanhui" @click="`${window.history.go(-1)}`"></p>
+        <el-input
+                style="width: 2.5rem;"
+                type="text" type="search"
+                placeholder="请输入地址"
+                prefix-icon="el-icon-search"
+                autofocus="true"
+                v-model="search_key"
+        >
+        </el-input>
+        <span @click="">搜索</span>
+    </form>
+    <section class="cate">
+        <section class="img">
+            <header>
+                <img src="http://192.168.1.15/upload/20181025/2a65b21bdbd6157b1a2434d9a31a50bb.png" alt="">
+            </header>
+        </section>
+    </section>
+</div>
+</body>
+<!-- 引入组件库 -->
+<!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>-->
+<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-rc.4/polyfill.js"></script>
+<script src="./js/vconsole.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/jq.js"></script>
+<script src="js/fly.js"></script>
+<!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
+<script src="js/selectAddress/selectAddress-compile.js"></script>
+</html>

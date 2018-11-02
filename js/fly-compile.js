@@ -57,9 +57,9 @@ fly.interceptors.request.use(function (request) {
         background: 'rgba(0, 0, 0, 0.7)'
     });
     //路由拦截
-    if (localStorage.uid === 'null' || !localStorage.uid || localStorage.uid === undefined) {
-        location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop');
-    }
+    // if(localStorage.uid === 'null' || !localStorage.uid || localStorage.uid ===undefined){
+    //     location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
+    // }
     return request;
 });
 
@@ -114,10 +114,10 @@ function ajax(url) {
     });
 }
 
-// const ImgBaseUrl ='http://192.168.1.21'
-var ImgBaseUrl = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public';
-// const Base_url = 'http://192.168.1.21'
-var Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php';
+var ImgBaseUrl = 'http://192.168.1.15';
+// const ImgBaseUrl ='https://shop.zhihuimall.com.cn:443/zhihuishop/public'
+var Base_url = 'http://192.168.1.15';
+// const Base_url = 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php'
 
 //获取权限
 var wxConfig = function wxConfig(url) {

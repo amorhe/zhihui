@@ -12,6 +12,7 @@
         <item url="file://$PROJECT_DIR$/js/sale/sale-compile.js" />
         <item url="file://$PROJECT_DIR$/js/search/search-compile.js" />
         <item url="file://$PROJECT_DIR$/js/searchResult/searchResult-compile.js" />
+        <item url="file://$PROJECT_DIR$/js/selectAddress/selectAddress-compile.js" />
         <item url="file://$PROJECT_DIR$/js/storeList/storeList-compile.js" />
         <item url="file://$PROJECT_DIR$/js/swiper.min-compile.js" />
         <item url="file://$PROJECT_DIR$/js/toDaySale/toDaySale-compile.js" />
@@ -28,6 +29,7 @@
       <root url="file://$PROJECT_DIR$/js/sale/sale-compile.js" />
       <root url="file://$PROJECT_DIR$/js/search/search-compile.js" />
       <root url="file://$PROJECT_DIR$/js/searchResult/searchResult-compile.js" />
+      <root url="file://$PROJECT_DIR$/js/selectAddress/selectAddress-compile.js" />
       <root url="file://$PROJECT_DIR$/js/storeList/storeList-compile.js" />
       <root url="file://$PROJECT_DIR$/js/swiper.min-compile.js" />
       <root url="file://$PROJECT_DIR$/js/toDaySale/toDaySale-compile.js" />

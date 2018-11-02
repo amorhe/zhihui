@@ -266,9 +266,9 @@ let app = new Vue({
 
     mounted() {
         //路由拦截
-        if (localStorage.uid === 'null') {
-            location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
-        }
+        // if (localStorage.uid === 'null') {
+        //     location.assign('https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop')
+        // }
 
         let shopCatelist = new Swiper('#shopCatelist', {
             width: innerWidth,
