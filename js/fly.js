@@ -181,7 +181,7 @@ const allShopGoodList = (store_id,longitude_latitude,status) => ajax(Base_url + 
 
 //智能排序
 //排序
-const allSort = (sort_status, longitude_latitude, page) => ajax(Base_url + '/api/allsort/sortlist', {sort_status, longitude_latitude, page})
+const allSort = (sort_status, longitude_latitude, page,area_id) => ajax(Base_url + '/api/allsort/sortlist', {sort_status, longitude_latitude, page,area_id})
 
 //分类下的店铺
 //店铺列表

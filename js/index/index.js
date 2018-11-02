@@ -182,7 +182,7 @@ let app = new Vue({
             this.index_foot[sort_status - 1] = 1
             this.sort_status = sort_status
 
-            let result = await allSort(sort_status, longitude_latitude, this.sortPage)
+            let result = await allSort(sort_status, longitude_latitude, this.sortPage,area_id)
             if (result.code === 1) {
                 console.log(result)
                 this.allSortList = result.data.data
@@ -200,7 +200,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await allSort(this.sort_status, longitude_latitude, this.sortPage)
+                    result = await allSort(this.sort_status, longitude_latitude, this.sortPage,area_id)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         console.log(this.allSortList.length, result.data.total)
@@ -261,7 +261,7 @@ let app = new Vue({
 
                 this.getRecommendList(longitude_latitude);
                 this.getShopGoodList(longitude_latitude);
-                this.getAllSort(longitude_latitude)
+                this.getAllSort(1)
                 this.getDistrict(longitude_latitude)
             }else{
                 this.getWxConfig()

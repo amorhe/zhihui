@@ -209,8 +209,8 @@ var allShopGoodList = function allShopGoodList(store_id, longitude_latitude, sta
 
 //智能排序
 //排序
-var allSort = function allSort(sort_status, longitude_latitude, page) {
-    return ajax(Base_url + '/api/allsort/sortlist', { sort_status: sort_status, longitude_latitude: longitude_latitude, page: page });
+var allSort = function allSort(sort_status, longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/allsort/sortlist', { sort_status: sort_status, longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 
 //分类下的店铺

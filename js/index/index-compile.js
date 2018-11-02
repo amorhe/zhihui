@@ -446,7 +446,7 @@ var app = new Vue({
                                 this.sort_status = sort_status;
 
                                 _context11.next = 7;
-                                return allSort(sort_status, longitude_latitude, this.sortPage);
+                                return allSort(sort_status, longitude_latitude, this.sortPage, area_id);
 
                             case 7:
                                 result = _context11.sent;
@@ -505,7 +505,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context12.next = 11;
-                                return allSort(this.sort_status, longitude_latitude, this.sortPage);
+                                return allSort(this.sort_status, longitude_latitude, this.sortPage, area_id);
 
                             case 11:
                                 result = _context12.sent;
@@ -603,7 +603,7 @@ var app = new Vue({
 
                 _this2.getRecommendList(longitude_latitude);
                 _this2.getShopGoodList(longitude_latitude);
-                _this2.getAllSort(longitude_latitude);
+                _this2.getAllSort(1);
                 _this2.getDistrict(longitude_latitude);
             } else {
                 _this2.getWxConfig();
