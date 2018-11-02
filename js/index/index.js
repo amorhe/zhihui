@@ -63,6 +63,11 @@ let app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
+        async getCitySearchList(){
+            let result = await citySearchList(area)
+            console.log(result);
+            localStorage.area_id = result.data.id
+        },
         async getIsShop() {
             let uid = localStorage.uid
             let result = await isaShop(uid)
@@ -147,6 +152,8 @@ let app = new Vue({
         async getDistrict() {
             let result = await districts(longitude_latitude)
             this.address = result.result.ad_info.district
+            localStorage.area = this.address
+            this.getCitySelectList()
             console.log(result.result.ad_info.district)
         },
         async getShopCateList() {
@@ -258,11 +265,10 @@ let app = new Vue({
                 if(localStorage.area){
                     this.address = localStorage.area
                 }
-
+                this.getCitySearchList()
                 this.getRecommendList(longitude_latitude);
                 this.getShopGoodList(longitude_latitude);
                 this.getAllSort(1)
-                this.getDistrict(longitude_latitude)
             }else{
                 this.getWxConfig()
             }

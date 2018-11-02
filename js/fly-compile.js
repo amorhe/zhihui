@@ -12,6 +12,7 @@ localStorage.uid = 2121;
 // 全局变量
 var uid = localStorage.uid;
 var longitude_latitude = localStorage.longitude_latitude;
+var area = localStorage.area;
 var area_id = localStorage.area_id;
 
 function makeFormData(obj, form_data) {
@@ -200,6 +201,10 @@ var deleteHistory = function deleteHistory(uid) {
 var shopCatelist = function shopCatelist() {
     return ajax(Base_url + '/api/allshopcate/shopcatelist');
 };
+//更多分类
+var moreShopCateList = function moreShopCateList() {
+    return ajax(Base_url + '/api/allshopcate/moreshopcatelist');
+};
 
 //店铺套餐
 //套餐
@@ -279,6 +284,10 @@ var addmemberphone = function addmemberphone(uid, phone) {
 //关于城市选择
 var citySelectList = function citySelectList() {
     return ajax(Base_url + '/api/allcityselect/cityselectlist');
+};
+//城市列表
+var citySearchList = function citySearchList(area) {
+    return ajax(Base_url + '/api/allcityselect/citysearchlist', { area: area });
 };
 
 // 初始化

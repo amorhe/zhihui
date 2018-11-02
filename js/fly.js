@@ -8,6 +8,7 @@ localStorage.uid = 2121
 // 全局变量
 let uid = localStorage.uid
 let longitude_latitude = localStorage.longitude_latitude
+let area = localStorage.area
 let area_id = localStorage.area_id
 
 function makeFormData(obj, form_data) {
@@ -173,6 +174,8 @@ const deleteHistory = (uid) => ajax(Base_url + '/api/allsearch/delhistorysearchl
 //所有分类
 //分类
 const shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
+//更多分类
+const moreShopCateList = () => ajax(Base_url + '/api/allshopcate/moreshopcatelist')
 
 
 //店铺套餐
@@ -220,6 +223,8 @@ const addmemberphone = (uid,phone) => ajax(Base_url + '/api/allorder/addmemberph
 
 //关于城市选择
 const citySelectList = () => ajax(Base_url + '/api/allcityselect/cityselectlist')
+//城市列表
+const citySearchList = (area) => ajax(Base_url + '/api/allcityselect/citysearchlist',{area})
 
 // 初始化
 let vConsole = new VConsole();

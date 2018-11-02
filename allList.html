@@ -26,19 +26,15 @@
         </el-input>
         <span @click="">搜索</span>
     </form>
-    <section class="cate" v-for="i in 3">
+    <section class="cate" v-for="v in list">
         <section class="img">
-            <header>
-                <img src="http://192.168.1.15/upload/20181025/2a65b21bdbd6157b1a2434d9a31a50bb.png" alt="">
-                <span>美食</span>
+            <header @click="goTo('./storelist.html',v.id)">
+                <img :src="baseImgUrl+v.images" alt="">
+                <span>{{v.catename}}</span>
             </header>
-            <table border="1" cellspacing="0" style="width: 100%;background: #ffffff">
-                <tr v-for="i in 4" style="width: 25%">
-                    <td v-for="i in 4" align="center" style="height: .4rem">
-                        西瓜
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <p v-for="v1 in v.shopchild_cate"> {{v1.catename}}</p>
+            </div>
         </section>
     </section>
 </div>

@@ -59,9 +59,9 @@
                      :key="item.id"
                 >
                     <div class="banner">
-                        <img
-                                :src="`${baseImgUrl}${item.images}`"
-                                alt="">
+                        <a :href="item.banner_url">
+                            <img :src="`${baseImgUrl}${item.images}`" alt="">
+                        </a>
                     </div>
                 </div>
 
@@ -81,6 +81,10 @@
                                 :src="`${baseImgUrl}${item.images}`"
                                 alt="">
                         <p>{{item.catename}}</p>
+                    </div>
+                    <div class="index_list_div" style="float: right" @click="`${location.assign('./allList.html')}`">
+                        <img src="./img/more.svg" alt="">
+                        <p>更多</p>
                     </div>
                 </div>
             </div>

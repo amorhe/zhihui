@@ -1,14 +1,11 @@
 let app = new Vue({
     el: "#app",
     data: {
-        search_key:'',
+        search_key: '',
         jssdkconfig: '',
         baseImgUrl: ImgBaseUrl,
         address: '',
-        longitude_latitude: '',
-        allLoaded: true,
-        loading: false,//判断是否加载数据
-        loading_more: true,//控制是否发送ajax请求
+        list:[],
     },
     computed: {
         cate() {
@@ -33,6 +30,16 @@ let app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
+        goTo(url, id, status) {
+            location.assign(`${url}?id=${id}&status=${status}`)
+        },
+        async getList() {
+            let result = await moreShopCateList()
+            console.log(result);
+            if (result.code === 1){
+                this.list = result.data
+            }
+        },
         async getWxConfig() {
 
             let that = this
@@ -55,62 +62,7 @@ let app = new Vue({
                     'getLocation',
                 ]
             });
-
-            wx.ready(function () {
-                wx.getLocation({
-                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                    success: function (res) {
-                        console.log(JSON.stringify(res))
-                        // console.log(localStorage.jsdk)
-                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                        localStorage.longitude_latitude = longitude + ',' + latitude
-                        that.longitude_latitude = longitude + ',' + latitude
-                        localStorage.setItem('longitude_latitude', that.longitude_latitude)
-                        that.getRecommendList(longitude + ',' + latitude);
-                        that.getShopGoodList(longitude + ',' + latitude);
-                        that.getAllSort(1, longitude + ',' + latitude, 1)
-                        that.getDistrict(latitude + ',' + longitude)
-                    }
-                });
-            })
-            wx.error(function (res) {
-                console.log(`err:${res}`)
-            });
-
-        },
-        async loadingMore() {
-            if (this.allLoaded === false) {
-                return
-            }
-            if ($(window).scrollTop() + $(window).height() + 100 >= $(document).height()) {
-                // console.log(1)
-                this.allLoaded = false
-                this.loading = true;
-                this.sortPage++;
-                let result
-                if (this.loading_more) {
-                    this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await allSort(this.sort_status, this.longitude_latitude, this.sortPage)
-                    if (result.code === 1) {//判断接受是否成功
-                        this.loading = false
-                        console.log(this.allSortList.length, result.data.total)
-                        if (this.allSortList.length === result.data.total) {
-                            return
-                        } else {
-                            this.loading_more = true
-                            this.allSortList = [...this.allSortList, ...result.data.data];
-                        }
-                    } else {
-                        setTimeout(() => {
-                            this.loading = false
-                            this.loading_more = true
-                        }, 1000)
-                    }
-                } else {
-                    this.loading = false
-                }
-            }
+            wx.ready()
         },
         getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -126,6 +78,10 @@ let app = new Vue({
         },
     },
     created() {
+        setTimeout(() => {
+            this.getList()
+        })
+
     },
 
     mounted() {

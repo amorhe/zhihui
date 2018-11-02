@@ -68,24 +68,23 @@ var app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
-        getIsShop: function () {
+        getCitySearchList: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var uid, result;
+                var result;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                uid = localStorage.uid;
-                                _context.next = 3;
-                                return isaShop(uid);
+                                _context.next = 2;
+                                return citySearchList(area);
 
-                            case 3:
+                            case 2:
                                 result = _context.sent;
 
                                 console.log(result);
-                                this.isshop = result.code;
+                                localStorage.area_id = result.data.id;
 
-                            case 6:
+                            case 5:
                             case 'end':
                                 return _context.stop();
                         }
@@ -93,29 +92,60 @@ var app = new Vue({
                 }, _callee, this);
             }));
 
-            function getIsShop() {
+            function getCitySearchList() {
                 return _ref.apply(this, arguments);
+            }
+
+            return getCitySearchList;
+        }(),
+        getIsShop: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+                var uid, result;
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                uid = localStorage.uid;
+                                _context2.next = 3;
+                                return isaShop(uid);
+
+                            case 3:
+                                result = _context2.sent;
+
+                                console.log(result);
+                                this.isshop = result.code;
+
+                            case 6:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function getIsShop() {
+                return _ref2.apply(this, arguments);
             }
 
             return getIsShop;
         }(),
         getWxConfig: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
                 var that, url, result;
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                return regeneratorRuntime.wrap(function _callee3$(_context3) {
                     while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context3.prev = _context3.next) {
                             case 0:
                                 that = this;
                                 url = window.location.href;
 
                                 console.log(url);
 
-                                _context2.next = 5;
+                                _context3.next = 5;
                                 return wxConfig(url);
 
                             case 5:
-                                result = _context2.sent;
+                                result = _context3.sent;
 
                                 result = JSON.parse(result.data);
                                 jssdkconfig = result;
@@ -152,57 +182,57 @@ var app = new Vue({
 
                             case 12:
                             case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, this);
-            }));
-
-            function getWxConfig() {
-                return _ref2.apply(this, arguments);
-            }
-
-            return getWxConfig;
-        }(),
-        getStoreListImg: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-                var result;
-                return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                    while (1) {
-                        switch (_context3.prev = _context3.next) {
-                            case 0:
-                                _context3.next = 2;
-                                return storeImg(uid, longitude_latitude);
-
-                            case 2:
-                                result = _context3.sent;
-
-                                console.log(result);
-                                this.storeImg = result.data;
-
-                            case 5:
-                            case 'end':
                                 return _context3.stop();
                         }
                     }
                 }, _callee3, this);
             }));
 
-            function getStoreListImg() {
+            function getWxConfig() {
                 return _ref3.apply(this, arguments);
+            }
+
+            return getWxConfig;
+        }(),
+        getStoreListImg: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+                var result;
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.next = 2;
+                                return storeImg(uid, longitude_latitude);
+
+                            case 2:
+                                result = _context4.sent;
+
+                                console.log(result);
+                                this.storeImg = result.data;
+
+                            case 5:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function getStoreListImg() {
+                return _ref4.apply(this, arguments);
             }
 
             return getStoreListImg;
         }(),
         addNews: function () {
-            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(content) {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(content) {
                 var uid, result;
-                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                return regeneratorRuntime.wrap(function _callee5$(_context5) {
                     while (1) {
-                        switch (_context4.prev = _context4.next) {
+                        switch (_context5.prev = _context5.next) {
                             case 0:
                                 if (!(content === "")) {
-                                    _context4.next = 3;
+                                    _context5.next = 3;
                                     break;
                                 }
 
@@ -211,15 +241,15 @@ var app = new Vue({
                                     type: 'error',
                                     duration: 1000
                                 });
-                                return _context4.abrupt('return');
+                                return _context5.abrupt('return');
 
                             case 3:
                                 uid = localStorage.uid;
-                                _context4.next = 6;
+                                _context5.next = 6;
                                 return newsAdd(uid, content);
 
                             case 6:
-                                result = _context4.sent;
+                                result = _context5.sent;
 
                                 if (result.code === 1) {
                                     this.$message({
@@ -234,49 +264,19 @@ var app = new Vue({
 
                             case 10:
                             case 'end':
-                                return _context4.stop();
-                        }
-                    }
-                }, _callee4, this);
-            }));
-
-            function addNews(_x) {
-                return _ref4.apply(this, arguments);
-            }
-
-            return addNews;
-        }(),
-        getBanner: function () {
-            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-                var result;
-                return regeneratorRuntime.wrap(function _callee5$(_context5) {
-                    while (1) {
-                        switch (_context5.prev = _context5.next) {
-                            case 0:
-                                _context5.next = 2;
-                                return bannerList();
-
-                            case 2:
-                                result = _context5.sent;
-
-                                this.banner = result.data;
-                                console.log(result);
-
-                            case 5:
-                            case 'end':
                                 return _context5.stop();
                         }
                     }
                 }, _callee5, this);
             }));
 
-            function getBanner() {
+            function addNews(_x) {
                 return _ref5.apply(this, arguments);
             }
 
-            return getBanner;
+            return addNews;
         }(),
-        getDistrict: function () {
+        getBanner: function () {
             var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
                 var result;
                 return regeneratorRuntime.wrap(function _callee6$(_context6) {
@@ -284,13 +284,13 @@ var app = new Vue({
                         switch (_context6.prev = _context6.next) {
                             case 0:
                                 _context6.next = 2;
-                                return districts(longitude_latitude);
+                                return bannerList();
 
                             case 2:
                                 result = _context6.sent;
 
-                                this.address = result.result.ad_info.district;
-                                console.log(result.result.ad_info.district);
+                                this.banner = result.data;
+                                console.log(result);
 
                             case 5:
                             case 'end':
@@ -300,13 +300,13 @@ var app = new Vue({
                 }, _callee6, this);
             }));
 
-            function getDistrict() {
+            function getBanner() {
                 return _ref6.apply(this, arguments);
             }
 
-            return getDistrict;
+            return getBanner;
         }(),
-        getShopCateList: function () {
+        getDistrict: function () {
             var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
                 var result;
                 return regeneratorRuntime.wrap(function _callee7$(_context7) {
@@ -314,15 +314,17 @@ var app = new Vue({
                         switch (_context7.prev = _context7.next) {
                             case 0:
                                 _context7.next = 2;
-                                return shopCatelist();
+                                return districts(longitude_latitude);
 
                             case 2:
                                 result = _context7.sent;
 
-                                this.shopCateListData = result.data;
-                                console.log(result);
+                                this.address = result.result.ad_info.district;
+                                localStorage.area = this.address;
+                                this.getCitySelectList();
+                                console.log(result.result.ad_info.district);
 
-                            case 5:
+                            case 7:
                             case 'end':
                                 return _context7.stop();
                         }
@@ -330,13 +332,13 @@ var app = new Vue({
                 }, _callee7, this);
             }));
 
-            function getShopCateList() {
+            function getDistrict() {
                 return _ref7.apply(this, arguments);
             }
 
-            return getShopCateList;
+            return getDistrict;
         }(),
-        getRecommendList: function () {
+        getShopCateList: function () {
             var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
                 var result;
                 return regeneratorRuntime.wrap(function _callee8$(_context8) {
@@ -344,17 +346,15 @@ var app = new Vue({
                         switch (_context8.prev = _context8.next) {
                             case 0:
                                 _context8.next = 2;
-                                return recommendList(longitude_latitude, area_id);
+                                return shopCatelist();
 
                             case 2:
                                 result = _context8.sent;
 
-                                if (result.code === 1) {
-                                    this.recommendList = result.data.data;
-                                    console.log(result);
-                                }
+                                this.shopCateListData = result.data;
+                                console.log(result);
 
-                            case 4:
+                            case 5:
                             case 'end':
                                 return _context8.stop();
                         }
@@ -362,13 +362,13 @@ var app = new Vue({
                 }, _callee8, this);
             }));
 
-            function getRecommendList() {
+            function getShopCateList() {
                 return _ref8.apply(this, arguments);
             }
 
-            return getRecommendList;
+            return getShopCateList;
         }(),
-        getShopGoodList: function () {
+        getRecommendList: function () {
             var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
                 var result;
                 return regeneratorRuntime.wrap(function _callee9$(_context9) {
@@ -376,13 +376,13 @@ var app = new Vue({
                         switch (_context9.prev = _context9.next) {
                             case 0:
                                 _context9.next = 2;
-                                return shopGoodList(longitude_latitude, area_id);
+                                return recommendList(longitude_latitude, area_id);
 
                             case 2:
                                 result = _context9.sent;
 
                                 if (result.code === 1) {
-                                    this.shopGoodList = result.data;
+                                    this.recommendList = result.data.data;
                                     console.log(result);
                                 }
 
@@ -394,13 +394,13 @@ var app = new Vue({
                 }, _callee9, this);
             }));
 
-            function getShopGoodList() {
+            function getRecommendList() {
                 return _ref9.apply(this, arguments);
             }
 
-            return getShopGoodList;
+            return getRecommendList;
         }(),
-        getDiscountList: function () {
+        getShopGoodList: function () {
             var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
                 var result;
                 return regeneratorRuntime.wrap(function _callee10$(_context10) {
@@ -408,14 +408,14 @@ var app = new Vue({
                         switch (_context10.prev = _context10.next) {
                             case 0:
                                 _context10.next = 2;
-                                return discountList();
+                                return shopGoodList(longitude_latitude, area_id);
 
                             case 2:
                                 result = _context10.sent;
 
                                 if (result.code === 1) {
+                                    this.shopGoodList = result.data;
                                     console.log(result);
-                                    this.discountList = result.data;
                                 }
 
                             case 4:
@@ -426,18 +426,50 @@ var app = new Vue({
                 }, _callee10, this);
             }));
 
-            function getDiscountList() {
+            function getShopGoodList() {
                 return _ref10.apply(this, arguments);
+            }
+
+            return getShopGoodList;
+        }(),
+        getDiscountList: function () {
+            var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+                var result;
+                return regeneratorRuntime.wrap(function _callee11$(_context11) {
+                    while (1) {
+                        switch (_context11.prev = _context11.next) {
+                            case 0:
+                                _context11.next = 2;
+                                return discountList();
+
+                            case 2:
+                                result = _context11.sent;
+
+                                if (result.code === 1) {
+                                    console.log(result);
+                                    this.discountList = result.data;
+                                }
+
+                            case 4:
+                            case 'end':
+                                return _context11.stop();
+                        }
+                    }
+                }, _callee11, this);
+            }));
+
+            function getDiscountList() {
+                return _ref11.apply(this, arguments);
             }
 
             return getDiscountList;
         }(),
         getAllSort: function () {
-            var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(sort_status) {
+            var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(sort_status) {
                 var result;
-                return regeneratorRuntime.wrap(function _callee11$(_context11) {
+                return regeneratorRuntime.wrap(function _callee12$(_context12) {
                     while (1) {
-                        switch (_context11.prev = _context11.next) {
+                        switch (_context12.prev = _context12.next) {
                             case 0:
                                 this.allLoaded = true;
                                 this.sortPage = 1;
@@ -445,11 +477,11 @@ var app = new Vue({
                                 this.index_foot[sort_status - 1] = 1;
                                 this.sort_status = sort_status;
 
-                                _context11.next = 7;
+                                _context12.next = 7;
                                 return allSort(sort_status, longitude_latitude, this.sortPage, area_id);
 
                             case 7:
-                                result = _context11.sent;
+                                result = _context12.sent;
 
                                 if (result.code === 1) {
                                     console.log(result);
@@ -458,37 +490,37 @@ var app = new Vue({
 
                             case 9:
                             case 'end':
-                                return _context11.stop();
+                                return _context12.stop();
                         }
                     }
-                }, _callee11, this);
+                }, _callee12, this);
             }));
 
             function getAllSort(_x2) {
-                return _ref11.apply(this, arguments);
+                return _ref12.apply(this, arguments);
             }
 
             return getAllSort;
         }(),
         loadingMore: function () {
-            var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
+            var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
                 var _this = this;
 
                 var result;
-                return regeneratorRuntime.wrap(function _callee12$(_context12) {
+                return regeneratorRuntime.wrap(function _callee13$(_context13) {
                     while (1) {
-                        switch (_context12.prev = _context12.next) {
+                        switch (_context13.prev = _context13.next) {
                             case 0:
                                 if (!(this.allLoaded === false)) {
-                                    _context12.next = 2;
+                                    _context13.next = 2;
                                     break;
                                 }
 
-                                return _context12.abrupt('return');
+                                return _context13.abrupt('return');
 
                             case 2:
                                 if (!($(window).scrollTop() + $(window).height() + 100 >= $(document).height())) {
-                                    _context12.next = 27;
+                                    _context13.next = 27;
                                     break;
                                 }
 
@@ -499,19 +531,19 @@ var app = new Vue({
                                 result = void 0;
 
                                 if (!this.loading_more) {
-                                    _context12.next = 26;
+                                    _context13.next = 26;
                                     break;
                                 }
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
-                                _context12.next = 11;
+                                _context13.next = 11;
                                 return allSort(this.sort_status, longitude_latitude, this.sortPage, area_id);
 
                             case 11:
-                                result = _context12.sent;
+                                result = _context13.sent;
 
                                 if (!(result.code === 1)) {
-                                    _context12.next = 23;
+                                    _context13.next = 23;
                                     break;
                                 }
 
@@ -520,18 +552,18 @@ var app = new Vue({
                                 console.log(this.allSortList.length, result.data.total);
 
                                 if (!(this.allSortList.length === result.data.total)) {
-                                    _context12.next = 19;
+                                    _context13.next = 19;
                                     break;
                                 }
 
-                                return _context12.abrupt('return');
+                                return _context13.abrupt('return');
 
                             case 19:
                                 this.loading_more = true;
                                 this.allSortList = [].concat(_toConsumableArray(this.allSortList), _toConsumableArray(result.data.data));
 
                             case 21:
-                                _context12.next = 24;
+                                _context13.next = 24;
                                 break;
 
                             case 23:
@@ -541,7 +573,7 @@ var app = new Vue({
                                 }, 1000);
 
                             case 24:
-                                _context12.next = 27;
+                                _context13.next = 27;
                                 break;
 
                             case 26:
@@ -549,14 +581,14 @@ var app = new Vue({
 
                             case 27:
                             case 'end':
-                                return _context12.stop();
+                                return _context13.stop();
                         }
                     }
-                }, _callee12, this);
+                }, _callee13, this);
             }));
 
             function loadingMore() {
-                return _ref12.apply(this, arguments);
+                return _ref13.apply(this, arguments);
             }
 
             return loadingMore;
@@ -600,11 +632,10 @@ var app = new Vue({
                 if (localStorage.area) {
                     _this2.address = localStorage.area;
                 }
-
+                _this2.getCitySearchList();
                 _this2.getRecommendList(longitude_latitude);
                 _this2.getShopGoodList(longitude_latitude);
                 _this2.getAllSort(1);
-                _this2.getDistrict(longitude_latitude);
             } else {
                 _this2.getWxConfig();
             }
