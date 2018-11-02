@@ -63,34 +63,7 @@ var app = new Vue({
                                 console.log(result);
                                 jssdkconfig = this.jssdkconfig;
 
-                                wx.config({
-                                    debug: false,
-                                    appId: jssdkconfig.appId,
-                                    timestamp: jssdkconfig.timestamp,
-                                    nonceStr: jssdkconfig.nonceStr,
-                                    signature: jssdkconfig.signature,
-                                    jsApiList: ['getLocation', 'chooseImage', 'uploadImage']
-                                });
-
-                                wx.ready(function () {
-                                    wx.getLocation({
-                                        type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                                        success: function success(res) {
-                                            console.log(JSON.stringify(res));
-                                            // console.log(localStorage.jsdk)
-                                            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                                            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                                            localStorage.longitude_latitude = longitude + ',' + latitude;
-                                            that.longitude_latitude = longitude + ',' + latitude;
-                                            localStorage.setItem('longitude_latitude', that.longitude_latitude);
-                                        }
-                                    });
-                                });
-                                wx.error(function (res) {
-                                    console.log("err:" + res);
-                                });
-
-                            case 13:
+                            case 10:
                             case "end":
                                 return _context.stop();
                         }
@@ -104,32 +77,14 @@ var app = new Vue({
 
             return getWxConfig;
         }(),
-        chooseImage: function chooseImage(which) {
-            var _this = this;
-
-            var images = {
-                localId: [],
-                serverId: []
-            };
-            wx.chooseImage({
-                count: 1, //设置一次能选择的图片的数量
-                sizeType: ['original', 'compressed'], //指定是原图还是压缩,默认二者都有
-                sourceType: ['album', 'camera'], //可以指定来源是相册还是相机,默认二者都有
-                success: function success(res) {
-                    images.localId = res.localIds;
-                    _this.localId[which] = res.localIds[0];
-                    alert(JSON.stringify(_this.localId));
-                }
-            });
-        },
         upLoadImg: function upLoadImg(event, which) {
-            var _this2 = this;
+            var _this = this;
 
             console.log(event);
             var formData = new FormData();
             formData.append("file", event.target.files[0]);
             $.ajax({
-                url: 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php/api/allarea/uploadimg',
+                url: Base_url + '/api/allarea/uploadimg',
                 type: 'POST',
                 data: formData,
                 cache: false,
@@ -137,7 +92,7 @@ var app = new Vue({
                 processData: false, //不可缺
                 success: function success(res) {
                     console.log(res.data);
-                    _this2.localId[which] = res.data;
+                    _this.localId[which] = res.data;
                     // alert(JSON.stringify(this.localId))
                 }
             });
@@ -211,10 +166,10 @@ var app = new Vue({
                                     break;
                                 }
 
-                                this.sCity = '';
-                                this.sArea = '';
-                                this.sCountry = '';
-                                this.sAgency = '';
+                                this.city = '';
+                                this.area = '';
+                                this.country = '';
+                                this.agency = '';
                                 return _context3.abrupt("return");
 
                             case 9:
@@ -255,9 +210,9 @@ var app = new Vue({
                                     break;
                                 }
 
-                                this.sArea = '';
-                                this.sCountry = '';
-                                this.sAgency = '';
+                                this.area = '';
+                                this.country = '';
+                                this.agency = '';
                                 return _context4.abrupt("return");
 
                             case 8:
@@ -298,8 +253,8 @@ var app = new Vue({
                                     break;
                                 }
 
-                                this.sCountry = '';
-                                this.sAgency = '';
+                                this.country = '';
+                                this.agency = '';
                                 return _context5.abrupt("return");
 
                             case 7:
@@ -340,7 +295,7 @@ var app = new Vue({
                                     break;
                                 }
 
-                                this.sAgency = '';
+                                this.agency = '';
                                 return _context6.abrupt("return");
 
                             case 6:
@@ -442,7 +397,7 @@ var app = new Vue({
         }(),
         adds: function () {
             var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
-                var uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, address, id_card_positive_photo, id_card_negative_photo, business_license, shop_name, phone, name, id_card, result;
+                var uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, province, city, area, street, community, address, id_card_positive_photo, id_card_negative_photo, business_license, shop_name, phone, name, id_card, result;
                 return regeneratorRuntime.wrap(function _callee9$(_context9) {
                     while (1) {
                         switch (_context9.prev = _context9.next) {
@@ -455,33 +410,62 @@ var app = new Vue({
                                 area_id = this.sArea;
                                 street_id = this.sCountry;
                                 community_id = this.sAgency;
-                                address = 2;
+                                province = this.province.filter(function (item) {
+                                    return item.id === province_id;
+                                })[0].region_name;
+                                city = this.city.filter(function (item) {
+                                    return item.id === city_id;
+                                })[0].region_name;
+                                area = this.area.filter(function (item) {
+                                    return item.id === area_id;
+                                })[0].region_name;
+                                street = void 0;
+
+                                if (this.country) {
+                                    street = this.country.filter(function (item) {
+                                        return item.id === street_id;
+                                    })[0].region_name;
+                                } else {
+                                    street = "";
+                                }
+                                community = void 0;
+
+                                if (this.agency) {
+                                    community = this.agency.filter(function (item) {
+                                        return item.id === community_id;
+                                    })[0].region_name;
+                                } else {
+                                    community = "";
+                                }
+                                console.log(province);
+                                console.log(city);
+                                console.log(area);
+                                console.log(street);
+                                console.log(community);
+                                address = province + city + area + street + community;
+
+                                console.log(address);
                                 id_card_positive_photo = this.localId.back;
                                 id_card_negative_photo = this.localId.front;
                                 business_license = this.localId.card;
                                 shop_name = this.shop_name, phone = this.phone, name = this.name, id_card = this.id_card;
 
-                                if (!(!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id, !shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license)) {
-                                    _context9.next = 16;
-                                    break;
+                                if (!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id, !shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license) {
+                                    this.$message({
+                                        message: "请检查数据",
+                                        type: 'error',
+                                        duration: 1000
+                                    });
+                                    // return
                                 }
-
-                                this.$message({
-                                    message: "请检查数据",
-                                    type: 'error',
-                                    duration: 1000
-                                });
-                                return _context9.abrupt("return");
-
-                            case 16:
-                                _context9.next = 18;
+                                _context9.next = 29;
                                 return storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license);
 
-                            case 18:
+                            case 29:
                                 result = _context9.sent;
 
                                 if (!(result.code === 1)) {
-                                    _context9.next = 22;
+                                    _context9.next = 33;
                                     break;
                                 }
 
@@ -492,7 +476,7 @@ var app = new Vue({
                                 });
                                 return _context9.abrupt("return");
 
-                            case 22:
+                            case 33:
                             case "end":
                                 return _context9.stop();
                         }
@@ -508,12 +492,11 @@ var app = new Vue({
         }()
     },
     created: function created() {
-        var _this3 = this;
+        var _this2 = this;
 
         setTimeout(function () {
-            _this3.getWxConfig();
-            _this3.getProvince();
-            _this3.getOneCate();
+            _this2.getProvince();
+            _this2.getOneCate();
         }, 100);
     }
 });

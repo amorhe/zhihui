@@ -47,61 +47,13 @@ let app = new Vue({
             this.jssdkconfig = result
             console.log(result)
             jssdkconfig = this.jssdkconfig
-
-            wx.config({
-                debug: false,
-                appId: jssdkconfig.appId,
-                timestamp: jssdkconfig.timestamp,
-                nonceStr: jssdkconfig.nonceStr,
-                signature: jssdkconfig.signature,
-                jsApiList: [
-                    'getLocation',
-                    'chooseImage',
-                    'uploadImage',
-                ]
-            });
-
-            wx.ready(function () {
-                wx.getLocation({
-                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                    success: function (res) {
-                        console.log(JSON.stringify(res))
-                        // console.log(localStorage.jsdk)
-                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                        localStorage.longitude_latitude = longitude + ',' + latitude
-                        that.longitude_latitude = longitude + ',' + latitude
-                        localStorage.setItem('longitude_latitude', that.longitude_latitude)
-                    }
-                });
-            })
-            wx.error(function (res) {
-                console.log(`err:${res}`)
-            });
-
-        },
-        chooseImage(which) {
-            let images = {
-                localId: [],
-                serverId: []
-            };
-            wx.chooseImage({
-                count: 1,//设置一次能选择的图片的数量
-                sizeType: ['original', 'compressed'],//指定是原图还是压缩,默认二者都有
-                sourceType: ['album', 'camera'],//可以指定来源是相册还是相机,默认二者都有
-                success: (res) => {
-                    images.localId = res.localIds;
-                    this.localId[which] = res.localIds[0];
-                    alert(JSON.stringify(this.localId))
-                }
-            });
         },
         upLoadImg(event, which) {
             console.log(event);
             var formData = new FormData();
             formData.append("file", event.target.files[0]);
             $.ajax({
-                url: 'https://shop.zhihuimall.com.cn:443/zhihuishop/public/index.php/api/allarea/uploadimg',
+                url: Base_url+'/api/allarea/uploadimg',
                 type: 'POST',
                 data: formData,
                 cache: false,
@@ -143,10 +95,10 @@ let app = new Vue({
         async getCity(provinceId) {
             let result = await areaList(2, provinceId)
             if (result === false) {
-                this.sCity = ''
-                this.sArea = ''
-                this.sCountry = ''
-                this.sAgency = ''
+                this.city = ''
+                this.area = ''
+                this.country = ''
+                this.agency = ''
                 return
             }
             console.log(result);
@@ -157,9 +109,9 @@ let app = new Vue({
         async getArea(CityId) {
             let result = await areaList(3, CityId)
             if (result === false) {
-                this.sArea = ''
-                this.sCountry = ''
-                this.sAgency = ''
+                this.area = ''
+                this.country = ''
+                this.agency = ''
                 return
             }
             console.log(result);
@@ -170,8 +122,8 @@ let app = new Vue({
         async getCountry(areaId) {
             let result = await areaList(4, areaId)
             if (result === false) {
-                this.sCountry = ''
-                this.sAgency = ''
+                this.country = ''
+                this.agency = ''
                 return
             }
             console.log(result);
@@ -182,7 +134,7 @@ let app = new Vue({
         async getAgency(countryId) {
             let result = await areaList(5, countryId)
             if (result === false) {
-                this.sAgency = ''
+                this.agency = ''
                 return
             }
             this.sAgency = result[0].id
@@ -218,7 +170,29 @@ let app = new Vue({
             let area_id = this.sArea
             let street_id = this.sCountry
             let community_id = this.sAgency
-            let address = 2
+
+            let province = this.province.filter((item) => item.id === province_id)[0].region_name
+            let city = this.city.filter((item) => item.id === city_id)[0].region_name
+            let area = this.area.filter((item) => item.id === area_id)[0].region_name
+            let street
+            if (this.country) {
+                street = this.country.filter((item) => item.id === street_id)[0].region_name
+            }else{
+                street = ""
+            }
+            let community
+            if (this.agency) {
+                community = this.agency.filter((item) => item.id === community_id)[0].region_name
+            }else{
+                community = ""
+            }
+            console.log(province);
+            console.log(city);
+            console.log(area);
+            console.log(street);
+            console.log(community);
+            let address = province + city + area + street + community
+            console.log(address);
             let id_card_positive_photo = this.localId.back
             let id_card_negative_photo = this.localId.front
             let business_license = this.localId.card
@@ -229,7 +203,7 @@ let app = new Vue({
                     type: 'error',
                     duration: 1000
                 })
-                return
+                // return
             }
             let result = await storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license)
             if (result.code === 1){
@@ -244,7 +218,6 @@ let app = new Vue({
     },
     created() {
         setTimeout(() => {
-            this.getWxConfig()
             this.getProvince()
             this.getOneCate()
         }, 100)
