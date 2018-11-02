@@ -1,9 +1,8 @@
 let app = new Vue({
     el: "#app",
     data: {
-        baseImgUrl:ImgBaseUrl,
+        baseImgUrl: ImgBaseUrl,
         shopList: [],
-        longitude_latitude: '',
         page: 1,
         allLoaded: true,
         loading: false,//判断是否加载数据
@@ -14,16 +13,13 @@ let app = new Vue({
         if (!localStorage.longitude_latitude) {
             location.assign('./index.html')
         }
-
-        let longitude_latitude = this.GetQueryString('longitude_latitude')
-        this.longitude_latitude = longitude_latitude
         setTimeout(() => {
             this.getStoreList(longitude_latitude, this.page)
         })
     },
     methods: {
-        goTo(url, id, longitude_latitude, status) {
-            location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
+        goTo(url, id, status) {
+            location.assign(`${url}?id=${id}&status=${status}`)
         },
         back() {
             history.go(-1)
@@ -34,8 +30,8 @@ let app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
-        async getStoreList(longitude_latitude, page) {
-            let result = await todayDiscountList(longitude_latitude, page)
+        async getStoreList(page) {
+            let result = await todayDiscountList(longitude_latitude, page, area_id)
             if (result.code === 0) {
                 alert(result.message)
             }
@@ -63,7 +59,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await todayDiscountList(this.longitude_latitude, this.page)
+                    result = await todayDiscountList(longitude_latitude, this.page, area_id)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         // console.log(this.allSortList.length, result.data.total)

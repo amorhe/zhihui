@@ -24,7 +24,7 @@
             <img src="./img/logo.png"
                  style="height: .2rem;" alt="">
         </a>
-        <a href="allList.html">
+        <a href="selectAddress.html">
             <p style="font-size: .12rem">{{address === "" ? '定位失败' : address}}</p>
         </a>
         <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
@@ -76,7 +76,7 @@
                 <div class="swiper-slide" v-for="i in cate">
                     <div class="index_list_div" v-for="item in i"
                          :key="item.id"
-                         @click="goTo('./storelist.html',item.id,longitude_latitude)">
+                         @click="goTo('./storelist.html',item.id)">
                         <img
                                 :src="`${baseImgUrl}${item.images}`"
                                 alt="">
@@ -91,7 +91,7 @@
         <div class="day_recom_top">
             <p>小编推荐</p>
             <p>
-                <span @click="goTo('./morerecommendlist.html','xbtj',longitude_latitude)">更多推荐</span>
+                <span @click="goTo('./morerecommendlist.html','xbtj')">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
@@ -99,7 +99,7 @@
             <div class="swiper-container" id="recommend">
                 <div class="swiper-wrapper day_recom_swiper">
                     <div class="swiper-slide" v-for="item in recommendList" :key="item.id"
-                         @click="goTo('./detail.html',item.id,longitude_latitude,1)">
+                         @click="goTo('./detail.html',item.id,1)">
                         <img class="slide_img" :src="`${baseImgUrl}${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -121,7 +121,7 @@
         <div class="day_recom_top">
             <p>商家推荐</p>
             <p>
-                <span @click="goTo('./recommend.html','xbtj',longitude_latitude,0)">更多推荐</span>
+                <span @click="goTo('./recommend.html','xbtj',0)">更多推荐</span>
                 <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
@@ -129,7 +129,7 @@
             <div class="swiper-container" id="shopGoodList">
                 <div class="swiper-wrapper day_recom_swiper">
                     <div class="swiper-slide" v-for="item in shopGoodList" :key="item.store_id"
-                         @click="goTo('./detail.html',item.store_id,longitude_latitude,0)">
+                         @click="goTo('./detail.html',item.store_id,0)">
                         <img class="slide_img" :src="`${baseImgUrl}${item.store_images}`" alt="">
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
@@ -160,16 +160,16 @@
 
     <div class="index_bottom">
         <div class="index_foot">
-            <p @click="getAllSort(1,longitude_latitude,1)" :class="{'active':index_foot[0] === 1}">
+            <p @click="getAllSort(1)" :class="{'active':index_foot[0] === 1}">
                 离我最近</p>
-            <p @click="getAllSort(2,longitude_latitude,1)" :class="{'active':index_foot[1] === 1}">
+            <p @click="getAllSort(2)" :class="{'active':index_foot[1] === 1}">
                 折扣最高</p>
-            <p @click="getAllSort(3,longitude_latitude,1)" :class="{'active':index_foot[2] === 1}">
+            <p @click="getAllSort(3)" :class="{'active':index_foot[2] === 1}">
                 最新发布</p>
         </div>
 
         <div class="index_foot_list" v-for="item in allSortList" :key="item.id"
-             @click="goTo('./detail.html',item.id,longitude_latitude,1)">
+             @click="goTo('./detail.html',item.id,1)">
             <img :src="`${baseImgUrl}${item.store_images}`" alt="">
             <div>
                 <p class="list_name">{{item.shop_name}}</p>

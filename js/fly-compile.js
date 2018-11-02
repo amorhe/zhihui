@@ -3,10 +3,16 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // 添加请求拦截器
-var loadinglet = void 0;
+var loading = void 0;
 var jssdkconfig = void 0;
-localStorage.longitude_latitude = '120,30';
+
+// localStorage.longitude_latitude = '120,30'
 localStorage.uid = 2121;
+
+// 全局变量
+var uid = localStorage.uid;
+var longitude_latitude = localStorage.longitude_latitude;
+var area_id = localStorage.area_id;
 
 function makeFormData(obj, form_data) {
     var data = [];
@@ -21,11 +27,11 @@ function makeFormData(obj, form_data) {
             }
         }
     } else if ((typeof obj === "undefined" ? "undefined" : _typeof(obj)) == 'object') {
-        for (var j in obj) {
-            var arr = makeFormData(obj[j]);
-            for (var k = 0, l = arr.length; k < l; k++) {
-                var key = !!form_data ? j + arr[k].key : "[" + j + "]" + arr[k].key;
-                data.push({ key: key, value: arr[k].value });
+        for (var _j in obj) {
+            var _arr = makeFormData(obj[_j]);
+            for (var _k = 0, _l = _arr.length; _k < _l; _k++) {
+                var _key = !!form_data ? _j + _arr[_k].key : "[" + _j + "]" + _arr[_k].key;
+                data.push({ key: _key, value: _arr[_k].value });
             }
         }
     } else {
@@ -33,7 +39,7 @@ function makeFormData(obj, form_data) {
     }
     if (!!form_data) {
         // 封装
-        for (var i = 0, len = data.length; i < len; i++) {
+        for (var i = 0, _len = data.length; i < _len; i++) {
             form_data.append(data[i].key, data[i].value);
         }
     } else {
@@ -48,7 +54,7 @@ fly.interceptors.request.use(function (request) {
     // 打印出请求体
     // console.log(request.body)
     // 终止请求
-    // var err=new Error("xxx")
+    // let err=new Error("xxx")
     // err.request=request
     // return Promise.reject(new Error(""))
 
@@ -143,16 +149,16 @@ var discountList = function discountList() {
     return ajax(Base_url + '/api/alldiscount/discountlist');
 };
 //今日钜惠
-var todayDiscountList = function todayDiscountList(longitude_latitude, page) {
-    return ajax(Base_url + '/api/alldiscount/todydiscountlist', { longitude_latitude: longitude_latitude, page: page });
+var todayDiscountList = function todayDiscountList(longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/alldiscount/todydiscountlist', { longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 //很优惠
-var firmDiscountList = function firmDiscountList(longitude_latitude, page) {
-    return ajax(Base_url + '/api/alldiscount/firmdiscountlist', { longitude_latitude: longitude_latitude, page: page });
+var firmDiscountList = function firmDiscountList(longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/alldiscount/firmdiscountlist', { longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 //优惠信息
-var informationDiscountList = function informationDiscountList(longitude_latitude, page) {
-    return ajax(Base_url + '/api/alldiscount/informationdiscountlist', { longitude_latitude: longitude_latitude, page: page });
+var informationDiscountList = function informationDiscountList(longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/alldiscount/informationdiscountlist', { longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 
 //商家二维码
@@ -177,8 +183,8 @@ var hotSearchList = function hotSearchList() {
     return ajax(Base_url + '/api/allsearch/hotsearchlist');
 };
 //套餐搜索
-var shopGoodsSearchList = function shopGoodsSearchList(search_key, longitude_latitude, uid) {
-    return ajax(Base_url + '/api/allsearch/shopgoodssearchlist', { search_key: search_key, longitude_latitude: longitude_latitude, uid: uid });
+var shopGoodsSearchList = function shopGoodsSearchList(search_key, longitude_latitude, uid, area_id) {
+    return ajax(Base_url + '/api/allsearch/shopgoodssearchlist', { search_key: search_key, longitude_latitude: longitude_latitude, uid: uid, area_id: area_id });
 };
 //搜索历史
 var historySearchList = function historySearchList(uid) {
@@ -209,24 +215,25 @@ var allSort = function allSort(sort_status, longitude_latitude, page) {
 
 //分类下的店铺
 //店铺列表
-var storeList = function storeList(shopcate_id, longitude_latitude, page) {
-    return ajax(Base_url + '/api/allstore/storelist', { shopcate_id: shopcate_id, longitude_latitude: longitude_latitude, page: page });
+var storeList = function storeList(shopcate_id, type, longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/allstore/storelist', { shopcate_id: shopcate_id, type: type, longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 //小编推荐
-var recommendList = function recommendList(longitude_latitude) {
-    return ajax(Base_url + '/api/allstore/recommendlist', { longitude_latitude: longitude_latitude });
+var recommendList = function recommendList(longitude_latitude, area_id) {
+    return ajax(Base_url + '/api/allstore/recommendlist', { longitude_latitude: longitude_latitude, area_id: area_id });
 };
 //小编更多推荐
-var MoreRecommendList = function MoreRecommendList(longitude_latitude, page) {
-    return ajax(Base_url + '/api/allstore/morerecommendlist', { longitude_latitude: longitude_latitude, page: page });
+var MoreRecommendList = function MoreRecommendList(longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/allstore/morerecommendlist', { longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 //商家推荐列表
-var shopGoodList = function shopGoodList(longitude_latitude) {
-    return ajax(Base_url + '/api/allstore/shopgoodslist', { longitude_latitude: longitude_latitude });
+var shopGoodList = function shopGoodList(longitude_latitude, area_id) {
+    var page = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    return ajax(Base_url + '/api/allstore/shopgoodslist', { longitude_latitude: longitude_latitude, area_id: area_id, page: page });
 };
 //更多商家推荐列表
-var moreShopGoodsList = function moreShopGoodsList(longitude_latitude, page) {
-    return ajax(Base_url + '/api/allstore/moreshopgoodslist', { longitude_latitude: longitude_latitude, page: page });
+var moreShopGoodsList = function moreShopGoodsList(longitude_latitude, page, area_id) {
+    return ajax(Base_url + '/api/allstore/moreshopgoodslist', { longitude_latitude: longitude_latitude, page: page, area_id: area_id });
 };
 
 // 商家入驻相关

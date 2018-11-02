@@ -1,8 +1,14 @@
 // 添加请求拦截器
-let loadinglet
+let loading
 let jssdkconfig
-localStorage.longitude_latitude = '120,30'
+
+// localStorage.longitude_latitude = '120,30'
 localStorage.uid = 2121
+
+// 全局变量
+let uid = localStorage.uid
+let longitude_latitude = localStorage.longitude_latitude
+let area_id = localStorage.area_id
 
 function makeFormData(obj, form_data) {
     const data = [];
@@ -10,19 +16,19 @@ function makeFormData(obj, form_data) {
         data.push({key: "", value: obj});
     }
     else if (obj instanceof Array) {
-        for (var j = 0, len = obj.length; j < len; j++) {
-            var arr = makeFormData(obj[j]);
-            for (var k = 0, l = arr.length; k < l; k++) {
-                var key = !!form_data ? j + arr[k].key : "[" + j + "]" + arr[k].key;
+        for (let j = 0, len = obj.length; j < len; j++) {
+            let arr = makeFormData(obj[j]);
+            for (let k = 0, l = arr.length; k < l; k++) {
+                let key = !!form_data ? j + arr[k].key : "[" + j + "]" + arr[k].key;
                 data.push({key: key, value: arr[k].value})
             }
         }
     }
     else if (typeof obj == 'object') {
-        for (var j in obj) {
-            var arr = makeFormData(obj[j]);
-            for (var k = 0, l = arr.length; k < l; k++) {
-                var key = !!form_data ? j + arr[k].key : "[" + j + "]" + arr[k].key;
+        for (let j in obj) {
+            let arr = makeFormData(obj[j]);
+            for (let k = 0, l = arr.length; k < l; k++) {
+                let key = !!form_data ? j + arr[k].key : "[" + j + "]" + arr[k].key;
                 data.push({key: key, value: arr[k].value})
             }
         }
@@ -32,7 +38,7 @@ function makeFormData(obj, form_data) {
     }
     if (!!form_data) {
         // 封装
-        for (var i = 0, len = data.length; i < len; i++) {
+        for (let i = 0, len = data.length; i < len; i++) {
             form_data.append(data[i].key, data[i].value)
         }
     }
@@ -48,7 +54,7 @@ fly.interceptors.request.use((request) => {
     // 打印出请求体
     // console.log(request.body)
     // 终止请求
-    // var err=new Error("xxx")
+    // let err=new Error("xxx")
     // err.request=request
     // return Promise.reject(new Error(""))
 
@@ -137,11 +143,11 @@ const bannerList = () => ajax(Base_url + '/api/allbanner/bannerlist')
 //优惠底层图片和文案
 const discountList = () => ajax(Base_url + '/api/alldiscount/discountlist')
 //今日钜惠
-const todayDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/alldiscount/todydiscountlist', {longitude_latitude, page})
+const todayDiscountList = (longitude_latitude, page,area_id) => ajax(Base_url + '/api/alldiscount/todydiscountlist', {longitude_latitude, page,area_id})
 //很优惠
-const firmDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/alldiscount/firmdiscountlist', {longitude_latitude, page})
+const firmDiscountList = (longitude_latitude, page,area_id) => ajax(Base_url + '/api/alldiscount/firmdiscountlist', {longitude_latitude, page,area_id})
 //优惠信息
-const informationDiscountList = (longitude_latitude, page) => ajax(Base_url + '/api/alldiscount/informationdiscountlist', {longitude_latitude, page})
+const informationDiscountList = (longitude_latitude, page,area_id) => ajax(Base_url + '/api/alldiscount/informationdiscountlist', {longitude_latitude, page,area_id})
 
 //商家二维码
 //商家二维码
@@ -158,7 +164,7 @@ const newsAdd = (uid,content) => ajax(Base_url + '/api/allnews/newsadd',{uid,con
 //热搜
 const hotSearchList = () => ajax(Base_url + '/api/allsearch/hotsearchlist')
 //套餐搜索
-const shopGoodsSearchList =  (search_key,longitude_latitude,uid) => ajax(Base_url + '/api/allsearch/shopgoodssearchlist',{search_key,longitude_latitude,uid})
+const shopGoodsSearchList =  (search_key,longitude_latitude,uid,area_id) => ajax(Base_url + '/api/allsearch/shopgoodssearchlist',{search_key,longitude_latitude,uid,area_id})
 //搜索历史
 const historySearchList = (uid) => ajax(Base_url + '/api/allsearch/historysearchlist',{uid})
 //删除搜索历史
@@ -179,15 +185,15 @@ const allSort = (sort_status, longitude_latitude, page) => ajax(Base_url + '/api
 
 //分类下的店铺
 //店铺列表
-const storeList = (shopcate_id, longitude_latitude, page) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id, longitude_latitude, page})
+const storeList = (shopcate_id,type,longitude_latitude, page, area_id) => ajax(Base_url + '/api/allstore/storelist', {shopcate_id,type, longitude_latitude, page, area_id})
 //小编推荐
-const recommendList = (longitude_latitude) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude})
+const recommendList = (longitude_latitude,area_id) => ajax(Base_url + '/api/allstore/recommendlist', {longitude_latitude,area_id})
 //小编更多推荐
-const MoreRecommendList = (longitude_latitude,page) => ajax(Base_url + '/api/allstore/morerecommendlist',{longitude_latitude,page})
+const MoreRecommendList = (longitude_latitude,page,area_id) => ajax(Base_url + '/api/allstore/morerecommendlist',{longitude_latitude,page,area_id})
 //商家推荐列表
-const shopGoodList = (longitude_latitude) => ajax(Base_url + '/api/allstore/shopgoodslist', {longitude_latitude})
+const shopGoodList = (longitude_latitude,area_id,page = 1) => ajax(Base_url + '/api/allstore/shopgoodslist', {longitude_latitude,area_id,page})
 //更多商家推荐列表
-const moreShopGoodsList = (longitude_latitude,page) => ajax(Base_url + '/api/allstore/moreshopgoodslist',{longitude_latitude,page})
+const moreShopGoodsList = (longitude_latitude,page,area_id) => ajax(Base_url + '/api/allstore/moreshopgoodslist',{longitude_latitude,page,area_id})
 
 // 商家入驻相关
 // 地区列表
@@ -216,6 +222,6 @@ const addmemberphone = (uid,phone) => ajax(Base_url + '/api/allorder/addmemberph
 const citySelectList = () => ajax(Base_url + '/api/allcityselect/cityselectlist')
 
 // 初始化
-var vConsole = new VConsole();
+let vConsole = new VConsole();
 console.log('Hello world');
 

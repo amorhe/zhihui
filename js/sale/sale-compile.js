@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -10,7 +10,6 @@ var app = new Vue({
         baseImgUrl: ImgBaseUrl,
         shopList: [],
         page: 1,
-        longitude_latitude: '',
         allLoaded: true,
         loading: false, //判断是否加载数据
         loading_more: true //控制是否发送ajax请求
@@ -22,9 +21,6 @@ var app = new Vue({
         if (!localStorage.longitude_latitude) {
             location.assign('./index.html');
         }
-
-        var longitude_latitude = this.GetQueryString('longitude_latitude');
-        this.longitude_latitude = longitude_latitude;
         setTimeout(function () {
             _this.getStoreList(longitude_latitude, _this.page);
         });
@@ -45,7 +41,7 @@ var app = new Vue({
                                     break;
                                 }
 
-                                return _context.abrupt('return');
+                                return _context.abrupt("return");
 
                             case 2:
                                 if (!($(window).scrollTop() + $(window).height() + 100 >= $(document).height())) {
@@ -66,7 +62,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context.next = 11;
-                                return firmDiscountList(this.longitude_latitude, this.page);
+                                return firmDiscountList(longitude_latitude, this.page, area_id);
 
                             case 11:
                                 result = _context.sent;
@@ -85,7 +81,7 @@ var app = new Vue({
                                     break;
                                 }
 
-                                return _context.abrupt('return');
+                                return _context.abrupt("return");
 
                             case 19:
 
@@ -110,7 +106,7 @@ var app = new Vue({
                                 this.loading = false;
 
                             case 27:
-                            case 'end':
+                            case "end":
                                 return _context.stop();
                         }
                     }
@@ -127,7 +123,7 @@ var app = new Vue({
             history.go(-1);
         },
         goTo: function goTo(url, id, longitude_latitude, status) {
-            location.assign(url + '?id=' + id + '&longitude_latitude=' + longitude_latitude + '&status=' + status);
+            location.assign(url + "?id=" + id + "&longitude_latitude=" + longitude_latitude + "&status=" + status);
         },
         GetQueryString: function GetQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -136,14 +132,14 @@ var app = new Vue({
             return null;
         },
         getStoreList: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(longitude_latitude, page) {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(page) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 _context2.next = 2;
-                                return firmDiscountList(longitude_latitude, page);
+                                return firmDiscountList(longitude_latitude, page, area_id);
 
                             case 2:
                                 result = _context2.sent;
@@ -157,14 +153,14 @@ var app = new Vue({
                                 }
 
                             case 5:
-                            case 'end':
+                            case "end":
                                 return _context2.stop();
                         }
                     }
                 }, _callee2, this);
             }));
 
-            function getStoreList(_x, _x2) {
+            function getStoreList(_x) {
                 return _ref2.apply(this, arguments);
             }
 

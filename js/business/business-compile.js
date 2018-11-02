@@ -10,7 +10,6 @@ var app = new Vue({
         baseImgUrl: ImgBaseUrl,
         shopList: [],
         page: 1,
-        longitude_latitude: '',
         allLoaded: true,
         loading: false, //判断是否加载数据
         loading_more: true //控制是否发送ajax请求
@@ -19,8 +18,8 @@ var app = new Vue({
         back: function back() {
             history.go(-1);
         },
-        goTo: function goTo(url, id, longitude_latitude, status) {
-            location.assign(url + "?id=" + id + "&longitude_latitude=" + longitude_latitude + "&status=" + status);
+        goTo: function goTo(url, id, status) {
+            location.assign(url + "?id=" + id + "&status=" + status);
         },
         GetQueryString: function GetQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -29,14 +28,14 @@ var app = new Vue({
             return null;
         },
         getStoreList: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(longitude_latitude, page) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(page) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.next = 2;
-                                return informationDiscountList(this.longitude_latitude, this.page);
+                                return informationDiscountList(longitude_latitude, this.page, area_id);
 
                             case 2:
                                 result = _context.sent;
@@ -57,7 +56,7 @@ var app = new Vue({
                 }, _callee, this);
             }));
 
-            function getStoreList(_x, _x2) {
+            function getStoreList(_x) {
                 return _ref.apply(this, arguments);
             }
 
@@ -98,7 +97,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context2.next = 11;
-                                return informationDiscountList(this.longitude_latitude, this.page);
+                                return informationDiscountList(longitude_latitude, this.page, area_id);
 
                             case 11:
                                 result = _context2.sent;
@@ -164,8 +163,6 @@ var app = new Vue({
         }
 
         var id = this.GetQueryString('id');
-        var longitude_latitude = this.GetQueryString('longitude_latitude');
-        this.longitude_latitude = longitude_latitude;
         setTimeout(function () {
             _this2.getStoreList(id, longitude_latitude);
         });

@@ -6,7 +6,6 @@ function removeSameItem(arr) {
     return Array.from(new Set(arr));
 }
 
-var jssdkconfig = void 0;
 var app = new Vue({
     el: "#app",
     data: {

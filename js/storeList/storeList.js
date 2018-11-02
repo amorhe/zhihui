@@ -5,7 +5,6 @@ let app = new Vue({
         id:0,
         shopCateListData:[],
         shopList: [],
-        longitude_latitude: '',
         page: 1,
         allLoaded: true,
         loading: false,//判断是否加载数据
@@ -16,9 +15,6 @@ let app = new Vue({
         if (!localStorage.longitude_latitude) {
             location.assign('./index.html')
         }
-
-        let longitude_latitude = this.GetQueryString('longitude_latitude')
-        this.longitude_latitude = longitude_latitude
         let id = this.GetQueryString('id')
         this.id = id
         setTimeout(() => {
@@ -45,8 +41,8 @@ let app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
-        async getStoreList(id,longitude_latitude, page) {
-            let result = await storeList(id,longitude_latitude, page)
+        async getStoreList(id) {
+            let result = await storeList(id,1,longitude_latitude, this.page,area_id)
             if (result.code === 0) {
                 console.log(result.message)
             }
@@ -69,7 +65,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await storeList(this.id,this.longitude_latitude, this.page)
+                    result = await storeList(this.id,1, longitude_latitude, this.page,area_id)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         // console.log(this.allSortList.length, result.data.total)

@@ -4,7 +4,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var jssdkconfig = void 0;
 var app = new Vue({
     el: "#app",
     data: {
@@ -15,7 +14,6 @@ var app = new Vue({
         sortPage: 1,
         index_foot: [1, 0, 0],
         address: '',
-        longitude_latitude: '',
         allLoaded: true,
         loading: false, //判断是否加载数据
         loading_more: true //控制是否发送ajax请求
@@ -48,24 +46,23 @@ var app = new Vue({
         },
         getShopGoodsSearchList: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var search_key, longitude_latitude, uid, result;
+                var search_key, uid, result;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 search_key = this.getRequest().search_key;
-                                longitude_latitude = localStorage.longitude_latitude;
                                 uid = localStorage.uid;
-                                _context.next = 5;
-                                return shopGoodsSearchList(search_key, longitude_latitude, uid);
+                                _context.next = 4;
+                                return shopGoodsSearchList(search_key, longitude_latitude, uid, area_id);
 
-                            case 5:
+                            case 4:
                                 result = _context.sent;
 
                                 this.allSortList = result.data;
                                 console.log(result);
 
-                            case 8:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -114,7 +111,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context2.next = 11;
-                                return allSort(this.sort_status, this.longitude_latitude, this.sortPage);
+                                return allSort(this.sort_status, longitude_latitude, this.sortPage);
 
                             case 11:
                                 result = _context2.sent;
@@ -171,7 +168,7 @@ var app = new Vue({
             return loadingMore;
         }(),
         goTo: function goTo(url, id, longitude_latitude, status) {
-            location.assign(url + '?id=' + id + '&longitude_latitude=' + longitude_latitude + '&status=' + status);
+            location.assign(url + '?id=' + id + '&status=' + status);
         },
         getRequest: function getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -195,7 +192,6 @@ var app = new Vue({
         }
 
         setTimeout(function () {
-            _this2.longitude_latitude = localStorage.longitude_latitude;
             _this2.getShopGoodsSearchList();
         });
     },

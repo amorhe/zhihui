@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>至惠商联</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/selectAddress.css">
+</head>
+<body style="background: #eeeeee">
+<div id="app" v-clock>
+    <form action="#" onsubmit="return false;" class="index_head" style="background: #ffffff">
+        <p class="iconfont icon-fanhui" @click="`${window.history.go(-1)}`"></p>
+        <el-input
+                style="width: 2.5rem;"
+                type="text" type="search"
+                placeholder="请输入城市名"
+                prefix-icon="el-icon-search"
+                autofocus="true"
+                v-model="search_key"
+        >
+        </el-input>
+        <span @click="">搜索</span>
+    </form>
+    <section class="address">
+        <div v-for="v in citySelectLists" @click="changeAddress(v.lat_lng,v.area_id,v.area)">{{v.area}}</div>
+    </section>
+</div>
+</body>
+<!-- 引入组件库 -->
+<!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>-->
+<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-rc.4/polyfill.js"></script>
+<script src="./js/vconsole.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/jq.js"></script>
+<script src="js/fly.js"></script>
+<!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
+<script src="js/selectAddress/selectAddress-compile.js"></script>
+</html>

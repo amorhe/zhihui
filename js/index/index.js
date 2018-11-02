@@ -77,9 +77,8 @@ let app = new Vue({
 
             let result = await wxConfig(url)
             result = JSON.parse(result.data)
-            this.jssdkconfig = result
+            jssdkconfig = result
             console.log(result)
-            jssdkconfig = this.jssdkconfig
 
             wx.config({
                 debug: false,
@@ -101,10 +100,10 @@ let app = new Vue({
                         var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                         var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                         localStorage.longitude_latitude = longitude + ',' + latitude
-                        that.getRecommendList(longitude + ',' + latitude);
-                        that.getShopGoodList(longitude + ',' + latitude);
-                        that.getAllSort(1, longitude + ',' + latitude, 1)
-                        that.getDistrict(latitude + ',' + longitude)
+                        that.getRecommendList(longitude_latitude);
+                        that.getShopGoodList(longitude_latitude);
+                        that.getAllSort(1, longitude_latitude, 1)
+                        that.getDistrict(longitude_latitude)
                     }
                 });
             })
@@ -114,8 +113,6 @@ let app = new Vue({
 
         },
         async getStoreListImg() {
-            let uid = localStorage.uid
-            let longitude_latitude = localStorage.longitude_latitude
             let result = await storeImg(uid, longitude_latitude)
             console.log(result)
             this.storeImg = result.data
@@ -147,7 +144,7 @@ let app = new Vue({
             this.banner = result.data
             console.log(result)
         },
-        async getDistrict(longitude_latitude) {
+        async getDistrict() {
             let result = await districts(longitude_latitude)
             this.address = result.result.ad_info.district
             console.log(result.result.ad_info.district)
@@ -157,15 +154,15 @@ let app = new Vue({
             this.shopCateListData = result.data
             console.log(result)
         },
-        async getRecommendList(longitude_latitude) {
-            let result = await recommendList(longitude_latitude)
+        async getRecommendList() {
+            let result = await recommendList(longitude_latitude,area_id)
             if (result.code === 1) {
                 this.recommendList = result.data.data
                 console.log(result)
             }
         },
-        async getShopGoodList(longitude_latitude) {
-            let result = await shopGoodList(longitude_latitude)
+        async getShopGoodList() {
+            let result = await shopGoodList(longitude_latitude,area_id)
             if (result.code === 1) {
                 this.shopGoodList = result.data
                 console.log(result)
@@ -178,14 +175,14 @@ let app = new Vue({
                 this.discountList = result.data
             }
         },
-        async getAllSort(sort_status, page) {
+        async getAllSort(sort_status) {
             this.allLoaded = true
             this.sortPage = 1
             this.index_foot = [0, 0, 0]
             this.index_foot[sort_status - 1] = 1
             this.sort_status = sort_status
 
-            let result = await allSort(sort_status, localStorage.longitude_latitude, page)
+            let result = await allSort(sort_status, longitude_latitude, this.sortPage)
             if (result.code === 1) {
                 console.log(result)
                 this.allSortList = result.data.data
@@ -203,7 +200,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await allSort(this.sort_status, localStorage.longitude_latitude, this.sortPage)
+                    result = await allSort(this.sort_status, longitude_latitude, this.sortPage)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         console.log(this.allSortList.length, result.data.total)
@@ -225,11 +222,11 @@ let app = new Vue({
             }
         },
         goTo(url, id, status) {
-            location.assign(`${url}?id=${id}&longitude_latitude=${localStorage.longitude_latitude}&status=${status}`)
+            location.assign(`${url}?id=${id}&status=${status}`)
         },
         goToDetail(i) {
             const url = ['./todaySale.html', './sale.html', './business.html']
-            this.goTo(url[i], '', localStorage.longitude_latitude)
+            this.goTo(url[i], '', longitude_latitude)
         },
         getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -258,10 +255,14 @@ let app = new Vue({
             this.getDiscountList();
             //定位检测
             if (localStorage.longitude_latitude){
-                this.getRecommendList(localStorage.longitude_latitude);
-                this.getShopGoodList(localStorage.longitude_latitude);
-                this.getAllSort(localStorage.longitude_latitude)
-                this.getDistrict(localStorage.longitude_latitude)
+                if(localStorage.area){
+                    this.address = localStorage.area
+                }
+
+                this.getRecommendList(longitude_latitude);
+                this.getShopGoodList(longitude_latitude);
+                this.getAllSort(longitude_latitude)
+                this.getDistrict(longitude_latitude)
             }else{
                 this.getWxConfig()
             }

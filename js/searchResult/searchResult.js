@@ -1,4 +1,3 @@
-let jssdkconfig
 let app = new Vue({
     el: "#app",
     data: {
@@ -9,7 +8,6 @@ let app = new Vue({
         sortPage: 1,
         index_foot: [1, 0, 0],
         address: '',
-        longitude_latitude: '',
         allLoaded: true,
         loading: false,//判断是否加载数据
         loading_more: true,//控制是否发送ajax请求
@@ -42,9 +40,8 @@ let app = new Vue({
         },
         async getShopGoodsSearchList() {
             let search_key = this.getRequest().search_key
-            let longitude_latitude = localStorage.longitude_latitude
             let uid = localStorage.uid
-            let result = await shopGoodsSearchList(search_key, longitude_latitude, uid)
+            let result = await shopGoodsSearchList(search_key, longitude_latitude, uid,area_id)
             this.allSortList = result.data
             console.log(result)
         },
@@ -60,7 +57,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await allSort(this.sort_status, this.longitude_latitude, this.sortPage)
+                    result = await allSort(this.sort_status, longitude_latitude, this.sortPage)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         console.log(this.allSortList.length, result.data.total)
@@ -82,7 +79,7 @@ let app = new Vue({
             }
         },
         goTo(url, id, longitude_latitude, status) {
-            location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
+            location.assign(`${url}?id=${id}&status=${status}`)
         },
         getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -104,7 +101,6 @@ let app = new Vue({
         }
 
         setTimeout(() => {
-            this.longitude_latitude = localStorage.longitude_latitude
             this.getShopGoodsSearchList()
         })
     },

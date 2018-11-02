@@ -22,11 +22,8 @@ var app = new Vue({
         if (!localStorage.longitude_latitude) {
             location.assign('./index.html');
         }
-
-        var longitude_latitude = this.GetQueryString('longitude_latitude');
-        this.longitude_latitude = longitude_latitude;
         setTimeout(function () {
-            _this.getStoreList(longitude_latitude, _this.page);
+            _this.getStoreList(longitude_latitude, _this.page, area_id);
         });
     },
 
@@ -44,14 +41,14 @@ var app = new Vue({
             return null;
         },
         getStoreList: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(longitude_latitude, page) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(page) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.next = 2;
-                                return moreShopGoodsList(longitude_latitude, page);
+                                return moreShopGoodsList(longitude_latitude, page, area_id);
 
                             case 2:
                                 result = _context.sent;
@@ -75,7 +72,7 @@ var app = new Vue({
                 }, _callee, this);
             }));
 
-            function getStoreList(_x, _x2) {
+            function getStoreList(_x) {
                 return _ref.apply(this, arguments);
             }
 
@@ -115,7 +112,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context2.next = 11;
-                                return moreShopGoodsList(this.longitude_latitude, this.page);
+                                return moreShopGoodsList(longitude_latitude, this.page, area_id);
 
                             case 11:
                                 result = _context2.sent;

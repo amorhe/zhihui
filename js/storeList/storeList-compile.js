@@ -11,7 +11,6 @@ var app = new Vue({
         id: 0,
         shopCateListData: [],
         shopList: [],
-        longitude_latitude: '',
         page: 1,
         allLoaded: true,
         loading: false, //判断是否加载数据
@@ -24,9 +23,6 @@ var app = new Vue({
         if (!localStorage.longitude_latitude) {
             location.assign('./index.html');
         }
-
-        var longitude_latitude = this.GetQueryString('longitude_latitude');
-        this.longitude_latitude = longitude_latitude;
         var id = this.GetQueryString('id');
         this.id = id;
         setTimeout(function () {
@@ -84,14 +80,14 @@ var app = new Vue({
             return null;
         },
         getStoreList: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(id, longitude_latitude, page) {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(id) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 _context2.next = 2;
-                                return storeList(id, longitude_latitude, page);
+                                return storeList(id, 1, longitude_latitude, this.page, area_id);
 
                             case 2:
                                 result = _context2.sent;
@@ -115,7 +111,7 @@ var app = new Vue({
                 }, _callee2, this);
             }));
 
-            function getStoreList(_x, _x2, _x3) {
+            function getStoreList(_x) {
                 return _ref2.apply(this, arguments);
             }
 
@@ -155,7 +151,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context3.next = 11;
-                                return storeList(this.id, this.longitude_latitude, this.page);
+                                return storeList(this.id, 1, longitude_latitude, this.page, area_id);
 
                             case 11:
                                 result = _context3.sent;

@@ -1,0 +1,28 @@
+section.cate{
+  padding: 0 .1rem;
+  section.img{
+    padding: .08rem 0;
+    header{
+      color: rgba(16, 16, 16, 1);
+      font-size: .14rem;
+      text-align: left;
+      font-family: PingFangSC-regular,sans-serif;
+      display: table;
+      margin-bottom: .07rem;
+      img{
+        display: table-cell;
+        vertical-align: middle;
+        border: .01rem solid #999999;
+        width: .26rem;
+        height: .26rem;
+        border-radius: 50%;
+      }
+      span{
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: .07rem;
+      }
+    }
+  }
+
+}

@@ -4,7 +4,6 @@ let app = new Vue({
         baseImgUrl:ImgBaseUrl,
         shopList: [],
         page: 1,
-        longitude_latitude: '',
         allLoaded: true,
         loading: false,//判断是否加载数据
         loading_more: true,//控制是否发送ajax请求
@@ -13,8 +12,8 @@ let app = new Vue({
         back() {
             history.go(-1)
         },
-        goTo(url, id, longitude_latitude, status) {
-            location.assign(`${url}?id=${id}&longitude_latitude=${longitude_latitude}&status=${status}`)
+        goTo(url, id, status) {
+            location.assign(`${url}?id=${id}&status=${status}`)
         },
         GetQueryString(name) {
             let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -22,8 +21,8 @@ let app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
-        async getStoreList(longitude_latitude, page) {
-            let result = await informationDiscountList(this.longitude_latitude, this.page)
+        async getStoreList(page) {
+            let result = await informationDiscountList(longitude_latitude, this.page,area_id)
             if (result.code === 0) {
                 alert(result.message)
             }
@@ -44,7 +43,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await informationDiscountList(this.longitude_latitude, this.page)
+                    result = await informationDiscountList(longitude_latitude, this.page,area_id)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         if (this.shopList.length === result.data.total) {
@@ -73,8 +72,6 @@ let app = new Vue({
         }
 
         let id = this.GetQueryString('id')
-        let longitude_latitude = this.GetQueryString('longitude_latitude')
-        this.longitude_latitude = longitude_latitude
         setTimeout(() => {
             this.getStoreList(id, longitude_latitude)
         })
