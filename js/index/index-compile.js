@@ -4,7 +4,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var jssdkconfig = void 0;
 var app = new Vue({
     el: "#app",
     data: {
@@ -27,7 +26,6 @@ var app = new Vue({
         sortPage: 1,
         index_foot: [1, 0, 0],
         address: '',
-        longitude_latitude: '',
         allLoaded: true,
         loading: false, //判断是否加载数据
         loading_more: true //控制是否发送ajax请求
@@ -142,8 +140,6 @@ var app = new Vue({
                                             var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                                             localStorage.longitude_latitude = longitude + ',' + latitude;
-                                            that.longitude_latitude = longitude + ',' + latitude;
-                                            localStorage.setItem('longitude_latitude', that.longitude_latitude);
                                             that.getRecommendList(longitude + ',' + latitude);
                                             that.getShopGoodList(longitude + ',' + latitude);
                                             that.getAllSort(1, longitude + ',' + latitude, 1);
@@ -440,7 +436,7 @@ var app = new Vue({
             return getDiscountList;
         }(),
         getAllSort: function () {
-            var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(sort_status, longitude_latitude, page) {
+            var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(sort_status, page) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee11$(_context11) {
                     while (1) {
@@ -453,7 +449,7 @@ var app = new Vue({
                                 this.sort_status = sort_status;
 
                                 _context11.next = 7;
-                                return allSort(sort_status, longitude_latitude, page);
+                                return allSort(sort_status, localStorage.longitude_latitude, page);
 
                             case 7:
                                 result = _context11.sent;
@@ -471,7 +467,7 @@ var app = new Vue({
                 }, _callee11, this);
             }));
 
-            function getAllSort(_x5, _x6, _x7) {
+            function getAllSort(_x5, _x6) {
                 return _ref11.apply(this, arguments);
             }
 
@@ -512,7 +508,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context12.next = 11;
-                                return allSort(this.sort_status, this.longitude_latitude, this.sortPage);
+                                return allSort(this.sort_status, localStorage.longitude_latitude, this.sortPage);
 
                             case 11:
                                 result = _context12.sent;
@@ -568,12 +564,12 @@ var app = new Vue({
 
             return loadingMore;
         }(),
-        goTo: function goTo(url, id, longitude_latitude, status) {
-            location.assign(url + '?id=' + id + '&longitude_latitude=' + longitude_latitude + '&status=' + status);
+        goTo: function goTo(url, id, status) {
+            location.assign(url + '?id=' + id + '&longitude_latitude=' + localStorage.longitude_latitude + '&status=' + status);
         },
         goToDetail: function goToDetail(i) {
             var url = ['./todaySale.html', './sale.html', './business.html'];
-            this.goTo(url[i], '', this.longitude_latitude);
+            this.goTo(url[i], '', localStorage.longitude_latitude);
         },
         getRequest: function getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -595,14 +591,22 @@ var app = new Vue({
         var _this2 = this;
 
         setTimeout(function () {
-            var uid = _this2.GetQueryString('uid');
-            localStorage.uid = uid;
+            // let uid = this.GetQueryString('uid')
+            // localStorage.uid = uid
             // alert(localStorage.uid)
             _this2.getIsShop();
             _this2.getBanner();
             _this2.getShopCateList();
             _this2.getDiscountList();
-            _this2.getWxConfig();
+            //定位检测
+            if (localStorage.longitude_latitude) {
+                _this2.getRecommendList(localStorage.longitude_latitude);
+                _this2.getShopGoodList(localStorage.longitude_latitude);
+                _this2.getAllSort(localStorage.longitude_latitude);
+                _this2.getDistrict(localStorage.longitude_latitude);
+            } else {
+                _this2.getWxConfig();
+            }
         }, 100);
     },
     mounted: function mounted() {

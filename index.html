@@ -24,8 +24,9 @@
             <img src="./img/logo.png"
                  style="height: .2rem;" alt="">
         </a>
-
-        <p v-if="address!=''" style="font-size: .12rem">{{address}}</p>
+        <a href="allList.html">
+            <p style="font-size: .12rem">{{address === "" ? '定位失败' : address}}</p>
+        </a>
         <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
         <form action="#" onsubmit="return false;">
             <el-input

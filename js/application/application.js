@@ -1,4 +1,3 @@
-let jssdkconfig
 if (navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") == "MSIE9.0") {
     $("select").css("background", "none");
 }

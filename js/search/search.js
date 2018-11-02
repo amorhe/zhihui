@@ -71,9 +71,9 @@ let app = new Vue({
     },
     mounted() {
         //路由拦截。。。
-        if (!localStorage.longitude_latitude) {
-            location.assign('./index.html')
-        }
+        // if (!localStorage.longitude_latitude) {
+        //     location.assign('./index.html')
+        // }
 
         setTimeout(() => {
             this.getHotSearchList()

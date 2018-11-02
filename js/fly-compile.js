@@ -3,7 +3,10 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // 添加请求拦截器
-var loading = void 0;
+var loadinglet = void 0;
+var jssdkconfig = void 0;
+localStorage.longitude_latitude = '120,30';
+localStorage.uid = 2121;
 
 function makeFormData(obj, form_data) {
     var data = [];
@@ -263,7 +266,12 @@ var memberPhone = function memberPhone(uid) {
 };
 // 当前用户添加预留手机号
 var addmemberphone = function addmemberphone(uid, phone) {
-    return ajax(Base_url + '/zhihuishop/public/index.php/api/allorder/addmemberphone', { uid: uid, phone: phone });
+    return ajax(Base_url + '/api/allorder/addmemberphone', { uid: uid, phone: phone });
+};
+
+//关于城市选择
+var citySelectList = function citySelectList() {
+    return ajax(Base_url + '/api/allcityselect/cityselectlist');
 };
 
 // 初始化

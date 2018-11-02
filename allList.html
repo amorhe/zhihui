@@ -26,11 +26,19 @@
         </el-input>
         <span @click="">搜索</span>
     </form>
-    <section class="cate">
+    <section class="cate" v-for="i in 3">
         <section class="img">
             <header>
                 <img src="http://192.168.1.15/upload/20181025/2a65b21bdbd6157b1a2434d9a31a50bb.png" alt="">
+                <span>美食</span>
             </header>
+            <table border="1" cellspacing="0" style="width: 100%;background: #ffffff">
+                <tr v-for="i in 4" style="width: 25%">
+                    <td v-for="i in 4" align="center" style="height: .4rem">
+                        西瓜
+                    </td>
+                </tr>
+            </table>
         </section>
     </section>
 </div>
@@ -48,5 +56,5 @@
 <script src="js/jq.js"></script>
 <script src="js/fly.js"></script>
 <!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
-<script src="js/selectAddress/selectAddress-compile.js"></script>
+<script src="js/allList/allList-compile.js"></script>
 </html>

@@ -150,9 +150,9 @@ var app = new Vue({
         var _this = this;
 
         //路由拦截。。。
-        if (!localStorage.longitude_latitude) {
-            location.assign('./index.html');
-        }
+        // if (!localStorage.longitude_latitude) {
+        //     location.assign('./index.html')
+        // }
 
         setTimeout(function () {
             _this.getHotSearchList();

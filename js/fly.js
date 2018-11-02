@@ -1,5 +1,8 @@
 // 添加请求拦截器
-let loading
+let loadinglet
+let jssdkconfig
+localStorage.longitude_latitude = '120,30'
+localStorage.uid = 2121
 
 function makeFormData(obj, form_data) {
     const data = [];
@@ -207,8 +210,10 @@ const budgetOrderList = (uid,store_id,goods_id) => ajax(Base_url + '/api/allorde
 // 当前用户是否存在手机号
 const memberPhone = (uid) => ajax(Base_url + '/api/allorder/memberphone',{uid})
 // 当前用户添加预留手机号
-const addmemberphone = (uid,phone) => ajax(Base_url + '/zhihuishop/public/index.php/api/allorder/addmemberphone',{uid,phone})
+const addmemberphone = (uid,phone) => ajax(Base_url + '/api/allorder/addmemberphone',{uid,phone})
 
+//关于城市选择
+const citySelectList = () => ajax(Base_url + '/api/allcityselect/cityselectlist')
 
 // 初始化
 var vConsole = new VConsole();
