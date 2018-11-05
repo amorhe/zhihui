@@ -28,15 +28,17 @@ let app = new Vue({
         cate() {
             let arr = []
             let arr2 = []
-            this.shopCateListData.forEach(c => {
-                if (arr2.length === 8) {
-                    arr2 = []
-                }
-                if (arr2.length === 0) {
-                    arr.push(arr2)
-                }
-                arr2.push(c)
-            })
+            if (this.shopCateListData) {
+                this.shopCateListData.forEach(c => {
+                    if (arr2.length === 8) {
+                        arr2 = []
+                    }
+                    if (arr2.length === 0) {
+                        arr.push(arr2)
+                    }
+                    arr2.push(c)
+                })
+            }
             return arr
         }
     },
@@ -182,14 +184,13 @@ let app = new Vue({
                 this.discountList = result.data
             }
         },
-        async getAllSort(sort_status) {
+        async getAllSort(sort_status,sortPage) {
             this.allLoaded = true
             this.sortPage = 1
             this.index_foot = [0, 0, 0]
             this.index_foot[sort_status - 1] = 1
             this.sort_status = sort_status
-
-            let result = await allSort(sort_status, longitude_latitude, this.sortPage,area_id)
+            let result = await allSort(sort_status, longitude_latitude, '','' ,sortPage,area_id)
             if (result.code === 1) {
                 console.log(result)
                 this.allSortList = result.data.data
@@ -207,7 +208,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await allSort(this.sort_status, longitude_latitude, this.sortPage,area_id)
+                    result = await allSort(this.sort_status, longitude_latitude, '','' ,this.sortPage,area_id)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         console.log(this.allSortList.length, result.data.total)
@@ -233,7 +234,7 @@ let app = new Vue({
         },
         goToDetail(i) {
             const url = ['./todaySale.html', './sale.html', './business.html']
-            this.goTo(url[i], '', longitude_latitude)
+            this.goTo(url[i], '',)
         },
         getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -268,7 +269,7 @@ let app = new Vue({
                 this.getCitySearchList()
                 this.getRecommendList(longitude_latitude);
                 this.getShopGoodList(longitude_latitude);
-                this.getAllSort(1)
+                this.getAllSort(1,this.sortPage)
             }else{
                 this.getWxConfig()
             }

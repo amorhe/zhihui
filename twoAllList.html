@@ -28,12 +28,12 @@
     </form>
     <section class="cate" v-for="v in list">
         <section class="img">
-            <header @click="goTo('./index_first_order_list.html',v.id)">
+            <header @click="goTo('./storelist.html',v.id)">
                 <img :src="baseImgUrl+v.images" alt="">
                 <span>{{v.catename}}</span>
             </header>
             <div>
-                <p v-for="v1 in v.shopchild_cate" @click="goTo('./storelist.html',v1.id)"> {{v1.catename}}</p>
+                <p v-for="v1 in v.shopchild_cate"> {{v1.catename}}</p>
             </div>
         </section>
     </section>
@@ -52,5 +52,5 @@
 <script src="js/jq.js"></script>
 <script src="js/fly.js"></script>
 <!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
-<script src="js/allList/allList-compile.js"></script>
+<script src="js/twoAllList/allList-compile.js"></script>
 </html>

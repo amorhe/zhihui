@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title></title>
+    <title>商品列表</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="iconfont/iconfont.css">
@@ -13,7 +13,7 @@
 <div id="app" v-clock @touchmove="loadingMore()" @wheel="loadingMore()">
     <div class="pay_top">
         <p class="iconfont icon-fanhui comeback" @click="back()"></p>
-        <p>{{shopCateListData}}</p>
+        <p>商品列表</p>
     </div>
 
     <div class="today_ul" v-for="item in shopList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">

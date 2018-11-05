@@ -197,13 +197,21 @@ var deleteHistory = function deleteHistory(uid) {
 };
 
 //所有分类
-//分类
+// 一级分类
 var shopCatelist = function shopCatelist() {
     return ajax(Base_url + '/api/allshopcate/shopcatelist');
 };
-//更多分类
+// 更多分类
 var moreShopCateList = function moreShopCateList() {
     return ajax(Base_url + '/api/allshopcate/moreshopcatelist');
+};
+// 二级分类
+var twoShopCateList = function twoShopCateList(p_id) {
+    return ajax(Base_url + '/api/allshopcate/twoshopcateList', { p_id: p_id });
+};
+// 更多二级分类列表
+var moreTwoShopCateList = function moreTwoShopCateList(p_id) {
+    return ajax(Base_url + '/api/allshopcate/moretwoshopcateList', { p_id: p_id });
 };
 
 //店铺套餐
@@ -214,8 +222,8 @@ var allShopGoodList = function allShopGoodList(store_id, longitude_latitude, sta
 
 //智能排序
 //排序
-var allSort = function allSort(sort_status, longitude_latitude, page, area_id) {
-    return ajax(Base_url + '/api/allsort/sortlist', { sort_status: sort_status, longitude_latitude: longitude_latitude, page: page, area_id: area_id });
+var allSort = function allSort(sort_status, longitude_latitude, type, shopcate_id, page, area_id) {
+    return ajax(Base_url + '/api/allsort/sortlist', { sort_status: sort_status, longitude_latitude: longitude_latitude, type: type, shopcate_id: shopcate_id, page: page, area_id: area_id });
 };
 
 //分类下的店铺

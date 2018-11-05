@@ -32,41 +32,12 @@ var app = new Vue({
     },
 
     methods: {
-        getShopCateList: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var _this2 = this;
-
-                var result;
-                return regeneratorRuntime.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _context.next = 2;
-                                return shopCatelist();
-
-                            case 2:
-                                result = _context.sent;
-
-                                result = result.data.filter(function (item) {
-                                    return item.id === _this2.id - 0;
-                                });
-                                this.shopCateListData = result[0].catename;
-                                document.title = this.shopCateListData;
-
-                            case 6:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function getShopCateList() {
-                return _ref.apply(this, arguments);
-            }
-
-            return getShopCateList;
-        }(),
+        // async getShopCateList() {
+        //     let result = await shopCatelist()
+        //     result = result.data.filter(item => item.id === this.id - 0)
+        //     this.shopCateListData = result[0].catename
+        //     document.title = this.shopCateListData
+        // },
         back: function back() {
             history.go(-1);
         },
@@ -80,17 +51,17 @@ var app = new Vue({
             return null;
         },
         getStoreList: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(id) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
                 var result;
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context.prev = _context.next) {
                             case 0:
-                                _context2.next = 2;
+                                _context.next = 2;
                                 return storeList(id, 1, longitude_latitude, this.page, area_id);
 
                             case 2:
-                                result = _context2.sent;
+                                result = _context.sent;
 
                                 if (result.code === 0) {
                                     console.log(result.message);
@@ -105,37 +76,37 @@ var app = new Vue({
 
                             case 5:
                             case 'end':
-                                return _context2.stop();
+                                return _context.stop();
                         }
                     }
-                }, _callee2, this);
+                }, _callee, this);
             }));
 
             function getStoreList(_x) {
-                return _ref2.apply(this, arguments);
+                return _ref.apply(this, arguments);
             }
 
             return getStoreList;
         }(),
         loadingMore: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-                var _this3 = this;
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+                var _this2 = this;
 
                 var result;
-                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context2.prev = _context2.next) {
                             case 0:
                                 if (!(this.allLoaded === false)) {
-                                    _context3.next = 2;
+                                    _context2.next = 2;
                                     break;
                                 }
 
-                                return _context3.abrupt('return');
+                                return _context2.abrupt('return');
 
                             case 2:
                                 if (!($(window).scrollTop() + $(window).height() + 10 >= $(document).height())) {
-                                    _context3.next = 27;
+                                    _context2.next = 27;
                                     break;
                                 }
 
@@ -145,19 +116,19 @@ var app = new Vue({
                                 result = void 0;
 
                                 if (!this.loading_more) {
-                                    _context3.next = 26;
+                                    _context2.next = 26;
                                     break;
                                 }
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
-                                _context3.next = 11;
+                                _context2.next = 11;
                                 return storeList(this.id, 1, longitude_latitude, this.page, area_id);
 
                             case 11:
-                                result = _context3.sent;
+                                result = _context2.sent;
 
                                 if (!(result.code === 1)) {
-                                    _context3.next = 23;
+                                    _context2.next = 23;
                                     break;
                                 }
 
@@ -166,29 +137,29 @@ var app = new Vue({
                                 // console.log(this.allSortList.length, result.data.total)
 
                                 if (!(this.shopList.length === result.data.total + 1)) {
-                                    _context3.next = 19;
+                                    _context2.next = 19;
                                     break;
                                 }
 
                                 console.log('没有更多数据');
-                                return _context3.abrupt('return');
+                                return _context2.abrupt('return');
 
                             case 19:
                                 this.loading_more = true;
                                 this.shopList = [].concat(_toConsumableArray(this.shopList), _toConsumableArray(res.data.data));
 
                             case 21:
-                                _context3.next = 24;
+                                _context2.next = 24;
                                 break;
 
                             case 23:
                                 setTimeout(function () {
-                                    _this3.loading = false;
-                                    _this3.loading_more = true;
+                                    _this2.loading = false;
+                                    _this2.loading_more = true;
                                 }, 1000);
 
                             case 24:
-                                _context3.next = 27;
+                                _context2.next = 27;
                                 break;
 
                             case 26:
@@ -196,14 +167,14 @@ var app = new Vue({
 
                             case 27:
                             case 'end':
-                                return _context3.stop();
+                                return _context2.stop();
                         }
                     }
-                }, _callee3, this);
+                }, _callee2, this);
             }));
 
             function loadingMore() {
-                return _ref3.apply(this, arguments);
+                return _ref2.apply(this, arguments);
             }
 
             return loadingMore;

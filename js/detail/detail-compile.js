@@ -57,7 +57,8 @@ var app = new Vue({
         var status = this.GetQueryString('status');
         this.status = status;
         setTimeout(function () {
-            _this.getWxConfig();
+            // this.getWxConfig()
+            _this.getStoreList(_this.store_id, localStorage.longitude_latitude, _this.status);
         });
     },
 
@@ -103,18 +104,6 @@ var app = new Vue({
                                             console.log(JSON.stringify(res));
                                         }
                                     });
-                                    wx.getLocation({
-                                        type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                                        success: function success(res) {
-                                            console.log(JSON.stringify(res));
-                                            // alert(localStorage.jsdk)
-                                            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                                            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                                            that.longitude_latitude = longitude + ',' + latitude;
-
-                                            that.getStoreList(that.store_id, that.longitude_latitude, that.status);
-                                        }
-                                    });
                                 });
 
                                 wx.error(function (res) {
@@ -142,7 +131,6 @@ var app = new Vue({
         },
         toMap: function toMap() {
             var that = this;
-            // location.href = `./map.html?longitude_latitude=${this.detail.longitude_latitude}&title=${encodeURIComponent(this.detail.address)}&content=${encodeURIComponent(this.detail.shop_name)}`
             wx.openLocation({
                 latitude: that.detail.longitude_latitude.split(',')[1] - 0, // 纬度，浮点数，范围为90 ~ -90
                 longitude: that.detail.longitude_latitude.split(',')[0] - 0, // 经度，浮点数，范围为180 ~ -180。

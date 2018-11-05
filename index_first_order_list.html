@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>至惠商联</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+</head>
+<body>
+<div id="app" @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
+    <div class="index_head">
+        <a href="https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop">
+            <img src="./img/logo.png"
+                 style="height: .2rem;" alt="">
+        </a>
+        <a href="selectAddress.html">
+            <p style="font-size: .12rem">{{address === "" ? '定位失败' : address}}</p>
+        </a>
+        <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
+        <form action="#" onsubmit="return false;">
+            <el-input
+                    type="search"
+                    placeholder="输入商家名字、品类"
+                    prefix-icon="el-icon-search"
+                    @focus="goToSearch()"
+            >
+            </el-input>
+        </form>
+    </div>
+
+    <div class="index_list">
+        <div class="swiper-container" id="shopCatelist">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="i in cate">
+                    <div class="index_list_div" v-for="item in i"
+                         :key="item.id"
+                         @click="goTo('./storelist.html',item.id)">
+                        <img
+                                :src="`${baseImgUrl}${item.images}`"
+                                alt="">
+                        <p>{{item.catename}}</p>
+                    </div>
+                    <div class="index_list_div" style="float: right" @click="`${location.assign(`./twoAllList.html?id=${GetQueryString('id')}`)}`">
+                        <img src="./img/more.svg" alt="">
+                        <p>更多</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="index_bottom_title">附近商家</h3>
+
+    <div class="index_bottom">
+        <div class="index_foot">
+            <p @click="getAllSort(1)" :class="{'active':index_foot[0] === 1}">
+                离我最近</p>
+            <p @click="getAllSort(2)" :class="{'active':index_foot[1] === 1}">
+                折扣最高</p>
+            <p @click="getAllSort(3)" :class="{'active':index_foot[2] === 1}">
+                最新发布</p>
+        </div>
+
+        <div class="index_foot_list" v-for="item in allSortList" :key="item.id"
+             @click="goTo('./detail.html',item.id,1)">
+            <img :src="`${baseImgUrl}${item.store_images}`" alt="">
+            <div>
+                <p class="list_name">{{item.shop_name}}</p>
+                <p class="list_content">[{{item.address}}]</p>
+                <p class="list_price">{{item.discount}}折起</p>
+            </div>
+            <div class="align_self">
+                <p class="fontSm">{{item.distance}}km</p>
+                <p>已售{{item.sold_num}}</p>
+            </div>
+        </div>
+        <div style="width: 100%;text-align: center">
+            <span v-if="allLoaded">上拉加载更多</span>
+            <span v-else>没有更多了</span>
+        </div>
+    </div>
+
+</div>
+</body>
+<!-- 引入组件库 -->
+<!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>-->
+<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-rc.4/polyfill.js"></script>
+<script src="./js/vconsole.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/font.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script src="js/jq.js"></script>
+<script src="js/fly.js"></script>
+<!--<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
+<script src="js/index_first_order_list/index_first_order_list-compile.js"></script>
+</html>

@@ -34,15 +34,17 @@ var app = new Vue({
         cate: function cate() {
             var arr = [];
             var arr2 = [];
-            this.shopCateListData.forEach(function (c) {
-                if (arr2.length === 8) {
-                    arr2 = [];
-                }
-                if (arr2.length === 0) {
-                    arr.push(arr2);
-                }
-                arr2.push(c);
-            });
+            if (this.shopCateListData) {
+                this.shopCateListData.forEach(function (c) {
+                    if (arr2.length === 8) {
+                        arr2 = [];
+                    }
+                    if (arr2.length === 0) {
+                        arr.push(arr2);
+                    }
+                    arr2.push(c);
+                });
+            }
             return arr;
         }
     },
@@ -465,7 +467,7 @@ var app = new Vue({
             return getDiscountList;
         }(),
         getAllSort: function () {
-            var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(sort_status) {
+            var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(sort_status, sortPage) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee12$(_context12) {
                     while (1) {
@@ -476,9 +478,8 @@ var app = new Vue({
                                 this.index_foot = [0, 0, 0];
                                 this.index_foot[sort_status - 1] = 1;
                                 this.sort_status = sort_status;
-
                                 _context12.next = 7;
-                                return allSort(sort_status, longitude_latitude, this.sortPage, area_id);
+                                return allSort(sort_status, longitude_latitude, '', '', sortPage, area_id);
 
                             case 7:
                                 result = _context12.sent;
@@ -496,7 +497,7 @@ var app = new Vue({
                 }, _callee12, this);
             }));
 
-            function getAllSort(_x2) {
+            function getAllSort(_x2, _x3) {
                 return _ref12.apply(this, arguments);
             }
 
@@ -537,7 +538,7 @@ var app = new Vue({
 
                                 this.loading_more = false; //禁止浏览器发送ajax请求
                                 _context13.next = 11;
-                                return allSort(this.sort_status, longitude_latitude, this.sortPage, area_id);
+                                return allSort(this.sort_status, longitude_latitude, '', '', this.sortPage, area_id);
 
                             case 11:
                                 result = _context13.sent;
@@ -598,7 +599,7 @@ var app = new Vue({
         },
         goToDetail: function goToDetail(i) {
             var url = ['./todaySale.html', './sale.html', './business.html'];
-            this.goTo(url[i], '', longitude_latitude);
+            this.goTo(url[i], '');
         },
         getRequest: function getRequest() {
             var url = window.location.search; //获取url中"?"符后的字串
@@ -635,7 +636,7 @@ var app = new Vue({
                 _this2.getCitySearchList();
                 _this2.getRecommendList(longitude_latitude);
                 _this2.getShopGoodList(longitude_latitude);
-                _this2.getAllSort(1);
+                _this2.getAllSort(1, _this2.sortPage);
             } else {
                 _this2.getWxConfig();
             }

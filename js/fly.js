@@ -172,11 +172,14 @@ const historySearchList = (uid) => ajax(Base_url + '/api/allsearch/historysearch
 const deleteHistory = (uid) => ajax(Base_url + '/api/allsearch/delhistorysearchlist',{uid});
 
 //所有分类
-//分类
+// 一级分类
 const shopCatelist = () => ajax(Base_url + '/api/allshopcate/shopcatelist')
-//更多分类
+// 更多分类
 const moreShopCateList = () => ajax(Base_url + '/api/allshopcate/moreshopcatelist')
-
+// 二级分类
+const twoShopCateList = (p_id) => ajax(Base_url + '/api/allshopcate/twoshopcateList',{p_id})
+// 更多二级分类列表
+const moreTwoShopCateList = (p_id) => ajax(Base_url + '/api/allshopcate/moretwoshopcateList',{p_id})
 
 //店铺套餐
 //套餐
@@ -184,7 +187,7 @@ const allShopGoodList = (store_id,longitude_latitude,status) => ajax(Base_url + 
 
 //智能排序
 //排序
-const allSort = (sort_status, longitude_latitude, page,area_id) => ajax(Base_url + '/api/allsort/sortlist', {sort_status, longitude_latitude, page,area_id})
+const allSort = (sort_status, longitude_latitude,type,shopcate_id ,page,area_id) => ajax(Base_url + '/api/allsort/sortlist', {sort_status, longitude_latitude,type,shopcate_id,page,area_id})
 
 //分类下的店铺
 //店铺列表

@@ -23,12 +23,12 @@ let app = new Vue({
         })
     },
     methods: {
-        async getShopCateList() {
-            let result = await shopCatelist()
-            result = result.data.filter(item => item.id === this.id - 0)
-            this.shopCateListData = result[0].catename
-            document.title = this.shopCateListData
-        },
+        // async getShopCateList() {
+        //     let result = await shopCatelist()
+        //     result = result.data.filter(item => item.id === this.id - 0)
+        //     this.shopCateListData = result[0].catename
+        //     document.title = this.shopCateListData
+        // },
         back() {
             history.go(-1)
         },
