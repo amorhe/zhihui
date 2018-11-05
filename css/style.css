@@ -457,7 +457,18 @@ html {
 
 .bus_top > p:nth-child(1) {
     font-size: .16rem;
-    font-weight: bold;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 2.7rem;
+}
+
+.bus_top > p:nth-child(2) {
+    font-size: .14rem;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 2.7rem;
 }
 
 .colorWrap {
@@ -469,30 +480,48 @@ html {
     justify-content: space-between;
 }
 
-.bus_down > p {
+.bus_down > p:nth-child(1) {
     flex-shrink: 0;
+    font-size: .12rem;
+    color: #d01300;
+    margin-right: .1rem;
+}
 
+.bus_down > p:nth-child(2) {
+    flex-shrink: 0;
+    font-size: .1rem;
+    color: #3d2c29;
+    margin-right: .1rem;
 }
 
 /*今日钜惠*/
 .today_ul {
-    padding: .09rem .07rem;
+    /*padding: .09rem .07rem;*/
     display: flex;
-    background: #eee;
+    background: #fafafa;
     margin: -.1rem 0 .2rem;
 }
 
-.today_ul > img {
-    width: 20%;
-    height: .54rem;
+.today_ul > div.img {
+    height: .6rem;
+    width: .9rem;
+    overflow: hidden;
     margin-right: 4.3%;
 }
 
-.today_ul > div {
+.today_ul > div > img {
+    height: .6rem;
+}
+
+.today_ul > div.content {
     width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.today_ul > div.content > p{
+    width: 2.7rem;
 }
 
 .nowrap {

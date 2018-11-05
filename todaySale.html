@@ -17,8 +17,11 @@
     </div>
 
     <div class="today_ul" v-for="item in shopList" :key="item.store_id" v-if="shopList.length !== item+1" @click="goTo('./detail.html',item.store_id,longitude_latitude,1)">
-        <img :src="`${baseImgUrl}${item.store_images}`" alt="">
-        <div>
+        <div class="img">
+            <img :src="`${baseImgUrl}${item.store_images}`" alt="">
+        </div>
+
+        <div class="content">
             <div class="bus_top">
                 <p>{{item.shop_name}}</p>
             </div>
