@@ -14,7 +14,7 @@ let app = new Vue({
             location.assign('./index.html')
         }
         setTimeout(() => {
-            this.getStoreList(longitude_latitude, this.page)
+            this.getStoreList(this.page)
         })
     },
     methods: {

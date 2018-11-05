@@ -23,7 +23,7 @@ var app = new Vue({
             location.assign('./index.html');
         }
         setTimeout(function () {
-            _this.getStoreList(longitude_latitude, _this.page, area_id);
+            _this.getStoreList(_this.page);
         });
     },
 

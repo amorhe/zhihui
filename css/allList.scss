@@ -12,9 +12,10 @@ section.cate {
       img {
         display: table-cell;
         vertical-align: middle;
-        width: .26rem;
-        height: .26rem;
+        width: .22rem;
+        height: .22rem;
         border-radius: 50%;
+        margin-right: .05rem;
       }
       span {
         display: table-cell;
@@ -29,12 +30,14 @@ section.cate {
       justify-content: start;
       width: 100%;
       >p{
+        font-size: .12rem;
         background: #ffffff;
-        text-align: center;
-        border:.01rem solid #999999;
         width: 24%;
-        height: .4rem;
-        line-height: .4rem;
+        text-align: center;
+        margin-top: .01rem;
+        margin-left: .01rem;
+        height: .3rem;
+        line-height: .3rem;
       }
     }
   }
