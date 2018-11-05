@@ -1,3 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    letter-spacing: .02em;
+}
+
 a {
     text-decoration: none;
 }
@@ -6,13 +13,20 @@ a {
     display: none;
 }
 
-iframe {
-    display: none;
+.button {
+    display: inline-block;
+    width: .6rem;
+    height: .3rem;
+    text-align: center;
+    line-height: .3rem;
+    border-radius: .15rem;
+    background: #fdb122;
+    margin-right: .1rem;
+    color: white;
 }
 
-* {
-    margin: 0;
-    padding: 0;
+iframe {
+    display: none;
 }
 
 html {
@@ -26,6 +40,7 @@ html {
 }
 
 .fontSm {
+    color: #afafaf;
     font-size: .12rem;
 }
 
@@ -34,7 +49,7 @@ html {
     width: 100%;
     height: .56rem;
     display: flex;
-    padding: 0 .1rem;
+    padding: 0 .05rem;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
@@ -48,6 +63,18 @@ html {
     width: 70%;
 }
 
+.title {
+    font-size: .12rem;
+    color: #e6a23c;
+    display: flex;
+    align-items: center;
+}
+
+.title > img {
+    height: .04rem;
+    margin: 0 .02rem;
+}
+
 .index_head .el-input__icon {
     line-height: .3rem;
 }
@@ -56,6 +83,13 @@ html {
     line-height: .3rem;
     height: .3rem;
     border-radius: .5rem;
+    border: none;
+    background: #eeeeee;
+    width: 2.3rem;
+}
+
+.index_head .el-input input::placeholder {
+    color: #909090;
 }
 
 .index_head .icon-add {
@@ -74,7 +108,7 @@ html {
 }
 
 .index_list_div {
-    margin-top: .1rem;
+    margin-top: .16rem;
     width: 25%;
     display: inline-block;
     text-align: center;
@@ -82,11 +116,12 @@ html {
 
 .index_list_div > p {
     font-size: .14rem;
+    margin-top: .04rem;
 }
 
 .index_list_div > img {
-    width: .51rem;
-    height: .51rem;
+    width: .5rem;
+    height: .5rem;
     border-radius: 50%;
 }
 
@@ -94,8 +129,6 @@ html {
     padding: .15rem;
     border: .1rem solid rgb(242, 242, 242);
     border-width: .1rem 0 0rem 0;
-    /*background: rgb(242,242,242);*/
-    /*margin-top: .1rem;*/
 }
 
 .day_recom_top {
@@ -105,8 +138,8 @@ html {
 }
 
 .day_recom_top > p:nth-child(1) {
-    font-size: .16rem;
-    font-weight: bold;
+    font-size: .18rem;
+    font-weight: 400;
 }
 
 .day_recom_top > p:nth-child(2) {
@@ -120,7 +153,6 @@ html {
 }
 
 .slide_img {
-    width: .64rem;
     height: .64rem;
     margin-right: .16rem;
 }
@@ -133,11 +165,17 @@ html {
 }
 
 .slide_div > p:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 1.5rem;
     font-weight: bold;
     color: #1a1a1a;
 }
 
 .slide_div > p:nth-child(2) {
+    color: #8e8e8e;
+    width: 1.5rem;
     font-size: .12rem;
     overflow: hidden;
     white-space: nowrap;
@@ -145,8 +183,8 @@ html {
 }
 
 .dollar {
-    font-size: .11rem;
-    font-weight: lighter;
+    font-size: .12rem;
+    color: #8c8c8c;
 }
 
 .colorRed {
@@ -196,8 +234,14 @@ html {
 /*.index_mid>div:nth-child(3){*/
 /*background: url("http://pic40.nipic.com/20140403/8614226_162018219198_2.jpg") 0 0 / 100% 100% no-repeat;*/
 /*}*/
+.index_bottom {
+    width: 100%;
+}
+
 .index_bottom_title {
     padding-top: .2rem;
+    padding-bottom: .1rem;
+    font-size: .2rem;
     text-align: center;
 }
 
@@ -216,7 +260,7 @@ html {
     padding: .1rem;
     display: flex;
     justify-content: flex-start;
-    height: .79rem;
+    height: .9rem;
     box-sizing: border-box;
     border-bottom: .01rem rgba(242, 242, 242, .9) solid;
     /*background: rgb(238, 238, 238);*/
@@ -225,7 +269,7 @@ html {
 .index_foot_list > img {
     float: left;
     width: .75rem;
-    height: .54rem;
+    box-shadow: 0px 1px 7px 1px #b5b5b5
 }
 
 .index_foot_list > div {
@@ -235,14 +279,23 @@ html {
     justify-content: space-between;
 }
 
+.index_foot_list > div:last-child {
+    margin: 0;
+}
+
 .list_name {
+    width: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: .16rem;
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .list_content {
     color: #666;
-    font-size: .12rem;
+    width: 2rem;
+    font-size: .14rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -250,9 +303,13 @@ html {
 
 .list_price {
     display: inline-block;
-    /*background: #c88749;*/
+    background: #f1d17b;
     color: #c83f28;
-    font-size: .09rem;
+    font-size: .1rem;
+    text-align: center;
+    border-radius: .02rem;
+    padding: .02rem .04rem;
+    align-self: self-start;
 }
 
 .align_self {
@@ -477,6 +534,8 @@ html {
 
 .banner {
     width: 100%;
+    height: 1.64rem;
+    overflow: hidden;
 }
 
 .banner img {

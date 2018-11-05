@@ -11,10 +11,10 @@
 </head>
 <body>
 <div id="app" v-clock @keyup.enter="goToSearch(search_key)">
-    <form action="#" onsubmit="return false;" class="index_head">
+    <form action="#" onsubmit="return false;" class="index_head" style="padding: 0 .1rem">
         <p class="iconfont icon-fanhui" @click="`${window.history.go(-1)}`"></p>
         <el-input
-                style="width: 2.5rem;"
+                style="width: 2.5rem;margin-left: .14rem"
                 type="text" type="search"
                 placeholder="输入套餐名称"
                 prefix-icon="el-icon-search"
@@ -22,15 +22,15 @@
                 v-model="search_key"
         >
         </el-input>
-        <span @click="goToSearch(search_key)">搜索</span>
+        <span @click="goToSearch(search_key)" class="button">搜索</span>
     </form>
 
-    <div style="height: .01rem; background: #c3c3c3"></div>
+    <div style="height: .01rem; background: #fff0d4"></div>
 
     <div class="search_div">
         <p>热门搜索</p>
         <div>
-            <p v-for="item in hotSearchList" @click="goToSearch(item.hot_words)">{{item.hot_words}}</p>
+            <p v-for="(item,i) in hotSearchList" :style="[{background:'hsl('+color[i]+',62%,74%)'},{color:'#ffffff'}]" @click="goToSearch(item.hot_words)">{{item.hot_words}}</p>
         </div>
     </div>
     <div style="height: .08rem; background: #ededed;margin-top: .2rem" v-if="historysearchList"></div>

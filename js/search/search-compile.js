@@ -15,6 +15,16 @@ var app = new Vue({
         loading: false, //判断是否加载数据
         loading_more: true //控制是否发送ajax请求
     },
+    computed: {
+        color: function color() {
+            var arr = [];
+            for (var i = 0; i < 30; i++) {
+                var h = Math.floor(Math.random() * 255) + 1;
+                arr.push(h);
+            }
+            return arr;
+        }
+    },
     methods: {
         back: function back() {
             history.go(-1);

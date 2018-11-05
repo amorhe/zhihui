@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -46,7 +48,7 @@ var app = new Vue({
         },
         getShopGoodsSearchList: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var search_key, uid, result;
+                var search_key, uid, result, obj, arr, i, a;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -59,10 +61,31 @@ var app = new Vue({
                             case 4:
                                 result = _context.sent;
 
-                                this.allSortList = result.data;
-                                console.log(result);
+                                if (result.code === 1) {
+                                    if (result.data !== null) {
+                                        obj = {};
+                                        arr = [];
 
-                            case 7:
+                                        for (i = 0; i < result.data.length; i++) {
+                                            // console.log(result.data[i]);
+                                            if (result.data[i] !== null) {
+                                                for (a in result.data[i]) {
+                                                    // console.log(a);
+                                                    // console.log(result.data[i][a]);
+                                                    obj[a] = result.data[i][a];
+                                                    // console.log(`obj:${JSON.stringify(obj)}`);
+                                                }
+                                                arr.push(obj);
+                                                // console.log(arr);
+                                            }
+                                        }
+                                        this.allSortList = arr;
+                                        console.log(this.allSortList);
+                                        console.log(_typeof(result.data[0]));
+                                    }
+                                }
+
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
@@ -80,7 +103,7 @@ var app = new Vue({
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
                 var _this = this;
 
-                var result;
+                var result, obj, arr, i, a;
                 return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
@@ -94,7 +117,7 @@ var app = new Vue({
 
                             case 2:
                                 if (!($(window).scrollTop() + $(window).height() + 100 >= $(document).height())) {
-                                    _context2.next = 27;
+                                    _context2.next = 30;
                                     break;
                                 }
 
@@ -105,7 +128,7 @@ var app = new Vue({
                                 result = void 0;
 
                                 if (!this.loading_more) {
-                                    _context2.next = 26;
+                                    _context2.next = 29;
                                     break;
                                 }
 
@@ -117,7 +140,7 @@ var app = new Vue({
                                 result = _context2.sent;
 
                                 if (!(result.code === 1)) {
-                                    _context2.next = 23;
+                                    _context2.next = 26;
                                     break;
                                 }
 
@@ -134,26 +157,49 @@ var app = new Vue({
 
                             case 19:
                                 this.loading_more = true;
-                                this.allSortList = [].concat(_toConsumableArray(this.allSortList), _toConsumableArray(result.data.data));
+                                obj = {};
+                                arr = [];
 
-                            case 21:
-                                _context2.next = 24;
-                                break;
-
-                            case 23:
-                                setTimeout(function () {
-                                    _this.loading = false;
-                                    _this.loading_more = true;
-                                }, 1000);
+                                if (result.code === 1) {
+                                    if (result.data !== null) {
+                                        for (i = 0; i < result.data.length; i++) {
+                                            // console.log(result.data[i]);
+                                            if (result.data[i] !== null) {
+                                                for (a in result.data[i]) {
+                                                    // console.log(a);
+                                                    // console.log(result.data[i][a]);
+                                                    obj[a] = result.data[i][a];
+                                                    // console.log(`obj:${JSON.stringify(obj)}`);
+                                                }
+                                                arr.push(obj);
+                                                // console.log(arr);
+                                            }
+                                        }
+                                        this.allSortList = arr;
+                                        console.log(this.allSortList);
+                                        console.log(_typeof(result.data[0]));
+                                    }
+                                }
+                                this.allSortList = [].concat(_toConsumableArray(this.allSortList), arr);
 
                             case 24:
                                 _context2.next = 27;
                                 break;
 
                             case 26:
-                                this.loading = false;
+                                setTimeout(function () {
+                                    _this.loading = false;
+                                    _this.loading_more = true;
+                                }, 1000);
 
                             case 27:
+                                _context2.next = 30;
+                                break;
+
+                            case 29:
+                                this.loading = false;
+
+                            case 30:
                             case 'end':
                                 return _context2.stop();
                         }

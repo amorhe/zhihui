@@ -12,14 +12,9 @@
 </head>
 <body>
 <div id="app" @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
+
     <div class="index_head">
-        <a href="https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop">
-            <img src="./img/logo.png"
-                 style="height: .2rem;" alt="">
-        </a>
-        <a href="selectAddress.html">
-            <p style="font-size: .12rem">{{address === "" ? '定位失败' : address}}</p>
-        </a>
+            <p class="iconfont icon-fanhui comeback" @click="`${history.go(-1)}`" style="align-self: unset"></p>
         <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
         <form action="#" onsubmit="return false;">
             <el-input
@@ -78,9 +73,14 @@
                 <p>已售{{item.sold_num}}</p>
             </div>
         </div>
-        <div style="width: 100%;text-align: center">
-            <span v-if="allLoaded">上拉加载更多</span>
-            <span v-else>没有更多了</span>
+        <div>
+            <div style="width: 100%;text-align: center;padding: .2rem 0" @click="loadingMore()" v-if="allSortList.length !== 0">
+                <span v-if="allLoaded">点击或上拉加载更多</span>
+                <span v-else>没有更多了</span>
+            </div>
+            <div style="width: 100%;text-align: center;padding: .2rem 0" v-if="allSortList.length === 0">
+                没有更多了
+            </div>
         </div>
     </div>
 

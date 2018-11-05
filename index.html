@@ -22,10 +22,12 @@
     <div class="index_head">
         <a href="https://shop.zhihuimall.com.cn/app/index.php?i=1604&c=entry&mid=8811&do=shop&m=vslai_shop">
             <img src="./img/logo.png"
-                 style="height: .2rem;" alt="">
+                 style="margin-left:.04rem;height: .16rem;" alt="">
         </a>
         <a href="selectAddress.html">
-            <p style="font-size: .12rem">{{address === "" ? '定位失败' : address}}</p>
+            <p :class="['title',{colorRed: address === ''}]">{{address === "" ? '定位失败' : address}}
+                <img v-show="address !== ''" src="img/s.png" alt="">
+            </p>
         </a>
         <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
         <form action="#" onsubmit="return false;">
@@ -83,7 +85,7 @@
                         <p>{{item.catename}}</p>
                     </div>
                     <div class="index_list_div" style="float: right" @click="`${location.assign('./allList.html')}`">
-                        <img src="./img/more.svg" alt="">
+                        <img src="./img/more.png" alt="">
                         <p>更多</p>
                     </div>
                 </div>
@@ -93,10 +95,9 @@
 
     <div class="day_recom">
         <div class="day_recom_top">
-            <p>小编推荐</p>
+            <p style="color: #1e319b;">小编推荐</p>
             <p>
-                <span @click="goTo('./morerecommendlist.html','xbtj')">更多推荐</span>
-                <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
+                <span class="fontSm" style="color: rgba(116,140,250,1);" @click="goTo('./morerecommendlist.html','xbtj')">更多推荐<i style="color: rgba(116,140,250,1);" class="iconfont icon-iconfontjiantou5 fontSm"></i></span>
             </p>
         </div>
         <div class="day_recom_bottom">
@@ -108,11 +109,11 @@
                         <div class="slide_div">
                             <p>{{item.shop_name}}</p>
                             <p>{{item.address}}</p>
-                            <p>
+                            <p style="display: flex;justify-content: space-between;align-items:baseline;width: 100%;">
                                 <!--<span class="dollar colorRed">￥</span>-->
-                                <span class="colorRed">{{item.discount}}折起</span>
+                                <span class="colorRed" style="font-size: .1rem"><span style="font-size: .16rem">{{item.discount}}</span>折起</span>
                                 <!--<span class="through_span">￥188</span>-->
-                                <span class="dollar" style="float: right">{{item.distance}}km</span>
+                                <span class="dollar">{{item.distance}}km</span>
                             </p>
                         </div>
                     </div>
@@ -123,10 +124,9 @@
 
     <div class="day_recom">
         <div class="day_recom_top">
-            <p>商家推荐</p>
+            <p style="color: #bd7c16;">商家推荐</p>
             <p>
-                <span @click="goTo('./recommend.html','xbtj',0)">更多推荐</span>
-                <i class="iconfont icon-iconfontjiantou5 fontSm"></i>
+                <span class="fontSm" style="color: #feae0f;" @click="goTo('./recommend.html','xbtj',0)">更多推荐</span><i style="color: #feae0f;" class="iconfont icon-iconfontjiantou5 fontSm"></i>
             </p>
         </div>
         <div class="day_recom_bottom">
@@ -139,9 +139,8 @@
                             <p>{{item.shop_name}}</p>
                             <p>{{item.meal_name}}</p>
                             <p>
-                                <span class="dollar colorRed">￥</span>
-                                <span class="colorRed">{{item.amount_money * ( 1 -item.discount/100)}}</span>
-                                <span class="through_span">{{item.amount_money}}</span>
+                                <span class="dollar colorRed">￥</span><span class="colorRed">{{item.amount_money * ( 1 -item.discount/100)}}</span>
+                                <span class="through_span">原价{{item.amount_money}}</span>
                             </p>
                         </div>
                     </div>
@@ -182,12 +181,17 @@
             </div>
             <div class="align_self">
                 <p class="fontSm">{{item.distance}}km</p>
-                <p>已售{{item.sold_num}}</p>
+                <p style="color: #756b5e;font-size: .12rem">已售 {{item.sold_num}}</p>
             </div>
         </div>
-        <div style="width: 100%;text-align: center">
-            <span v-if="allLoaded">上拉加载更多</span>
-            <span v-else>没有更多了</span>
+        <div>
+            <div style="width: 100%;text-align: center;padding: .2rem 0" @click="loadingMore()"  v-if="allSortList.length !== 0">
+                <span v-if="allLoaded">上拉加载更多</span>
+                <span v-else>没有更多了</span>
+            </div>
+            <div style="width: 100%;text-align: center;padding: .2rem 0" v-if="allSortList.length === 0">
+                没有更多了
+            </div>
         </div>
     </div>
 

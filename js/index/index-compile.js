@@ -653,9 +653,29 @@ var app = new Vue({
             observer: true, //修改swiper自己或子元素时，自动初始化swiper
             observeParents: true //修改swiper的父元素时，自动初始化swiper
         });
+        setInterval(function () {
+            var banner = new Swiper('#banner', {
+                autoplay: {
+                    delay: 3000,
+                    stopOnLastSlide: false,
+                    disableOnInteraction: true
+                },
+                // loop: true,
+                pagination: {
+                    el: '.swiper-pagination'
+                },
+                width: innerWidth,
+                observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true //修改swiper的父元素时，自动初始化swiper
+            });
+        }, 15000);
         var banner = new Swiper('#banner', {
-            autoplay: true,
-            loop: true,
+            autoplay: {
+                delay: 3000,
+                stopOnLastSlide: false,
+                disableOnInteraction: true
+            },
+            // loop: true,
             pagination: {
                 el: '.swiper-pagination'
             },
@@ -663,15 +683,22 @@ var app = new Vue({
             observer: true, //修改swiper自己或子元素时，自动初始化swiper
             observeParents: true //修改swiper的父元素时，自动初始化swiper
         });
+        console.log(banner.slides.length);
+        console.log(banner.activeIndex);
+        if (banner.slides.length === banner.activeIndex - 1) {
+            banner.slideTo(0, 1000, false);
+        }
         var recommend = new Swiper('#recommend', {
             freeMode: true,
             slidesPerView: 1.3,
+            spaceBetween: 20,
             observer: true, //修改swiper自己或子元素时，自动初始化swiper
             observeParents: true //修改swiper的父元素时，自动初始化swiper
         });
         var shopGoodList = new Swiper('#shopGoodList', {
             freeMode: true,
             slidesPerView: 1.3,
+            spaceBetween: 20,
             observer: true, //修改swiper自己或子元素时，自动初始化swiper
             observeParents: true //修改swiper的父元素时，自动初始化swiper
         });

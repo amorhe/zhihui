@@ -5,7 +5,7 @@ let app = new Vue({
         form: {
             name: '',
         },
-        isshop:'',
+        isshop: '',
         addnews: "",
         storeImg: '',
         jssdkconfig: '',
@@ -65,7 +65,7 @@ let app = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
-        async getCitySearchList(){
+        async getCitySearchList() {
             let result = await citySearchList(area)
             console.log(result);
             localStorage.area_id = result.data.id
@@ -164,14 +164,14 @@ let app = new Vue({
             console.log(result)
         },
         async getRecommendList() {
-            let result = await recommendList(longitude_latitude,area_id)
+            let result = await recommendList(longitude_latitude, area_id)
             if (result.code === 1) {
                 this.recommendList = result.data.data
                 console.log(result)
             }
         },
         async getShopGoodList() {
-            let result = await shopGoodList(longitude_latitude,area_id)
+            let result = await shopGoodList(longitude_latitude, area_id)
             if (result.code === 1) {
                 this.shopGoodList = result.data
                 console.log(result)
@@ -184,13 +184,13 @@ let app = new Vue({
                 this.discountList = result.data
             }
         },
-        async getAllSort(sort_status,sortPage) {
+        async getAllSort(sort_status, sortPage) {
             this.allLoaded = true
             this.sortPage = 1
             this.index_foot = [0, 0, 0]
             this.index_foot[sort_status - 1] = 1
             this.sort_status = sort_status
-            let result = await allSort(sort_status, longitude_latitude, '','' ,sortPage,area_id)
+            let result = await allSort(sort_status, longitude_latitude, '', '', sortPage, area_id)
             if (result.code === 1) {
                 console.log(result)
                 this.allSortList = result.data.data
@@ -208,7 +208,7 @@ let app = new Vue({
                 let result
                 if (this.loading_more) {
                     this.loading_more = false //禁止浏览器发送ajax请求
-                    result = await allSort(this.sort_status, longitude_latitude, '','' ,this.sortPage,area_id)
+                    result = await allSort(this.sort_status, longitude_latitude, '', '', this.sortPage, area_id)
                     if (result.code === 1) {//判断接受是否成功
                         this.loading = false
                         console.log(this.allSortList.length, result.data.total)
@@ -262,19 +262,19 @@ let app = new Vue({
             this.getShopCateList();
             this.getDiscountList();
             //定位检测
-            if (localStorage.longitude_latitude){
-                if(localStorage.area){
+            if (localStorage.longitude_latitude) {
+                if (localStorage.area) {
                     this.address = localStorage.area
                 }
                 this.getCitySearchList()
                 this.getRecommendList(longitude_latitude);
                 this.getShopGoodList(longitude_latitude);
-                this.getAllSort(1,this.sortPage)
-            }else{
+                this.getAllSort(1, this.sortPage)
+            } else {
                 this.getWxConfig()
             }
 
-        },100)
+        }, 100)
     },
 
     mounted() {
@@ -288,9 +288,29 @@ let app = new Vue({
             observer: true,//修改swiper自己或子元素时，自动初始化swiper
             observeParents: true,//修改swiper的父元素时，自动初始化swiper
         })
+        setInterval(()=>{
+            let banner = new Swiper('#banner', {
+                autoplay: {
+                    delay: 3000,
+                    stopOnLastSlide: false,
+                    disableOnInteraction: true,
+                },
+                // loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                width: innerWidth,
+                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true,//修改swiper的父元素时，自动初始化swiper
+            })
+        },15000)
         let banner = new Swiper('#banner', {
-            autoplay: true,
-            loop: true,
+            autoplay: {
+                delay: 3000,
+                stopOnLastSlide: false,
+                disableOnInteraction: true,
+            },
+            // loop: true,
             pagination: {
                 el: '.swiper-pagination',
             },
@@ -298,15 +318,22 @@ let app = new Vue({
             observer: true,//修改swiper自己或子元素时，自动初始化swiper
             observeParents: true,//修改swiper的父元素时，自动初始化swiper
         })
+        console.log(banner.slides.length);
+        console.log(banner.activeIndex);
+        if (banner.slides.length === banner.activeIndex - 1) {
+            banner.slideTo(0, 1000, false);
+        }
         let recommend = new Swiper('#recommend', {
             freeMode: true,
             slidesPerView: 1.3,
+            spaceBetween: 20,
             observer: true,//修改swiper自己或子元素时，自动初始化swiper
             observeParents: true,//修改swiper的父元素时，自动初始化swiper
         })
         let shopGoodList = new Swiper('#shopGoodList', {
             freeMode: true,
             slidesPerView: 1.3,
+            spaceBetween: 20,
             observer: true,//修改swiper自己或子元素时，自动初始化swiper
             observeParents: true,//修改swiper的父元素时，自动初始化swiper
         })

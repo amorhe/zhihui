@@ -42,8 +42,29 @@ let app = new Vue({
             let search_key = this.getRequest().search_key
             let uid = localStorage.uid
             let result = await shopGoodsSearchList(search_key, longitude_latitude, uid,area_id)
-            this.allSortList = result.data
-            console.log(result)
+            if (result.code === 1){
+                if(result.data !== null){
+                    let obj = {}
+                    let arr = []
+                    for (let i = 0; i < result.data.length; i++){
+                        // console.log(result.data[i]);
+                        if (result.data[i] !== null){
+                            for (let a in result.data[i]){
+                                // console.log(a);
+                                // console.log(result.data[i][a]);
+                                obj[a] = result.data[i][a]
+                                // console.log(`obj:${JSON.stringify(obj)}`);
+                            }
+                            arr.push(obj)
+                            // console.log(arr);
+                        }
+                    }
+                    this.allSortList = arr
+                    console.log(this.allSortList);
+                    console.log(typeof result.data[0])
+                }
+
+            }
         },
         async loadingMore() {
             if (this.allLoaded === false) {
@@ -65,7 +86,29 @@ let app = new Vue({
                             return
                         } else {
                             this.loading_more = true
-                            this.allSortList = [...this.allSortList, ...result.data.data];
+                            let obj = {}
+                            let arr = []
+                            if (result.code === 1){
+                                if(result.data !== null){
+                                    for (let i = 0; i < result.data.length; i++){
+                                        // console.log(result.data[i]);
+                                        if (result.data[i] !== null){
+                                            for (let a in result.data[i]){
+                                                // console.log(a);
+                                                // console.log(result.data[i][a]);
+                                                obj[a] = result.data[i][a]
+                                                // console.log(`obj:${JSON.stringify(obj)}`);
+                                            }
+                                            arr.push(obj)
+                                            // console.log(arr);
+                                        }
+                                    }
+                                    this.allSortList = arr
+                                    console.log(this.allSortList);
+                                    console.log(typeof result.data[0])
+                                }
+                            }
+                            this.allSortList = [...this.allSortList, ...arr];
                         }
                     } else {
                         setTimeout(() => {
