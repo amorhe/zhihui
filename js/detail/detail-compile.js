@@ -147,7 +147,11 @@ var app = new Vue({
             history.go(-1);
         },
         showDetail: function showDetail(i) {
-            this.show3 = i;
+            if (this.show3 === i) {
+                this.show3 = -1;
+            } else {
+                this.show3 = i;
+            }
         },
         filterTime: function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(v, i) {
@@ -220,6 +224,33 @@ var app = new Vue({
             }
 
             return getStoreList;
+        }(),
+        getOrderList: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(goods_id, rule, preset_time) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.next = 2;
+                                return orderList(uid, this.GetQueryString('id'), goods_id, rule, preset_time, preset_time, realprice);
+
+                            case 2:
+                                result = _context4.sent;
+
+                            case 3:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function getOrderList(_x6, _x7, _x8) {
+                return _ref4.apply(this, arguments);
+            }
+
+            return getOrderList;
         }()
     }
 });

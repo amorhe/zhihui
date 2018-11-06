@@ -7,7 +7,7 @@ var loading = void 0;
 var jssdkconfig = void 0;
 
 // localStorage.longitude_latitude = '120,30'
-localStorage.uid = 2121;
+localStorage.uid = 1212;
 
 // 全局变量
 var uid = localStorage.uid;

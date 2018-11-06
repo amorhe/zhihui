@@ -3,7 +3,7 @@ let loading
 let jssdkconfig
 
 // localStorage.longitude_latitude = '120,30'
-localStorage.uid = 2121
+localStorage.uid = 1212
 
 // 全局变量
 let uid = localStorage.uid

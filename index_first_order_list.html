@@ -13,10 +13,10 @@
 <body>
 <div id="app" @touchmove="loadingMore()" @wheel="loadingMore()" v-clock>
 
-    <div class="index_head">
-            <p class="iconfont icon-fanhui comeback" @click="`${history.go(-1)}`" style="align-self: unset"></p>
+    <div class="index_head" style="width: 90%;margin: 0 auto;">
+        <p class="iconfont icon-fanhui comeback" @click="`${history.go(-1)}`" style="align-self: unset"></p>
         <!--<i v-else class="iconfont icon-dingwei position_icon"></i>-->
-        <form action="#" onsubmit="return false;">
+        <form action="#" onsubmit="return false;" style="width: 90%">
             <el-input
                     type="search"
                     placeholder="输入商家名字、品类"
@@ -39,7 +39,8 @@
                                 alt="">
                         <p>{{item.catename}}</p>
                     </div>
-                    <div class="index_list_div" style="float: right" @click="`${location.assign(`./twoAllList.html?id=${GetQueryString('id')}`)}`">
+                    <div class="index_list_div" style="float: right"
+                         @click="`${location.assign(`./twoAllList.html?id=${GetQueryString('id')}`)}`">
                         <img src="./img/more.png" alt="">
                         <p>更多</p>
                     </div>
@@ -74,7 +75,8 @@
             </div>
         </div>
         <div>
-            <div style="width: 100%;text-align: center;padding: .2rem 0" @click="loadingMore()" v-if="allSortList.length !== 0">
+            <div style="width: 100%;text-align: center;padding: .2rem 0" @click="loadingMore()"
+                 v-if="allSortList.length !== 0">
                 <span v-if="allLoaded">点击或上拉加载更多</span>
                 <span v-else>没有更多了</span>
             </div>

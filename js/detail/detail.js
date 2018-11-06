@@ -120,7 +120,11 @@ let app = new Vue({
             history.go(-1)
         },
         showDetail(i) {
-            this.show3 = i
+            if (this.show3 === i){
+                this.show3 = -1
+            }else{
+                this.show3 = i
+            }
         },
         async filterTime(v, i) {
             this.selected = i
@@ -146,5 +150,8 @@ let app = new Vue({
                 this.detail = result.data
             }
         },
+        async getOrderList(goods_id,rule,preset_time,preset_time,realprice){
+            let result = await orderList(uid,this.GetQueryString('id'),goods_id,rule,preset_time,preset_time,realprice)
+        }
     }
 })

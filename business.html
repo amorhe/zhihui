@@ -20,10 +20,11 @@
         <img :src="`${baseImgUrl}${item.store_images}`" alt="">
         <div>
             <div class="bus_top">
-                <p>{{item.shop_name}}</p>
+                <p style="margin-top: .1rem">{{item.shop_name}}</p>
+                <div style="height: .1rem;"></div>
                 <p class="colorWrap">{{item.address}}</p>
             </div>
-            <div class="bus_down">
+            <div class="bus_down" style="padding-bottom: .1rem;">
                 <p class="colorRed">{{item.discount}}折</p>
                 <p>已售{{item.sold_num}}</p>
                 <p style="color: #7e7e7e;">{{item.distance}}km</p>

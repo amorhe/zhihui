@@ -19,7 +19,8 @@
     <div class="business_list recommend_list" v-for="item in shopList" :key="item.id" @click="goTo('./detail.html',item.id,longitude_latitude,1)">
         <div>
             <div class="bus_top">
-                <p>{{item.shop_name}}</p>
+                <p style="margin-top: .1rem">{{item.shop_name}}</p>
+                <div style="height: .1rem;"></div>
                 <p class="colorWrap">{{item.distribution}}</p>
             </div>
             <div class="bus_down">
@@ -30,9 +31,15 @@
         </div>
         <img style="float: right" :src="`${baseImgUrl}${item.store_images}`" alt="">
     </div>
-    <div style="width: 100%;text-align: center">
-        <span v-if="allLoaded" @click="loadingMore()">上拉加载更多</span>
-        <span v-else>没有更多了</span>
+
+    <div>
+        <div style="width: 100%;text-align: center;padding: .2rem 0" @click="loadingMore()"  v-if="shopList.length !== 0">
+            <span v-if="allLoaded">上拉或点击加载更多</span>
+            <span v-else>没有更多了</span>
+        </div>
+        <div style="width: 100%;text-align: center;padding: .2rem 0" v-if="shopList.length === 0">
+            没有更多了
+        </div>
     </div>
 </div>
 </body>

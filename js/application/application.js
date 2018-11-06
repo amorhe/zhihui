@@ -197,13 +197,46 @@ let app = new Vue({
             let id_card_negative_photo = this.localId.front
             let business_license = this.localId.card
             let {shop_name, phone, name, id_card} = this
-            if (!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id,!shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license) {
+
+            if (!shop_name){
                 this.$message({
-                    message: "请检查数据",
+                    message: "请填写商铺名称",
                     type: 'error',
                     duration: 1000
                 })
-                // return
+                return
+            }
+            if (!name){
+                this.$message({
+                    message: "请填写姓名",
+                    type: 'error',
+                    duration: 1000
+                })
+                return
+            }
+            if (!phone){
+                this.$message({
+                    message: "请填写手机号",
+                    type: 'error',
+                    duration: 1000
+                })
+                return
+            }
+            if (!id_card){
+                this.$message({
+                    message: "请填写身份证号码",
+                    type: 'error',
+                    duration: 1000
+                })
+                return
+            }
+            if (!uid, !province_id, !city_id, !area_id, !street_id, !community_id, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo ,!business_license) {
+                this.$message({
+                    message: "请上传照片",
+                    type: 'error',
+                    duration: 1000
+                })
+                return
             }
             let result = await storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license)
             if (result.code === 1){
@@ -212,7 +245,6 @@ let app = new Vue({
                     type: 'success',
                     duration: 1000
                 })
-                return
             }
         }
     },

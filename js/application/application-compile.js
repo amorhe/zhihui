@@ -450,33 +450,86 @@ var app = new Vue({
                                 business_license = this.localId.card;
                                 shop_name = this.shop_name, phone = this.phone, name = this.name, id_card = this.id_card;
 
-                                if (!uid, !shopcate_id, !shopchildcate_id, !province_id, !city_id, !area_id, !street_id, !community_id, !shop_name, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license) {
-                                    this.$message({
-                                        message: "请检查数据",
-                                        type: 'error',
-                                        duration: 1000
-                                    });
-                                    // return
-                                }
-                                _context9.next = 29;
-                                return storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license);
-
-                            case 29:
-                                result = _context9.sent;
-
-                                if (!(result.code === 1)) {
-                                    _context9.next = 33;
+                                if (shop_name) {
+                                    _context9.next = 29;
                                     break;
                                 }
 
                                 this.$message({
-                                    message: result.message,
-                                    type: 'success',
+                                    message: "请填写商铺名称",
+                                    type: 'error',
                                     duration: 1000
                                 });
                                 return _context9.abrupt("return");
 
-                            case 33:
+                            case 29:
+                                if (name) {
+                                    _context9.next = 32;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: "请填写姓名",
+                                    type: 'error',
+                                    duration: 1000
+                                });
+                                return _context9.abrupt("return");
+
+                            case 32:
+                                if (phone) {
+                                    _context9.next = 35;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: "请填写手机号",
+                                    type: 'error',
+                                    duration: 1000
+                                });
+                                return _context9.abrupt("return");
+
+                            case 35:
+                                if (id_card) {
+                                    _context9.next = 38;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: "请填写身份证号码",
+                                    type: 'error',
+                                    duration: 1000
+                                });
+                                return _context9.abrupt("return");
+
+                            case 38:
+                                if (!(!uid, !province_id, !city_id, !area_id, !street_id, !community_id, !phone, !name, !address, !id_card, !id_card_positive_photo, !id_card_negative_photo, !business_license)) {
+                                    _context9.next = 41;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: "请上传照片",
+                                    type: 'error',
+                                    duration: 1000
+                                });
+                                return _context9.abrupt("return");
+
+                            case 41:
+                                _context9.next = 43;
+                                return storeAdd(uid, shopcate_id, shopchildcate_id, province_id, city_id, area_id, street_id, community_id, shop_name, phone, name, address, id_card, id_card_positive_photo, id_card_negative_photo, business_license);
+
+                            case 43:
+                                result = _context9.sent;
+
+                                if (result.code === 1) {
+                                    this.$message({
+                                        message: result.message,
+                                        type: 'success',
+                                        duration: 1000
+                                    });
+                                }
+
+                            case 45:
                             case "end":
                                 return _context9.stop();
                         }

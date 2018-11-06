@@ -25,13 +25,12 @@
             <div class="bus_top">
                 <p>{{item.shop_name}}</p>
             </div>
-            <p class="nowrap fontTen colorWrap"><span v-show="item.meal_name">[{{item.meal_name}}] </span> {{item.name}}
+            <p class="nowrap fontTen colorWrap"><span v-show="item.meal_name">[{{item.meal_name}}] </span> {{item.name}}  <span style="margin-left:.1rem;max-width: 1.4rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+            {{item.address}}</span>
             </p>
             <div class="bus_down">
                 <p class="colorRed">￥{{item.amount_money}}起</p>
-                <p style="margin-left:.1rem;max-width: 1.4rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                    {{item.address}}</p>
-                <p class="dollar" style="text-align:right;flex-grow: 1">{{item.distance}}km</p>
+                <p class="dollar" style="text-align:right;flex-grow: 1">{{item.distance}}km &nbsp;</p>
             </div>
         </div>
     </div>
