@@ -6,7 +6,8 @@ var app = new Vue({
     el: "#app",
     data: {
         search_key: '',
-        citySelectLists: ''
+        citySelectLists: '',
+        citySearchSelectList: ''
     },
     methods: {
         back: function back() {
@@ -65,6 +66,72 @@ var app = new Vue({
             }
 
             return getCitySelectList;
+        }(),
+        getCitySearchSelectList: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(search_key) {
+                var result;
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                if (search_key) {
+                                    _context2.next = 3;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: "请输入地址",
+                                    type: 'error',
+                                    duration: 1000
+                                });
+                                return _context2.abrupt('return');
+
+                            case 3:
+                                _context2.next = 5;
+                                return citySearchSelectList(search_key);
+
+                            case 5:
+                                result = _context2.sent;
+
+                                if (!(result.code === 1)) {
+                                    _context2.next = 13;
+                                    break;
+                                }
+
+                                if (result.data) {
+                                    _context2.next = 11;
+                                    break;
+                                }
+
+                                if (search_key) {
+                                    _context2.next = 11;
+                                    break;
+                                }
+
+                                this.$message({
+                                    message: "暂不支持此地址",
+                                    type: 'error',
+                                    duration: 1000
+                                });
+                                return _context2.abrupt('return');
+
+                            case 11:
+                                this.citySearchSelectList = result.data;
+                                console.log(result);
+
+                            case 13:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function getCitySearchSelectList(_x) {
+                return _ref2.apply(this, arguments);
+            }
+
+            return getCitySearchSelectList;
         }()
     },
     mounted: function mounted() {

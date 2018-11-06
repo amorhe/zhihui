@@ -297,6 +297,10 @@ var citySelectList = function citySelectList() {
 var citySearchList = function citySearchList(area) {
     return ajax(Base_url + '/api/allcityselect/citysearchlist', { area: area });
 };
+//城市搜索
+var citySearchSelectList = function citySearchSelectList(search_city) {
+    return ajax(Base_url + '/api/allcityselect/citysearchselectlist', { search_city: search_city });
+};
 
 // 初始化
 var vConsole = new VConsole();

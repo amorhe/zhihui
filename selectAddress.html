@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/selectAddress.css">
 </head>
 <body style="background: #eeeeee">
-<div id="app" v-clock>
+<div id="app" v-clock @keydown.enter="getCitySearchSelectList(search_key)">
     <form action="#" onsubmit="return false;" class="index_head" style="background: #ffffff">
         <p class="iconfont icon-fanhui" @click="`${window.history.go(-1)}`"></p>
         <el-input
@@ -20,14 +20,20 @@
                 type="text" type="search"
                 placeholder="请输入城市名"
                 prefix-icon="el-icon-search"
-                autofocus="true"
                 v-model="search_key"
+                @focus=""
+                @input="getCitySearchSelectList(search_key)"
         >
         </el-input>
-        <span @click="">搜索</span>
+        <span class="button" @click="getCitySearchSelectList(search_key)" v-show="!search_key">搜索</span>
+        <span class="button" @click="search_key = ''" v-show="search_key">取消</span>
+
     </form>
-    <section class="address">
+    <section class="address" v-show="!search_key">
         <div v-for="v in citySelectLists" @click="changeAddress(v.lat_lng,v.area_id,v.area)">{{v.area}}</div>
+    </section>
+    <section class="address" v-show="search_key">
+        <div v-for="v in citySearchSelectList" @click="changeAddress(v.lat_lng,v.area_id,v.area)">{{v.area}}</div>
     </section>
 </div>
 </body>

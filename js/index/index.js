@@ -288,14 +288,14 @@ let app = new Vue({
             observer: true,//修改swiper自己或子元素时，自动初始化swiper
             observeParents: true,//修改swiper的父元素时，自动初始化swiper
         })
-        setInterval(()=>{
+        setTimeout(()=>{
             let banner = new Swiper('#banner', {
                 autoplay: {
                     delay: 3000,
                     stopOnLastSlide: false,
                     disableOnInteraction: true,
                 },
-                // loop: true,
+                loop: true,
                 pagination: {
                     el: '.swiper-pagination',
                 },
@@ -303,7 +303,7 @@ let app = new Vue({
                 observer: true,//修改swiper自己或子元素时，自动初始化swiper
                 observeParents: true,//修改swiper的父元素时，自动初始化swiper
             })
-        },15000)
+        })
         let banner = new Swiper('#banner', {
             autoplay: {
                 delay: 3000,

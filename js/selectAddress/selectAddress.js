@@ -2,7 +2,8 @@ let app = new Vue({
     el: "#app",
     data: {
         search_key: '',
-        citySelectLists:''
+        citySelectLists:'',
+        citySearchSelectList:'',
     },
     methods: {
         back() {
@@ -35,6 +36,31 @@ let app = new Vue({
             console.log(result)
             if (result.code === 1){
                 this.citySelectLists = result.data
+            }
+        },
+        async getCitySearchSelectList(search_key){
+            if (!search_key){
+                this.$message({
+                    message: "请输入地址",
+                    type: 'error',
+                    duration: 1000
+                })
+                return
+            }
+            let result = await citySearchSelectList(search_key)
+            if (result.code === 1){
+                if (!result.data){
+                    if (!search_key){
+                        this.$message({
+                            message: "暂不支持此地址",
+                            type: 'error',
+                            duration: 1000
+                        })
+                        return
+                    }
+                }
+                this.citySearchSelectList = result.data
+                console.log(result);
             }
         }
     },

@@ -228,6 +228,8 @@ const addmemberphone = (uid,phone) => ajax(Base_url + '/api/allorder/addmemberph
 const citySelectList = () => ajax(Base_url + '/api/allcityselect/cityselectlist')
 //城市列表
 const citySearchList = (area) => ajax(Base_url + '/api/allcityselect/citysearchlist',{area})
+//城市搜索
+const citySearchSelectList = (search_city) => ajax(Base_url + '/api/allcityselect/citysearchselectlist',{search_city})
 
 // 初始化
 let vConsole = new VConsole();
