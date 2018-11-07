@@ -74,37 +74,19 @@ var app = new Vue({
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
-                                if (search_key) {
-                                    _context2.next = 3;
-                                    break;
-                                }
-
-                                this.$message({
-                                    message: "请输入地址",
-                                    type: 'error',
-                                    duration: 1000
-                                });
-                                return _context2.abrupt('return');
-
-                            case 3:
-                                _context2.next = 5;
+                                _context2.next = 2;
                                 return citySearchSelectList(search_key);
 
-                            case 5:
+                            case 2:
                                 result = _context2.sent;
 
                                 if (!(result.code === 1)) {
-                                    _context2.next = 13;
+                                    _context2.next = 9;
                                     break;
                                 }
 
                                 if (result.data) {
-                                    _context2.next = 11;
-                                    break;
-                                }
-
-                                if (search_key) {
-                                    _context2.next = 11;
+                                    _context2.next = 7;
                                     break;
                                 }
 
@@ -115,11 +97,11 @@ var app = new Vue({
                                 });
                                 return _context2.abrupt('return');
 
-                            case 11:
+                            case 7:
                                 this.citySearchSelectList = result.data;
                                 console.log(result);
 
-                            case 13:
+                            case 9:
                             case 'end':
                                 return _context2.stop();
                         }

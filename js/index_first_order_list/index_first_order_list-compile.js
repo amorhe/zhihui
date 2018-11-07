@@ -98,7 +98,7 @@ var app = new Vue({
                                 this.sort_status = sort_status;
 
                                 _context2.next = 7;
-                                return allSort(sort_status, longitude_latitude, 1, this.GetQueryString('id'), sortPage, area_id);
+                                return allSort(sort_status, longitude_latitude, 2, this.GetQueryString('id'), sortPage, area_id);
 
                             case 7:
                                 result = _context2.sent;

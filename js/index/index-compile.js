@@ -467,7 +467,7 @@ var app = new Vue({
             return getDiscountList;
         }(),
         getAllSort: function () {
-            var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(sort_status, sortPage) {
+            var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(sort_status) {
                 var result;
                 return regeneratorRuntime.wrap(function _callee12$(_context12) {
                     while (1) {
@@ -475,13 +475,11 @@ var app = new Vue({
                             case 0:
                                 this.allLoaded = true;
                                 this.sortPage = 1;
-                                this.index_foot = [0, 0, 0];
-                                this.index_foot[sort_status - 1] = 1;
                                 this.sort_status = sort_status;
-                                _context12.next = 7;
-                                return allSort(sort_status, longitude_latitude, '', '', sortPage, area_id);
+                                _context12.next = 5;
+                                return allSort(sort_status, longitude_latitude, '', '', this.sortPage, area_id);
 
-                            case 7:
+                            case 5:
                                 result = _context12.sent;
 
                                 if (result.code === 1) {
@@ -489,7 +487,7 @@ var app = new Vue({
                                     this.allSortList = result.data.data;
                                 }
 
-                            case 9:
+                            case 7:
                             case 'end':
                                 return _context12.stop();
                         }
@@ -497,7 +495,7 @@ var app = new Vue({
                 }, _callee12, this);
             }));
 
-            function getAllSort(_x2, _x3) {
+            function getAllSort(_x2) {
                 return _ref12.apply(this, arguments);
             }
 

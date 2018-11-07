@@ -184,13 +184,11 @@ let app = new Vue({
                 this.discountList = result.data
             }
         },
-        async getAllSort(sort_status, sortPage) {
+        async getAllSort(sort_status) {
             this.allLoaded = true
             this.sortPage = 1
-            this.index_foot = [0, 0, 0]
-            this.index_foot[sort_status - 1] = 1
             this.sort_status = sort_status
-            let result = await allSort(sort_status, longitude_latitude, '', '', sortPage, area_id)
+            let result = await allSort(sort_status, longitude_latitude, '', '', this.sortPage, area_id)
             if (result.code === 1) {
                 console.log(result)
                 this.allSortList = result.data.data
